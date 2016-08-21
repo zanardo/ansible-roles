@@ -8,12 +8,16 @@ Para usar os roles:
 
 - Clonar o repositório:
 
-    git clone https://github.com/zanardo/ansible-roles ~/ansible-roles
+```
+git clone https://github.com/zanardo/ansible-roles ~/ansible-roles
+```
 
 - Configurar o caminho dos roles no arquivo `ansible.cfg` dos playbooks:
 
-    roles_path = ./roles:~/ansible-roles
+```
+roles_path = ./roles:~/ansible-roles
+```
 
-*Atenção*: Este repositório é uma experiência de unificar os roles do Ansible
+**Atenção**: Este repositório é uma experiência de unificar os roles do Ansible
 em apenas um repositório, ao invés de manter cada role em um repositório
 separado e usar git submodules.
