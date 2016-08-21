@@ -1,6 +1,8 @@
 Este repositório contém roles do
 [Ansible](https://docs.ansible.com/ansible/index.html).
 
+Os roles são desenvolvidos e testados apenas no **Debian** (stable).
+
 Os termos de uso podem ser encontrados no arquivo `COPYING` na raíz deste
 repositório.
 
