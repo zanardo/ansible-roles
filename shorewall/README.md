@@ -5,7 +5,7 @@ permite manter as configurações em arquivos-textos organizados.
 
 # Como usar
 
-Para usar este Role, adicione dentro do grupo `roles' do Playbook:
+Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 
 ```
 roles:
