@@ -1,0 +1,8 @@
+---
+- name: reconfigura shorewall
+  shell: >
+    warn=no
+    touch /tmp/ansible-shorewall-restart &&
+    shorewall check && 
+    shorewall restart &&
+    rm -f /tmp/ansible-shorewall-restart
