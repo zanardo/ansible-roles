@@ -32,20 +32,20 @@
     shadw=$(sha512sum "firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2" | cut -d" " -f1) ; \
     grep "$shadw" /tmp/mozilla_SHA512SUMS
 
-- name: cria diretório /opt/firefox
+- name: cria /usr/local/firefox
   file: >
     state=directory
-    path="/opt/firefox"
+    path="/usr/local/firefox"
     mode=0755
 
 - name: extrai tarball
   shell: >
     warn=no
-    tar -C /opt/firefox/ --strip-components=1 -xjf \
+    tar -C "/usr/local/firefox" --strip-components=1 -xjf \
       "/tmp/firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2"
 
 - name: cria symlink para /usr/local/bin/firefox
   file: >
     path="/usr/local/bin/firefox"
-    src="/opt/firefox/firefox"
+    src="/usr/local/firefox/firefox"
     state=link
