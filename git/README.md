@@ -12,14 +12,12 @@ roles:
   - { role: git, git_version: "x.y.z" }
 ```
 
-Você deverá adicionar o diretório `/opt/git` no seu `$PATH`, além
-de carregar o arquivo `/opt/git/share/git-core/bash_completion`
-no Bash. Exemplo de adição ao `~/.bashrc`:
+Carregue o script de completion adicionando as seguintes linhas
+no seu `~/.bashrc`:
 
 ```
-export PATH="/opt/git/bin:$PATH"
-test -f /opt/git/share/git-core/bash_completion && \
-   source /opt/git/share/git-core/bash_completion
+test -f /usr/local/etc/bash_completion.d/git &&
+   source /usr/local/etc/bash_completion.d/git
 ```
 
 # Variáveis
@@ -33,4 +31,5 @@ As seguintes mudanças são feitas no sistema:
 - São instalados pacotes necessários para compilação, instalação e execução do
   Git.
 
-- O Git é instalado na árvore `/opt/git`.
+- O Git é instalado em `/usr/local/stow/git-<version>` e o `xstow` é utilizado
+  para criar symlinks dos arquivos em `/usr/local`.
