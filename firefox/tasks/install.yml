@@ -1,4 +1,11 @@
 ---
+- name: instala pacotes necessários
+  apt: >
+    name="{{ item }}"
+    state=present
+  with_items:
+    - xstow
+
 - name: download do tarball
   get_url: >
     dest="/tmp/firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2"
@@ -32,17 +39,26 @@
     shadw=$(sha512sum "firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2" | cut -d" " -f1) ; \
     grep "$shadw" /tmp/mozilla_SHA512SUMS
 
-- name: cria /usr/local/firefox
+- name: cria diretórios necessários
   file: >
     state=directory
-    path="/usr/local/firefox"
+    path="{{ item }}"
     mode=0755
+    recurse=yes
+  with_items:
+    - "/usr/local/stow/firefox-{{ firefox_version }}/firefox"
 
 - name: extrai tarball
   shell: >
     warn=no
-    tar -C "/usr/local/firefox" --strip-components=1 -xjf \
+    tar -C "/usr/local/stow/firefox-{{ firefox_version }}/firefox" --strip-components=1 -xjf \
       "/tmp/firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2"
+
+- name: executa xstow
+  shell: >
+    chdir=/usr/local/stow
+    xstow -D firefox-* &&
+    xstow "firefox-{{ firefox_version }}"
 
 - name: cria symlink para /usr/local/bin/firefox
   file: >
