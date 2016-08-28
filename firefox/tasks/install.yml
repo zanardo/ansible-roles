@@ -39,6 +39,11 @@
     shadw=$(sha512sum "firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2" | cut -d" " -f1) ; \
     grep "$shadw" /tmp/mozilla_SHA512SUMS
 
+- name: remove arquivos caso mesma versão esteja instalada
+  file: >
+    state=absent
+    path="/usr/local/stow/firefox-{{ firefox_version }}"
+
 - name: cria diretórios necessários
   file: >
     state=directory
