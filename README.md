@@ -37,7 +37,9 @@ Alguns políticas de padronização que os roles observam:
 
 - Softwares compilados devem ser instalados em `/usr/local`.
 
-- Usar o Stow para gerenciar os arquivos instalados.
+- Usar o Stow para gerenciar os arquivos instalados, para facilitar a
+  atualização das versões e remover os softwares de `/usr/local` caso
+  necessário.
 
 - Compilar e instalar os softwares usando um usuário sem privilégios (ex:
   `nobody`).
