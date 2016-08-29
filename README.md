@@ -28,6 +28,8 @@ separado e usar git submodules.
 
 Alguns políticas de padronização que os roles observam:
 
+## Versões
+
 - Usar os pacotes oficiais da distribuição do Debian sempre que possível.
 
 - Caso seja necessário usar uma versão diferente dos softwares (ex: versão mais
@@ -35,13 +37,23 @@ Alguns políticas de padronização que os roles observam:
   instalar de forma a não afetar os pacotes instalados. Evitar instalar pacotes
   de repositórios externos.
 
+## Locais de instalação
+
 - Softwares compilados devem ser instalados em `/usr/local`.
 
 - Usar o Stow para gerenciar os arquivos instalados, para facilitar a
   atualização das versões e remover os softwares de `/usr/local` caso
   necessário.
 
+- Arquivos de configurações devem ficar em `/usr/local/etc`.
+
+- Os dados devem ficar em um local configurado pelo usuário. Ex: `/srv`.
+
+## Segurança
+
 - Compilar e instalar os softwares usando um usuário sem privilégios (ex:
   `nobody`).
+
+## Outros
 
 - Tentar evitar dependências entre os roles.
