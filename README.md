@@ -47,12 +47,13 @@ Alguns políticas de padronização que os roles observam:
 
 - Arquivos de configurações devem ficar em `/usr/local/etc`.
 
-- Os dados devem ficar em um local configurado pelo usuário. Ex: `/srv`.
+- Os dados devem ficar em um local configurado pelo usuário através de
+  variáveis. Ex: `/srv`.
 
 ## Segurança
 
-- Compilar e instalar os softwares usando um usuário sem privilégios (ex:
-  `nobody`).
+- Caso seja necessário compilar um software, executar a compilação e instalação
+  usando um usuário com poucos privilégios (ex: `nobody`).
 
 ## Outros
 
