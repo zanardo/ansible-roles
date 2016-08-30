@@ -1,0 +1,4 @@
+[program:pgbouncer]
+command=/usr/local/bin/pgbouncer /usr/local/etc/pgbouncer/pgbouncer.ini
+user=pgbouncer
+redirect_stderr=True 

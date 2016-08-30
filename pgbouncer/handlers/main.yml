@@ -1,0 +1,8 @@
+---
+- name: reinicia pgbouncer
+  shell: supervisorctl update && supervisorctl restart pgbouncer
+
+- name: reconfigura pgbouncer
+  become: yes
+  become_user: pgbouncer
+  shell: killall -HUP pgbouncer || true
