@@ -1,0 +1,5 @@
+---
+apt_cacher_cachedir: "/var/cache/apt-cacher-ng"
+apt_cacher_port: "3142"
+apt_cacher_bindaddress: "0.0.0.0"
+apt_cacher_proxy: ""

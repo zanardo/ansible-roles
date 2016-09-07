@@ -1,0 +1,16 @@
+Ansible Role para instalar e configurar o serviço `apt-cacher-ng' no Debian.
+
+O `apt-cacher-ng' fornece um proxy/cache HTTP para cache local de pacotes e
+índices de repositórios do Debian e derivados.
+
+Para usar este Role, adicione dentro do grupo `roles' do Playbook:
+
+  roles:
+
+    - role: zanardo.apt-cacher-ng
+      # As seguintes variáveis são opcionais, e os exemplos abaixo mostram seus
+      # valores default:
+      apt_cacher_cachedir: /var/cache/apt-cacher-ng
+      apt_cacher_port: 3142
+      apt_cacher_bindaddress: 0.0.0.0
+      apt_cacher_proxy: ""
