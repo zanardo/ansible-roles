@@ -4,22 +4,13 @@ código-fonte.
 
 # Como usar
 
-Você pode adicionar este Role como um submódulo do Git no seu repositório
-com os Playbooks:
-
-```
-git submodule add \
-  https://github.com/zanardo/ansible-role-pgbouncer \
-  roles/pgbouncer
-```
-
 Para usar este Role, adicione dentro do grupo ``roles`` do Playbook, e configure
 a variável com a versão a ser instalada:
 
 ```
 roles:
 
-  - role: pgbouncer
+  - role: zanardo.pgbouncer
   	pgbouncer_version: "x.y.z"
 	pgbouncer_conf: "files/pgbouncer.ini"
 	pgbouncer_userlist_conf: "files/userlist.txt"
