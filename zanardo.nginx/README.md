@@ -7,7 +7,7 @@ Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 ```
 roles:
 
-  - { role: nginx }
+  - { role: zanardo.nginx }
 ```
 
 # Variáveis
