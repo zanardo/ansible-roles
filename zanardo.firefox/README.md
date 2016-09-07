@@ -12,7 +12,7 @@ versão a ser instalada.
 ```
 roles:
 
-  - { role: firefox, firefox_version: "x.y.z" }
+  - { role: zanardo.firefox, firefox_version: "x.y.z" }
 ```
 
 # Variáveis
