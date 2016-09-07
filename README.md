@@ -18,8 +18,3 @@ git clone https://github.com/zanardo/ansible-roles ~/ansible-roles
 
 ```
 roles_path = ./roles:~/ansible-roles
-```
-
-**Atenção**: Este repositório é uma experiência de unificar os roles do Ansible
-em apenas um repositório, ao invés de manter cada role em um repositório
-separado e usar git submodules.
