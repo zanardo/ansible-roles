@@ -1,0 +1,4 @@
+---
+- name: reconfigura squid
+  shell: >
+    squid3 -k check && squid3 -k reconfigure
