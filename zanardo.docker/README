@@ -1,0 +1,11 @@
+Ansible Role para instalar o Docker, baixando os binários da distribuição
+oficial para Linux.
+
+Para usar este Role, adicione dentro do grupo `roles' do Playbook:
+
+  roles:
+
+    - role: zanardo.docker
+      # As variáveis abaixo são opcionais.
+      docker_version: "1.11.0"
+      docker_daemon_conf: "-s btrfs"

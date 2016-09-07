@@ -1,0 +1,49 @@
+---
+- name: instala pacotes necessários
+  apt: name={{ item }} state=present
+  with_items:
+    - cgroupfs-mount
+    - ca-certificates
+    - bash-completion
+    - git
+
+- name: cria diretório /usr/local/src
+  file: >
+    state=directory
+    dest="/usr/local/src"
+
+- name: download do tarball
+  get_url: >
+    url="https://get.docker.com/builds/Linux/x86_64/docker-{{ docker_version }}.tgz"
+    dest="/usr/local/src/docker-{{ docker_version }}.tgz"
+
+- name: descompacta tarball
+  shell: >
+    warn=no
+    chdir=/tmp
+    tar xzf "/usr/local/src/docker-{{ docker_version }}.tgz" &&
+    cp -a docker/docker* /usr/local/bin/ &&
+    rm -rf /tmp/docker
+
+- name: ajuste para facilitar auto-complete do shell
+  shell: >
+    warn: no
+    chmod 700 /usr/local/bin/docker-*
+
+- name: download do script de bash-completion
+  get_url: >
+    url="https://github.com/docker/docker/raw/v{{ docker_version }}/contrib/completion/bash/docker"
+    dest=/etc/bash_completion.d/docker_local
+    owner=root
+    group=root
+    mode=0644
+    force=yes
+
+- name: copia unit do systemd
+  template: >
+    src=docker.service.j2
+    dest=/etc/systemd/system/docker.service
+    owner=root
+    group=root
+    mode=0644
+  notify: reinicia docker
