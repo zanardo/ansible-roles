@@ -1,0 +1,6 @@
+---
+- include: check.yml
+  with_items: "{{ python_versions }}"
+  loop_control:
+    loop_var: outer_item
+  tags: python
