@@ -1,0 +1,6 @@
+---
+- name: reinicia rrd
+  shell: >
+    warn=no
+    supervisorctl update &&
+    supervisorctl restart rrd rrdweb

@@ -1,0 +1,47 @@
+---
+- name: instala pacotes necessários
+  apt: >
+    name="{{ item }}"
+    state=present
+  with_items:
+    - python
+    - python-tornado
+    - rrdtool
+    - python-rrdtool
+    - git
+    - supervisor
+
+- name: cria diretórios necessários
+  file: >
+    state=directory
+    path="{{ item }}"
+  with_items:
+    - "/opt/rrd"
+    - "/var/lib/rrd"
+
+- name: cria diretórios com permissão para rrd
+  file: >
+    state=directory
+    path="/var/lib/rrd/{{ item }}"
+    owner=daemon
+    group=daemon
+  with_items:
+    - "data"
+    - "conf-data"
+    - "conf-graph"
+    - "conf-graph-filters"
+
+- name: clona repositório do git do rrd
+  git: >
+    dest="/opt/rrd"
+    repo="https://github.com/zanardo/rrd"
+    update=no
+
+- name: copia configuração de inicialização pelo supervisor
+  template: >
+    src="{{ item }}.supervisor"
+    dest="/etc/supervisor/conf.d/{{ item }}.conf"
+  with_items:
+    - rrd
+    - rrdweb
+  notify: reinicia rrd

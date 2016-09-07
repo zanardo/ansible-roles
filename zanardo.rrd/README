@@ -1,0 +1,25 @@
+Ansible Role para instalar e configurar o servidor `rrd' no Debian. Para mais
+detalhes do sistema `rrd', ver https://github.com/zanardo/rrd.
+
+Para usar este Role, adicione dentro do grupo `roles' do Playbook:
+
+  roles:
+
+    - { role: zanardo.rrd }
+
+Variáveis de configuração:
+
+    - `rrd_port': Porta UDP que o servidor `rrd' escutará.
+
+    - `rrdweb_port': Porta TCP que o servidor `rrdweb` escutará.
+
+As seguintes mudanças são feitas no sistema:
+
+    - São instalados pacotes necessários para executar o Redis.
+
+    - É criado o diretório `/opt/rrd' contendo os scripts para execução.
+
+    - É criado o diretório `/var/lib/rrd' para conter os dados.
+
+    - O Supervisor é configurado para inicializar os processos `rrd' e
+      `rrdweb'.
