@@ -10,7 +10,7 @@ Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 ```
 roles:
 
-  - { role: shorewall }
+  - { role: zanardo.shorewall }
 ```
 
 # Variáveis
