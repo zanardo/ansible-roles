@@ -1,0 +1,53 @@
+---
+- name: instala pacotes necessários
+  apt: name={{ item }} state=present
+  with_items:
+    - supervisor
+
+- name: cria usuário redis-local
+  user: >
+    name=redis-local
+    system=yes
+    home=/nonexistent
+    createhome=no
+    state=present
+
+- name: cria diretório da instância
+  file: >
+    state=directory
+    path="/srv/{{ redis_instance }}"
+    owner=redis-local
+    group=redis-local
+
+- name: copia arquivo de inicialização via supervisor
+  template: >
+    src=redis.supervisor
+    dest="/srv/{{ redis_instance }}/redis.supervisor"
+
+- name: cria link para serviço supervisor
+  file: >
+    state=link
+    path="/etc/supervisor/conf.d/{{ redis_instance }}.conf"
+    src="/srv/{{ redis_instance }}/redis.supervisor"
+  notify: reinicia redis
+
+- name: testa se o arquivo de configuração é igual ao default
+  shell: >
+    cmp -s "/usr/local/etc/redis.conf.orig" "/srv/{{ redis_instance }}/redis.conf"
+  register: redis_conf_changed
+  changed_when: False
+  failed_when: False
+  when: redis_conf_file is not defined
+
+- name: copia arquivo de configuração default
+  shell: >
+    cp "/usr/local/etc/redis.conf.orig" "/srv/{{ redis_instance }}/redis.conf"
+  when: redis_conf_file is not defined and redis_conf_changed|failed
+  notify: reinicia redis
+
+- name: copia arquivo de configuração customizado
+  template: >
+    src="{{ redis_conf_file }}"
+    dest="/srv/{{ redis_instance }}/redis.conf"
+  when: redis_conf_file is defined
+  notify: reinicia redis

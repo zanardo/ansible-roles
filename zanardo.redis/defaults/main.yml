@@ -1,0 +1,8 @@
+---
+# Configure o path local para copiar um ærquivo de configuração
+# customizado.
+#redis_conf_file: "files/redis/redis.conf"
+
+# Configura o nome da instância, caso queira rodar mais de uma instância
+# do Redis.
+redis_instance: "redis"

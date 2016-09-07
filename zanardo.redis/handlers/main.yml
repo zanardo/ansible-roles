@@ -1,0 +1,5 @@
+---
+- name: reinicia redis
+  shell: >
+    supervisorctl update && \
+    supervisorctl restart "{{ redis_instance }}"

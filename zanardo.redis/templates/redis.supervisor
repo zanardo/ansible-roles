@@ -1,0 +1,5 @@
+[program:{{ redis_instance }}]
+command=/usr/local/bin/redis-server /srv/{{ redis_instance }}/redis.conf
+directory=/srv/{{ redis_instance }}/
+user=redis-local
+redirect_stderr=True 
