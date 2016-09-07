@@ -1,0 +1,19 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nginx-light
+  tags:
+    - nginx
+
+- name: copia arquivo de configuração
+  template:
+    src: "{{ nginx_conf }}"
+    dest: /etc/nginx/nginx.conf
+  when: nginx_conf|d()
+  notify: reinicia nginx
+  tags:
+    - nginx
+    - "nginx:conf"

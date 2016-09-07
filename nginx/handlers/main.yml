@@ -1,0 +1,4 @@
+---
+- name: reinicia nginx
+  shell: >
+    nginx -t && nginx -s reload
