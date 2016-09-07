@@ -1,0 +1,3 @@
+---
+- name: reinicia dnsmasq
+  service: name=dnsmasq state=restarted
