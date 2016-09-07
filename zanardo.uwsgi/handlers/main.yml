@@ -1,0 +1,5 @@
+---
+- name: reinicia uwsgi
+  shell: >
+    supervisorctl update &&
+    supervisorctl restart uwsgi

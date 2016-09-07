@@ -1,0 +1,14 @@
+Ansible Role para instalar e configurar o `uWSGI' com modo Emperor no Debian.
+
+Para usar este Role, adicione dentro do grupo `roles' do Playbook e configure
+a versão a ser instalada:
+
+  roles:
+
+    - { role: zanardo.uwsgi, uwsgi_version: "x.y.z" }
+
+Mais variáveis de opções podem ser configuradas, e os defaults estão em
+`defaults/main.yml'.
+
+O uWSGI será carregado em modo Emperor, rodando como root. As configurações de
+cada Vassal devem ser copiadas para `/opt/uwsgi/vassals'.

@@ -1,0 +1,4 @@
+[program:uwsgi]
+command = /opt/uwsgi/uwsgi --ini /opt/uwsgi/uwsgi.ini
+stopsignal = QUIT
+redirect_stderr = true
