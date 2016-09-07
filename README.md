@@ -11,10 +11,10 @@ Para usar os roles:
 - Clonar o repositório:
 
 ```
-git clone https://github.com/zanardo/ansible-roles ~/ansible-roles
+git clone https://github.com/zanardo/ansible-roles ~/ansible-roles-zanardo
 ```
 
 - Configurar o caminho dos roles no arquivo `ansible.cfg` dos playbooks:
 
 ```
-roles_path = ./roles:~/ansible-roles
+roles_path = ./roles:~/ansible-roles-zanardo
