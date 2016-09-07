@@ -9,7 +9,7 @@ configure a versão do Git a ser instalada:
 ```
 roles:
 
-  - { role: git, git_version: "x.y.z" }
+  - { role: zanardo.git, git_version: "x.y.z" }
 ```
 
 Carregue o script de completion adicionando as seguintes linhas
