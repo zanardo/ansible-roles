@@ -8,7 +8,7 @@ Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 ```
 roles:
 
-  - { role: rrd-collectors }
+  - { role: zanardo.rrd-collectors }
 ```
 
 # Variáveis
