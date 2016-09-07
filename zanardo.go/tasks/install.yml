@@ -1,0 +1,31 @@
+---
+- name: instala pacotes
+  apt: name="{{ item }}" state=present
+  with_items:
+    - ca-certificates
+
+- name: download do tarball
+  get_url: >
+    url="https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
+    dest="/tmp/go-{{ go_version }}.tar.gz"
+
+- name: remove instalação anterior
+  file: >
+    state=absent
+    path="/usr/local/go"
+
+- name: extrai o tarball
+  shell: >
+    warn=no
+    chdir="/tmp"
+    mkdir /usr/local/go &&
+    tar -C /usr/local/go --strip-components=1 \
+      -xzf "/tmp/go-{{ go_version }}.tar.gz"
+
+- name: corrige permissões para root
+  file: >
+    state=directory
+    owner=root
+    group=root
+    path="/usr/local/go"
+    recurse=yes
