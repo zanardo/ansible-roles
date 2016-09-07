@@ -10,7 +10,7 @@ Para usar este Role, adicione dentro do grupo `roles` do Playbook.
 ```
 roles:
 
-  - { role: gtk-theme-greybird }
+  - { role: zanardo.gtk-theme-greybird }
 ```
 
 # Variáveis
