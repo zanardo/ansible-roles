@@ -5,7 +5,7 @@
 
 - name: copia arquivo de configurações
   template: >
-    src={{ dnsmasq_conf_file }}
+    src={{ dnsmasq_conf }}
     dest=/etc/dnsmasq.conf
     owner=root
     group=root
