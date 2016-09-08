@@ -1,11 +1,12 @@
 ---
 - name: atualiza apt
-  apt: update_cache=yes
+  apt:
+    update_cache: yes
 
 - name: reinicia ssh
-  service: >
-    name=ssh
-    state=restarted
+  service:
+    name: ssh
+    state: restarted
 
 - name: reconfigura grub
   shell: >
