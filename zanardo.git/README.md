@@ -6,7 +6,7 @@ código-fonte.
 Para usar este Role, adicione dentro do grupo `roles` do Playbook e 
 configure a versão do Git a ser instalada:
 
-```
+```yaml
 roles:
 
   - { role: zanardo.git, git_version: "x.y.z" }
@@ -15,7 +15,7 @@ roles:
 Carregue o script de completion adicionando as seguintes linhas
 no seu `~/.bashrc`:
 
-```
+```bash
 test -f /usr/local/etc/bash_completion.d/git &&
    source /usr/local/etc/bash_completion.d/git
 ```

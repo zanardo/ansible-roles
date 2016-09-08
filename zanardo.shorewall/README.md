@@ -7,7 +7,7 @@ permite manter as configurações em arquivos-textos organizados.
 
 Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 
-```
+```yaml
 roles:
 
   - { role: zanardo.shorewall }

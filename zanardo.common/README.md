@@ -5,7 +5,7 @@ Brasil.
 
 Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 
-```
+```yaml
 roles:
 
   - { role: zanardo.common }

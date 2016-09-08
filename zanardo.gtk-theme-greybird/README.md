@@ -7,7 +7,7 @@ O tema é obtido diretamente do repositório upstream e salvo dentro de
 
 Para usar este Role, adicione dentro do grupo `roles` do Playbook.
 
-```
+```yaml
 roles:
 
   - { role: zanardo.gtk-theme-greybird }

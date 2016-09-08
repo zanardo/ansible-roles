@@ -7,7 +7,7 @@ código-fonte.
 Para usar este Role, adicione dentro do grupo ``roles`` do Playbook, e configure
 a variável com a versão a ser instalada:
 
-```
+```yaml
 roles:
 
   - role: zanardo.pgbouncer

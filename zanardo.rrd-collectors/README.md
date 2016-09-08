@@ -5,7 +5,7 @@ binários de release em `https://github.com/zanardo/rrd-collectors`.
 
 Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 
-```
+```yaml
 roles:
 
   - { role: zanardo.rrd-collectors }
@@ -23,7 +23,7 @@ roles:
   coletor `iftraff`. Ex: `[eth0, eth1]`.
 
 - `rrd_collectors_df_mounts`: Pontos de montagem a serem monitorados pelo coletor `df`. Ex:
-```
+```yaml
 - mount: "/"
   name: "root"
 - mount: "/var"

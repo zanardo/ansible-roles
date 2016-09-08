@@ -5,7 +5,7 @@ diretamente do site oficial. O Go é instalado em `/usr/local/go`.
 
 Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 
-```
+```yaml
 roles:
 
   - { role: zanardo.go, go_version: "x.y.x" }

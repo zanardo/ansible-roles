@@ -7,7 +7,7 @@ O **dnsmasq** fornece um resolvedor recursivo de DNS, além de um servidor DHCP.
 Para usar este Role, adicione dentro do grupo `roles` do Playbook e configure o
 caminho do arquivo de configurações:
 
-```
+```yaml
 roles:
 
   - role: zanardo.dnsmasq

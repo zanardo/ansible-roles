@@ -9,7 +9,7 @@ em `/usr/local/bin/firefox`.
 Para usar este Role, adicione dentro do grupo `roles` do Playbook e configure a
 versão a ser instalada.
 
-```
+```yaml
 roles:
 
   - { role: zanardo.firefox, firefox_version: "x.y.z" }

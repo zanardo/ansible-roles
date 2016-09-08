@@ -4,7 +4,7 @@ Ansible Role para instalar e configurar o [Nginx](http://www.nginx.org/).
 
 Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 
-```
+```yaml
 roles:
 
   - { role: zanardo.nginx }

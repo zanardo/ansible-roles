@@ -5,7 +5,7 @@ Ansible Role para instalar e configurar o
 
 Para usar este Role, adicione dentro do grupo ``roles`` do Playbook:
 
-```
+```yaml
 roles:
 
   - { role: zanardo.squid }
