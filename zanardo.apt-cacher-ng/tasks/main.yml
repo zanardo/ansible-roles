@@ -1,20 +1,22 @@
 ---
 - name: instala pacotes
-  apt: name={{item}} state=present
+  apt:
+    name: "{{item}}"
+    state: present
   with_items:
     - apt-cacher-ng
 
 - name: copia configuração
-  template: >
-    dest=/etc/apt-cacher-ng/zzz_override.conf
-    src=acng.conf.j2
-    owner=root
-    group=root
-    mode=0644
+  template:
+    dest: /etc/apt-cacher-ng/zzz_override.conf
+    src: acng.conf.j2
+    owner: root
+    group: root
+    mode: 0644
   notify: reinicia apt-cacher-ng
 
 - name: se certifica que o serviço está rodando
-  service: >
-    name=apt-cacher-ng
-    state=started
-    enabled=yes
+  service:
+    name: apt-cacher-ng
+    state: started
+    enabled: yes

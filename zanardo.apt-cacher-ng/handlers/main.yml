@@ -1,5 +1,5 @@
 ---
 - name: reinicia apt-cacher-ng
-  service: >
-    name=apt-cacher-ng
-    state=restarted
+  service:
+    name: apt-cacher-ng
+    state: restarted
