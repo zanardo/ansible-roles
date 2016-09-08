@@ -1,14 +1,16 @@
 ---
 - name: instala pacotes
-  apt: name=dnsmasq state=present
+  apt:
+    name: dnsmasq
+    state: present
   tags: dnsmasq
 
 - name: copia arquivo de configurações
-  template: >
-    src={{ dnsmasq_conf }}
-    dest=/etc/dnsmasq.conf
-    owner=root
-    group=root
-    mode=0644
+  template:
+    src: "{{ dnsmasq_conf }}"
+    dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: 0644
   notify: reinicia dnsmasq
   tags: dnsmasq
