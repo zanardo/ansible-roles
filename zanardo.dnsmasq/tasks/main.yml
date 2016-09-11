@@ -3,7 +3,7 @@
   apt:
     name: dnsmasq
     state: present
-  tags: dnsmasq
+  tags: ["dnsmasq"]
 
 - name: copia arquivo de configurações
   template:
@@ -13,4 +13,4 @@
     group: root
     mode: 0644
   notify: reinicia dnsmasq
-  tags: dnsmasq
+  tags: ["dnsmasq", "dnsmasq:conf"]

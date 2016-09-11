@@ -17,3 +17,9 @@ roles:
 # Variáveis
 
 - `dnsmasq_conf`: Path local para o arquivo com as configurações do dnsmasq.
+
+# Tags
+
+- `dnsmasq`: Instala e configura.
+
+- `dnsmasq:conf`: Atualiza a configuração.
