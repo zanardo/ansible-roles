@@ -12,11 +12,12 @@ roles:
   - { role: zanardo.git, git_version: "x.y.z" }
 ```
 
-Carregue o script de completion adicionando as seguintes linhas
-no seu `~/.bashrc`:
+Configure o PATH e carregue o script de completion adicionando as seguintes
+linhas no seu `~/.bashrc`:
 
 ```bash
-test -d /opt/git/etc/bash_completion.d/git &&
+export PATH="/opt/git/bin:$PATH"
+test -f /opt/git/etc/bash_completion.d/git &&
    source opt/git/etc/bash_completion.d/git
 ```
 
