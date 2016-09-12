@@ -2,7 +2,7 @@
 - name: verifica versão instalada
   shell: >
     warn=no
-    /usr/local/bin/pgbouncer --version | cut -d" " -f3
+    /opt/pgbouncer/bin/pgbouncer --version | cut -d" " -f3
   changed_when: False
   failed_when: False
   register: pgbouncer_register_version

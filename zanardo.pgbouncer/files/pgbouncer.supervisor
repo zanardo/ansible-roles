@@ -1,4 +1,6 @@
 [program:pgbouncer]
-command=/usr/local/bin/pgbouncer /usr/local/etc/pgbouncer/pgbouncer.ini
-user=pgbouncer
+command=/opt/pgbouncer/bin/pgbouncer /etc/opt/pgbouncer/pgbouncer.ini
+user=opt-pgbouncer
 redirect_stderr=True 
+stdout_logfile=/var/opt/pgbouncer/log/pgbouncer.log
+stdout_logfile_backups=9

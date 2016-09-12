@@ -14,9 +14,9 @@
     - ca-certificates
     - supervisor
 
-- name: cria usuário pgbouncer
+- name: cria usuário opt-pgbouncer
   user:
-    name: pgbouncer
+    name: opt-pgbouncer
     system: yes
     shell: /bin/bash
 
@@ -46,10 +46,26 @@
     chdir="/tmp/pgbouncer-{{ pgbouncer_version }}"
     ./configure && make
 
+- name: cria diretórios de instalação
+  file:
+    state: directory
+    owner: root
+    group: root
+    recurse: yes
+    path: /opt/pgbouncer/bin
+
+- name: cria diretórios de log
+  file:
+    state: directory
+    owner: opt-pgbouncer
+    group: opt-pgbouncer
+    recurse: yes
+    path: /var/opt/pgbouncer/log
+
 - name: instala
   shell: >
     chdir="/tmp/pgbouncer-{{ pgbouncer_version }}"
-    install -o root -g root -m 0755 pgbouncer /usr/local/bin/pgbouncer
+    install -o root -g root -m 0755 pgbouncer /opt/pgbouncer/bin/pgbouncer
 
 - name: remove arquivos temporários
   file:
