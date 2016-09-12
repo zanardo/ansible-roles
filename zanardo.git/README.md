@@ -16,8 +16,8 @@ Carregue o script de completion adicionando as seguintes linhas
 no seu `~/.bashrc`:
 
 ```bash
-test -f /usr/local/etc/bash_completion.d/git &&
-   source /usr/local/etc/bash_completion.d/git
+test -d /opt/git/etc/bash_completion.d/git &&
+   source opt/git/etc/bash_completion.d/git
 ```
 
 # Variáveis
@@ -31,5 +31,4 @@ As seguintes mudanças são feitas no sistema:
 - São instalados pacotes necessários para compilação, instalação e execução do
   Git.
 
-- O Git é instalado em `/usr/local/stow/git-<version>` e o `xstow` é utilizado
-  para criar symlinks dos arquivos em `/usr/local`.
+- O Git é instalado em `/opt/git`.
