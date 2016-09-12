@@ -24,9 +24,18 @@
     owner: nobody
 
 - name: download do tarball e assinatura
+  connection: local
   get_url:
     url: "http://ftp.kernel.org/pub/software/scm/git/git-{{ git_version }}.tar.{{ item }}"
+    dest: "~/.cache/ansible/git-{{ git_version }}.tar.{{ item }}"
+  with_items: ["xz", "sign"]
+
+- name: copia tarball e assinatura para host remoto
+  copy:
     dest: "/tmp/git-{{ git_version }}.tar.{{ item }}"
+    src: "~/.cache/ansible/git-{{ git_version }}.tar.{{ item }}"
+    owner: nobody
+    group: nogroup
   with_items: ["xz", "sign"]
 
 - name: importa chave gpg no keyring
@@ -95,4 +104,6 @@
     path: "/tmp/{{ item }}"
   with_items:
     - "git-{{ git_version }}"
+    - "git-{{ git_version }}.tar.xz"
+    - "git-{{ git_version }}.tar.sign"
     - "gitster.key"
