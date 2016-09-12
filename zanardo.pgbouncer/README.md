@@ -45,3 +45,27 @@ roles:
 - É configurado o serviço `pgbouncer` no Supervisor, e o processo é carregado.
 
 - Logs de execução são salvos em `/var/opt/pgbouncer/log/pgbouncer.log`.
+
+# Configuração
+
+Exemplo de arquivo de configuração:
+
+```ini
+[pgbouncer]
+listen_port = 5432
+listen_addr = 10.27.38.2
+auth_type = md5
+auth_file = /etc/opt/pgbouncer/userlist.txt
+pool_mode = transaction
+admin_users = postgres
+unix_socket_dir = /tmp
+
+[databases]
+* = host=127.0.0.1 port=5432 auth_user=postgres
+```
+
+# Tags
+
+- `pgbounce`: Executa todo o role.
+
+- `pgbouncer:conf`: Atualiza a configuração.
