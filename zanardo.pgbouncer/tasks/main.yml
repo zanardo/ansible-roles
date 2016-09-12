@@ -1,93 +1,16 @@
 ---
-- name: instala pacotes necessários
-  apt: >
-    name="{{ item }}"
-    state=present
-  with_items:
-    - make
-    - gcc
-    - libc6-dev
-    - libevent-dev
-    - libevent-2.0-5
-    - libssl-dev
-    - libssl1.0.0
-    - ca-certificates
-    - supervisor
-
-- name: cria usuário
-  user: >
-    name=pgbouncer
-    system=yes
-    shell=/bin/bash
-
 - name: verifica versão instalada
   shell: >
     warn=no
     /usr/local/bin/pgbouncer --version | cut -d" " -f3
   changed_when: False
+  failed_when: False
   register: pgbouncer_register_version
+  tags: ["pgbouncer"]
 
-- block:
+- include: install.yml
+  when: pgbouncer_register_version.stdout != pgbouncer_version or pgbouncer_force_install is defined
+  tags: ["pgbouncer"]
 
-  - name: faz o download do tarball
-    get_url: >
-      url="https://pgbouncer.github.io/downloads/files/{{ pgbouncer_version }}/pgbouncer-{{ pgbouncer_version }}.tar.gz"
-      dest="/tmp/pgbouncer-{{ pgbouncer_version }}.tar.gz"
-
-  - name: descompacta o tarball
-    unarchive: >
-      copy=no
-      dest="/tmp"
-      owner=pgbouncer
-      group=pgbouncer
-      src="/tmp/pgbouncer-{{ pgbouncer_version }}.tar.gz"
-
-  - name: compila
-    become: true
-    become_user: pgbouncer
-    shell: >
-      chdir="/tmp/pgbouncer-{{ pgbouncer_version }}"
-      ./configure && make
-
-  - name: instala
-    shell: >
-      chdir="/tmp/pgbouncer-{{ pgbouncer_version }}"
-      install -o root -g root -m 0755 pgbouncer /usr/local/bin/pgbouncer
-
-  - name: remove arquivos temporários
-    file: >
-      state=absent
-      path="/tmp/pgbouncer-{{ pgbouncer_version }}"
-  when: pgbouncer_register_version.stdout != pgbouncer_version
-
-- name: cria diretório de configuração
-  file: >
-    state=directory
-    path=/usr/local/etc/pgbouncer
-    owner=root
-    group=pgbouncer
-    mode=0750
-
-- name: copia unit do supervisor
-  copy: >
-    src="pgbouncer.supervisor"
-    dest="/etc/supervisor/conf.d/pgbouncer.conf"
-  notify: reinicia pgbouncer
-
-- name: copia arquivo de configuração
-  template: >
-    src="{{ pgbouncer_conf }}"
-    dest="/usr/local/etc/pgbouncer/pgbouncer.ini"
-    owner=root
-    group=pgbouncer
-    mode=0640
-  notify: reconfigura pgbouncer
-
-- name: copia arquivo de autenticação
-  template: >
-    src="{{ pgbouncer_userlist_conf }}"
-    dest="/usr/local/etc/pgbouncer/userlist.txt"
-    owner=root
-    group=pgbouncer
-    mode=0640
-  notify: reconfigura pgbouncer
+- include: config.yml
+  tags: ["pgbouncer", "pgbouncer:conf"]

@@ -1,0 +1,32 @@
+---
+- name: cria diretório de configuração
+  file:
+    state: directory
+    path: /usr/local/etc/pgbouncer
+    owner: root
+    group: pgbouncer
+    mode: 0750
+
+- name: copia unit do supervisor
+  copy:
+    src: pgbouncer.supervisor
+    dest: /etc/supervisor/conf.d/pgbouncer.conf
+  notify: reinicia pgbouncer
+
+- name: copia arquivo de configuração
+  template:
+    src: "{{ pgbouncer_conf }}"
+    dest: /usr/local/etc/pgbouncer/pgbouncer.ini
+    owner: root
+    group: pgbouncer
+    mode: 0640
+  notify: reconfigura pgbouncer
+
+- name: copia arquivo de autenticação
+  template:
+    src: "{{ pgbouncer_userlist_conf }}"
+    dest: "/usr/local/etc/pgbouncer/userlist.txt"
+    owner: root
+    group: pgbouncer
+    mode: 0640
+  notify: reconfigura pgbouncer
