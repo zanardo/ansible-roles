@@ -1,20 +1,13 @@
 ---
-- name: instala pacotes necessários
-  apt: >
-    name="{{ item }}"
-    state=present
-  with_items:
-    - xstow
-
 - name: download do tarball
-  get_url: >
-    dest="/tmp/firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2"
-    url="http://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/linux-{{ ansible_architecture }}/{{ firefox_lang }}/firefox-{{ firefox_version }}.tar.bz2"
+  get_url:
+    dest: "/tmp/firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2"
+    url: "http://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/linux-{{ ansible_architecture }}/{{ firefox_lang }}/firefox-{{ firefox_version }}.tar.bz2"
 
 - name: copia chave de assinatura do gpg
-  copy: >
-    dest=/tmp/mozilla_firefox.key
-    src=mozilla_firefox.key
+  copy:
+    dest: /tmp/mozilla_firefox.key
+    src: mozilla_firefox.key
 
 - name: importa chave pública do gpg no keyring
   shell: >
@@ -22,10 +15,10 @@
     gpg --no-default-keyring --homedir=. --import /tmp/mozilla_firefox.key
 
 - name: download dos arquivos com sha512sum
-  get_url: >
-    url="http://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/{{ item }}"
-    dest="/tmp/mozilla_{{ item }}"
-    force=yes
+  get_url:
+    url: "http://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/{{ item }}"
+    dest: "/tmp/mozilla_{{ item }}"
+    force: yes
   with_items: ["SHA512SUMS", "SHA512SUMS.asc"]
 
 - name: verifica assinatura do arquivo SHA512SUMS via gpg
@@ -39,34 +32,25 @@
     shadw=$(sha512sum "firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2" | cut -d" " -f1) ; \
     grep "$shadw" /tmp/mozilla_SHA512SUMS
 
-- name: remove arquivos caso mesma versão esteja instalada
-  file: >
-    state=absent
-    path="/usr/local/stow/firefox-{{ firefox_version }}"
+- name: remove instalação anterior
+  file:
+    state: absent
+    path: "/opt/firefox"
 
 - name: cria diretórios necessários
-  file: >
-    state=directory
-    path="{{ item }}"
-    mode=0755
-    recurse=yes
-  with_items:
-    - "/usr/local/stow/firefox-{{ firefox_version }}/firefox"
+  file:
+    state: directory
+    path: "/opt/firefox"
+    mode: 0755
 
 - name: extrai tarball
   shell: >
     warn=no
-    tar -C "/usr/local/stow/firefox-{{ firefox_version }}/firefox" --strip-components=1 -xjf \
+    tar -C /opt/firefox --strip-components=1 -xjf \
       "/tmp/firefox-{{ firefox_version }}-{{ firefox_lang }}.tar.bz2"
 
-- name: executa xstow
-  shell: >
-    chdir=/usr/local/stow
-    xstow -D firefox-* &&
-    xstow "firefox-{{ firefox_version }}"
-
 - name: cria symlink para /usr/local/bin/firefox
-  file: >
-    path="/usr/local/bin/firefox"
-    src="/usr/local/firefox/firefox"
-    state=link
+  file:
+    path: "/usr/local/bin/firefox"
+    src: "/opt/firefox/firefox"
+    state: link

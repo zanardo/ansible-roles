@@ -1,7 +1,7 @@
 Ansible Role para instalar o Mozilla Firefox.
 
 O Firefox é obtido diretamente pela distribuição da Mozilla, já compilado. Ele
-é instalado em `/usr/local/firefox`, e um link simbólico para o executável é criado
+é instalado em `/opt/firefox`, e um link simbólico para o executável é criado
 em `/usr/local/bin/firefox`.
 
 # Como usar
