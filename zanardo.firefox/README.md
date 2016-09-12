@@ -20,3 +20,7 @@ roles:
 - `firefox_version`: Define a versão a ser instalada. Ex: `48.0.1`.
 
 - `firefox_lang`: Define o idioma a ser instalado. Default: `en-US`.
+
+# Tags
+
+- `firefox`: Executa o role completo.
