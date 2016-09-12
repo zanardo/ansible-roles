@@ -48,6 +48,11 @@
       -xJf "/tmp/git-{{ git_version }}.tar.xz" &&
     chown -R nobody:nogroup "git-{{ git_version }}/"
 
+- name: remove diretório de destino
+  file:
+    state: absent
+    path: "/opt/git"
+
 - name: cria diretórios de destino
   file:
     state: directory
