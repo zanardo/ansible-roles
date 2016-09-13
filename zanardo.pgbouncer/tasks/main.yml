@@ -18,4 +18,6 @@
 - name: carrega pgbouncer
   supervisorctl:
     name: pgbouncer
-    state: started
+    state: "{{ item }}"
+  with_items: ["present", "started"]
+  tags: ["pgbouncer", "pgbouncer:conf"]
