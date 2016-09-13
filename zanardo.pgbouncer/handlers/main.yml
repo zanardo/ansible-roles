@@ -4,5 +4,5 @@
 
 - name: reconfigura pgbouncer
   become: yes
-  become_user: pgbouncer
+  become_user: opt-pgbouncer
   shell: killall -HUP pgbouncer || true
