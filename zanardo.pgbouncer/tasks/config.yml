@@ -2,7 +2,6 @@
 - name: cria diretórios de configuração
   file:
     state: directory
-    recurse: yes
     path: /etc/opt/pgbouncer
     owner: root
     group: opt-pgbouncer
