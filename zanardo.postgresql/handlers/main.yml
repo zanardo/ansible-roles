@@ -7,5 +7,5 @@
 - name: aguarda postgresql iniciar
   wait_for:
     timeout: 5
-    path: "/run/postgresql/9.4-main.pid"
+    path: "/run/postgresql/{{ postgresql_version }}-main.pid"
     state: present

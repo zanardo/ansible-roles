@@ -23,16 +23,16 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - "postgresql-9.4"
-    - "postgresql-contrib-9.4"
+    - "postgresql-{{ postgresql_version }}"
+    - "postgresql-contrib-{{ postgresql_version }}"
   tags: ["postgresql"]
 
 - name: copia arquivos de configuração
-  template: >
+  template:
     src: "{{ postgresql_conf }}/{{ item }}"
-    dest: "/etc/postgresql/9.4/main/{{ item }}"
+    dest: "/etc/postgresql/{{ postgresql_version }}/main/{{ item }}"
   notify: 
     - reinicia postgresql
-    - aguarda postgresql
+    - aguarda postgresql iniciar
   with_items: "{{ postgresql_conf_files }}"
   tags: ["postgresql", "postgresql:conf"]
