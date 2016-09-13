@@ -1,4 +1,9 @@
 ---
+- name: instala locales
+  apt:
+    name: locales
+    state: present
+
 - name: ativa locales necessários
   lineinfile:
     dest: /etc/locale.gen
