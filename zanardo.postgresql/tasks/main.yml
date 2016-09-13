@@ -1,49 +1,38 @@
 ---
 - name: ativa locales necessários
-  lineinfile: >
-    dest=/etc/locale.gen
-    line="{{ item }}"
-    regexp="^(?# *){{ item }}"
-    state=present
+  lineinfile:
+    dest: /etc/locale.gen
+    line: "{{ item }}"
+    regexp: "^(?# *){{ item }}"
+    state: present
   with_items:
     - "pt_BR ISO-8859-1"
     - "pt_BR.UTF-8 UTF-8"
     - "en_US ISO-8859-1"
     - "en_US.UTF-8 UTF-8"
   register: locale_gen
+  tags: ["postgresql"]
 
 - name: recompila locale
   command: locale-gen
   when: locale_gen|changed()
-
-- name: instala pacotes necessários
-  apt: name="{{ item }}" state=present
-  with_items:
-    - ca-certificates
-
-- name: adiciona chave do repositório
-  apt_key: >
-    state=present
-    url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
-
-- name: adiciona repositório
-  apt_repository: >
-    state=present
-    repo="deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main"
+  tags: ["postgresql"]
 
 - name: instala postgresql
-  apt: >
-    name="{{ item }}"
-    state=present
+  apt:
+    name: "{{ item }}"
+    state: present
   with_items:
-    - "postgresql-{{ postgresql_version }}"
-    - "postgresql-contrib-{{ postgresql_version }}"
+    - "postgresql-9.4"
+    - "postgresql-contrib-9.4"
+  tags: ["postgresql"]
 
 - name: copia arquivos de configuração
   template: >
-    src="{{ postgresql_conf }}/{{ item }}"
-    dest="/etc/postgresql/{{ postgresql_version }}/main/{{ item }}"
+    src: "{{ postgresql_conf }}/{{ item }}"
+    dest: "/etc/postgresql/9.4/main/{{ item }}"
   notify: 
     - reinicia postgresql
     - aguarda postgresql
   with_items: "{{ postgresql_conf_files }}"
+  tags: ["postgresql", "postgresql:conf"]

@@ -1,10 +1,11 @@
 ---
 - name: reinicia postgresql
-  service: name=postgresql state=restarted
+  service:
+    name: postgresql
+    state: restarted
 
-- name: aguarda postgresql
-  wait_for: >
-    timeout=5
-    path="/run/postgresql/{{ postgresql_version }}-main.pid"
-    state=present
-
+- name: aguarda postgresql iniciar
+  wait_for:
+    timeout: 5
+    path: "/run/postgresql/9.4-main.pid"
+    state: present
