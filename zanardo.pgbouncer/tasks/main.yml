@@ -14,3 +14,8 @@
 
 - include: config.yml
   tags: ["pgbouncer", "pgbouncer:conf"]
+
+- name: carrega pgbouncer
+  supervisorctl:
+    name: pgbouncer
+    state: started
