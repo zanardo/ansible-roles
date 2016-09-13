@@ -12,7 +12,6 @@
     - libssl-dev
     - libssl1.0.0
     - ca-certificates
-    - supervisor
 
 - name: cria usuário opt-pgbouncer
   user:
@@ -35,13 +34,13 @@
   unarchive:
     copy: no
     dest: /tmp
-    owner: pgbouncer
-    group: pgbouncer
+    owner: opt-pgbouncer
+    group: opt-pgbouncer
     src: "/tmp/pgbouncer-{{ pgbouncer_version }}.tar.gz"
 
 - name: compila
   become: true
-  become_user: pgbouncer
+  become_user: opt-pgbouncer
   shell: >
     chdir="/tmp/pgbouncer-{{ pgbouncer_version }}"
     ./configure && make
