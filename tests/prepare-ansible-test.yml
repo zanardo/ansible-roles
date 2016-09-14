@@ -1,0 +1,19 @@
+---
+- name: volta snapshot vm ansible-test
+  connection: local
+  command: virsh snapshot-revert --current ansible-test
+
+- name: inicia vm ansible-test
+  connection: local
+  virt:
+    name: ansible-test
+    state: running
+
+- name: aguarda vm ansible-test iniciar
+  connection: local
+  wait_for:
+    delay: 5
+    connect_timeout: 2
+    host: 10.27.38.100
+    port: 22
+    state: started
