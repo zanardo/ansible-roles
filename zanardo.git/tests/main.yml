@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - include: ../../tests/prepare-ansible-test.yml
+  
+- hosts: ansible-test
+
+  roles:
+    
+    - role: zanardo.git
+      git_version: "2.9.3"
