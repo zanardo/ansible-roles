@@ -1,6 +1,8 @@
 ---
 - name: reinicia pgbouncer
-  shell: supervisorctl update && supervisorctl restart pgbouncer
+  supervisorctl:
+    name: pgbouncer
+    state: restarted
 
 - name: reconfigura pgbouncer
   become: yes
