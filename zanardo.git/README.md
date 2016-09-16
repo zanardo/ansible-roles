@@ -18,7 +18,7 @@ linhas no seu `~/.bashrc`:
 ```bash
 export PATH="/opt/git/bin:$PATH"
 test -f /opt/git/etc/bash_completion.d/git &&
-   source opt/git/etc/bash_completion.d/git
+   source /opt/git/etc/bash_completion.d/git
 ```
 
 # Variáveis
