@@ -1,0 +1,4 @@
+---
+- name: recarrega repositórios apt
+  apt:
+    update_cache: yes

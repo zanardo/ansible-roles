@@ -1,0 +1,39 @@
+---
+- block:
+
+  - name: configura arquitetura i386 para apt
+    lineinfile:
+      state: present
+      dest: /var/lib/dpkg/arch
+      line: i386
+      regexp: "^i386$"
+    notify: recarrega repositórios apt
+
+  - name: instala pacotes necessários
+    apt:
+      state: present
+      name: "wine:i386"
+
+  - name: download do winbox para cache local
+    connection: local
+    get_url:
+      url: "http://download2.mikrotik.com/routeros/winbox/{{ winbox_version }}/winbox.exe"
+      dest: "~/.cache/ansible/winbox-{{ winbox_version }}.exe"
+
+  - name: cria diretório de destino
+    file:
+      state: directory
+      path: "/opt/winbox"
+
+  - name: cópia do winbox para destino
+    copy:
+      src: "~/.cache/ansible/winbox-{{ winbox_version }}.exe"
+      dest: "/opt/winbox/winbox-{{ winbox_version }}.exe"
+
+  - name: cria link
+    file:
+      state: link
+      src: "/opt/winbox/winbox-{{ winbox_version }}.exe"
+      dest: "/opt/winbox/winbox.exe"
+
+  tags: ["winbox"]
