@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - include: ../../tests/prepare-ansible-test.yml
+  
+- hosts: ansible-test
+
+  roles:
+    
+    - role: zanardo.winbox
+      winbox_version: "3.5"
