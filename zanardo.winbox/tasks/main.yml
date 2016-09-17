@@ -7,6 +7,7 @@
       dest: /var/lib/dpkg/arch
       line: i386
       regexp: "^i386$"
+      create: yes
     notify: recarrega repositórios apt
 
   - name: instala pacotes necessários
