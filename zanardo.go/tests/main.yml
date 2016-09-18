@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - include: ../../tests/prepare-ansible-test.yml
+  
+- hosts: ansible-test
+
+  roles:
+    
+    - role: zanardo.go
+      go_version: "1.7.1"
