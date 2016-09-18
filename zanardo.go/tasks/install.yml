@@ -1,18 +1,26 @@
 ---
-- name: instala pacotes
-  apt: name="{{ item }}" state=present
+- name: instala pacotes necessários
+  apt:
+    name: "{{ item }}"
+    state: present
   with_items:
     - ca-certificates
 
-- name: download do tarball
-  get_url: >
-    url="https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
-    dest="/tmp/go-{{ go_version }}.tar.gz"
+- name: download do tarball para cache local
+  connection: local
+  get_url:
+    url: "https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: "~/.cache/ansible/go-{{ go_version }}.tar.gz"
+
+- name: upload do tarball
+  copy:
+    src: "~/.cache/ansible/go-{{ go_version }}.tar.gz"
+    dest: "/tmp/go-{{ go_version }}.tar.gz"
 
 - name: remove instalação anterior
-  file: >
-    state=absent
-    path="/usr/local/go"
+  file:
+    state: absent
+    path: /usr/local/go
 
 - name: extrai o tarball
   shell: >
@@ -23,9 +31,9 @@
       -xzf "/tmp/go-{{ go_version }}.tar.gz"
 
 - name: corrige permissões para root
-  file: >
-    state=directory
-    owner=root
-    group=root
-    path="/usr/local/go"
-    recurse=yes
+  file:
+    state: directory
+    owner: root
+    group: root
+    path: /usr/local/go
+    recurse: yes
