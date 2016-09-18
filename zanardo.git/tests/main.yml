@@ -9,3 +9,7 @@
     
     - role: zanardo.git
       git_version: "2.9.3"
+
+- hosts: localhost
+  tasks:
+    - include: ../../tests/destroy-ansible-test.yml

@@ -9,3 +9,7 @@
     
     - role: zanardo.winbox
       winbox_version: "3.5"
+
+- hosts: localhost
+  tasks:
+    - include: ../../tests/destroy-ansible-test.yml

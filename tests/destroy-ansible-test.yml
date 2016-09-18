@@ -1,0 +1,6 @@
+---
+- name: destrói vm ansible-test
+  connection: local
+  virt:
+    name: ansible-test
+    state: destroyed
