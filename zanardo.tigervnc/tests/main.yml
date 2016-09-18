@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - include: ../../tests/prepare-ansible-test.yml
+  
+- hosts: ansible-test
+
+  roles:
+    
+    - role: zanardo.tigervnc
+      tigervnc_version: "1.6.0"
