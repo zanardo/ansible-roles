@@ -1,4 +1,11 @@
 ---
+- name: instala pacotes necessários
+  apt:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - bzip2
+
 - name: download do tarball
   connection: local
   get_url:
