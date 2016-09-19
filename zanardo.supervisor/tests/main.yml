@@ -9,6 +9,18 @@
     
     - role: zanardo.supervisor
 
+  tasks:
+
+    - name: verifica se supervisor está rodando
+      stat:
+        path: /var/run/supervisor.sock
+      register: supervisor_stat
+
+    - name: testa se socket existe
+      assert:
+        that:
+          - "supervisor_stat.stat.issock is defined"
+
 - hosts: localhost
   tasks:
     - include: ../../tests/destroy-ansible-test.yml
