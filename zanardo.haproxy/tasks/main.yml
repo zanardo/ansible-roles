@@ -1,9 +1,14 @@
 ---
 - name: instala pacotes necessários
-  apt: name=haproxy state=present
+  apt:
+    name: haproxy
+    state: present
+  tags: ["haproxy"]
 
-- name: copia configuração haproxy
-  template: >
-    src="{{ haproxy_conf_file }}"
-    dest=/etc/haproxy/haproxy.cfg
+- name: copia arquivo de configuração
+  template:
+    src: "{{ haproxy_conf }}"
+    dest: /etc/haproxy/haproxy.cfg
+  when: haproxy_conf is defined
   notify: recarrega haproxy
+  tags: ["haproxy", "haproxy:conf"]
