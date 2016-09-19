@@ -10,6 +10,19 @@
     - role: zanardo.git
       git_version: "2.9.3"
 
+  tasks:
+
+    - name: executa git version
+      command: /opt/git/bin/git --version
+      args:
+        warn: no
+      register: git_version
+
+    - name: verifica saída do comando
+      assert:
+        that:
+          - "'git version' in git_version.stdout"
+
 - hosts: localhost
   tasks:
     - include: ../../tests/destroy-ansible-test.yml
