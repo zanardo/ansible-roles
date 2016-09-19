@@ -1,8 +1,0 @@
-Ansible Role para instalar e configurar o servidor `haproxy' no Debian.
-
-Para usar este Role, adicione dentro do grupo `roles' do Playbook:
-
-  roles:
-
-    - role: haproxy
-      haproxy_conf_file: files/haproxy.cfg
