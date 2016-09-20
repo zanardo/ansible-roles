@@ -17,7 +17,7 @@ git clone https://github.com/zanardo/ansible-roles ~/ansible-roles-zanardo
 - Configurar o caminho dos roles no arquivo `ansible.cfg` dos playbooks:
 
 ```ini
-roles_path = ./roles:~/ansible-roles-zanardo
+roles_path = ~/ansible-roles-zanardo
 ```
 
 - Criar o diretório para o cache local dos downloads:
