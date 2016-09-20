@@ -1,0 +1,66 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - libvirt-bin
+      - qemu-kvm
+
+  - name: configura política do libvirt-guests ao iniciar (on_boot)
+    lineinfile:
+      dest: /etc/default/libvirt-guests
+      line: "ON_BOOT={{ libvirt_guests_on_boot }}"
+      regexp: "^#?ON_BOOT="
+      state: present
+    when: libvirt_guests_on_boot is defined and libvirt_guests_on_boot in ("ignore", "start")
+
+  - name: configura delay entre carregamento de cada guest
+    lineinfile:
+      dest: /etc/default/libvirt-guests
+      line: "START_DELAY={{ libvirt_guests_start_delay }}"
+      regexp: "^#?START_DELAY="
+      state: present
+    when: libvirt_guests_start_delay is defined
+
+  - name: configura política do libvirt-guests para encerrar vms
+    lineinfile:
+      dest: /etc/default/libvirt-guests
+      line: "ON_SHUTDOWN={{ libvirt_guests_on_shutdown }}"
+      regexp: "^#?ON_SHUTDOWN="
+      state: present
+    when: libvirt_guests_on_shutdown is defined and libvirt_guests_on_shutdown in ("shutdown", "suspend")
+
+  - name: configura quantidade de vms suspensas em paralelo
+    lineinfile:
+      dest: /etc/default/libvirt-guests
+      line: "PARALLEL_SHUTDOWN={{ libvirt_guests_paralled_shutdown }}"
+      regexp: "^#?PARALLEL_SHUTDOWN="
+      state: present
+    when: libvirt_guests_paralled_shutdown is defined
+
+  - name: configura timeout para derrubar vms
+    lineinfile:
+      dest: /etc/default/libvirt-guests
+      line: "SHUTDOWN_TIMEOUT={{ libvirt_guests_shutdown_timeout }}"
+      regexp: "^#?SHUTDOWN_TIMEOUT="
+      state: present
+    when: libvirt_guests_shutdown_timeout is defined
+
+  - name: remove configuração do ksm
+    file:
+      state: absent
+      path: /etc/tmpfiles.d/ksm.conf
+    when: libvirt_ksm_enable == False
+
+  - name: configura ksm
+    copy:
+      content: |
+        w /sys/kernel/mm/ksm/run - - - - 1
+        w /sys/kernel/mm/ksm/sleep_millisecs - - - - {{ libvirt_ksm_sleep_millisecs }}
+      dest: /etc/tmpfiles.d/ksm.conf
+    when: libvirt_ksm_enable
+
+  tags: ["libvirt"]

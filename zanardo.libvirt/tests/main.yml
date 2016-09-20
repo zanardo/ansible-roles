@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  tasks:
+    - include: ../../tests/prepare-ansible-test.yml
+  
+- hosts: ansible-test
+
+  roles:
+    
+    - role: zanardo.libvirt
+
+- hosts: localhost
+  tasks:
+    - include: ../../tests/destroy-ansible-test.yml

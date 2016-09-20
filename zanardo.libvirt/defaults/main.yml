@@ -1,0 +1,8 @@
+---
+libvirt_guests_on_boot: "ignore"
+libvirt_guests_start_delay: 0
+libvirt_guests_on_shutdown: "shutdown"
+libvirt_guests_paralled_shutdown: 0
+libvirt_guests_shutdown_timeout: 30
+libvirt_ksm_enable: True
+libvirt_ksm_sleep_millisecs: 100
