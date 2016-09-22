@@ -1,33 +1,44 @@
 ---
 - name: instala pacotes necessários
-  apt: >
-    name="{{ item }}"
-    state=present
+  apt:
+    name: "{{ item }}"
+    state: present
   with_items:
     - ca-certificates
 
-- name: faz download do tarball com os binários
-  get_url: >
-    url="https://github.com/zanardo/rrd-collectors/releases/download/v{{ rrd_collectors_version }}/rrd-collectors-{{ rrd_collectors_version }}_linux_{{ ansible_userspace_architecture }}.tar.xz"
-    dest="/tmp/rrd-collectors-{{ rrd_collectors_version }}.txz"
+- name: faz download do tarball para cache loca
+  connection: local
+  get_url:
+    url: "https://github.com/zanardo/rrd-collectors/archive/v{{ rrd_collectors_version }}.tar.gz"
+    dest: "~/.cache/ansible/rrd-collectors-{{ rrd_collectors_version }}.tar.gz"
+
+- name: faz upload do tarball
+  copy:
+    src: "~/.cache/ansible/rrd-collectors-{{ rrd_collectors_version }}.tar.gz"
+    dest: "/tmp/rrd-collectors-{{ rrd_collectors_version }}.tar.gz"
 
 - name: cria diretório de instalação
-  file: >
-    state=directory
-    owner=root
-    group=root
-    path="/opt/rrd-collectors-{{ rrd_collectors_version }}"
+  file:
+    state: directory
+    owner: root
+    group: root
+    path: "/opt/rrd-collectors-{{ rrd_collectors_version }}"
 
 - name: descompacta tarball
   shell: >
     warn=no
     chdir="/opt/rrd-collectors-{{ rrd_collectors_version }}"
-    tar xJf "/tmp/rrd-collectors-{{ rrd_collectors_version }}.txz"
+    tar --strip-components=1 -C . -xzf "/tmp/rrd-collectors-{{ rrd_collectors_version }}.tar.gz"
 
 - name: corrige permissões para root
-  file: >
-    state=directory
-    owner=root
-    group=root
-    recurse=yes
-    path="/opt/rrd-collectors-{{ rrd_collectors_version }}"
+  file:
+    state: directory
+    owner: root
+    group: root
+    recurse: yes
+    path: "/opt/rrd-collectors-{{ rrd_collectors_version }}"
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: "/tmp/rrd-collectors-{{ rrd_collectors_version }}.tar.gz"
