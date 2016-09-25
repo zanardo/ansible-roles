@@ -5,7 +5,7 @@ O Python é instalado em `/opt/pythonX.Y` (onde `X.Y` é `2.7`, `3.4`, etc).
 
 # Como usar
 
-Para usar este Role, adicione dentro do grupo `roles' do Playbook e
+Para usar este Role, adicione dentro do grupo `roles` do Playbook e
 configure as versões do Python a serem instaladas::
 
 ```yaml
