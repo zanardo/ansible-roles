@@ -8,10 +8,12 @@ Para usar este Role, adicione dentro do grupo `roles' do Playbook:
 ```yaml
 roles:
 
-- { role: zanardo.rrd }
+- { role: zanardo.rrd, rrd_version: "x.y.z" }
 ```
 
 # Variáveis
+
+- `rrd_version`: versão do `rrd` a ser instalada.
 
 - `rrd_port`: porta UDP que o servidor `rrd' escutará para receber as coletas.
 
@@ -19,7 +21,7 @@ roles:
 
 # Ações
 
-- São instalados pacotes necessários para executar o rrd.
+- São instalados pacotes necessários para executar o `rrd`.
 
 - É criado o diretório `/opt/rrd` contendo os scripts para execução.
 
