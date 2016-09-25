@@ -1,10 +1,11 @@
 ---
-- set_fact: >
-    python_version="{{ outer_item }}"
-    python_maj_min="{{ '.'.join(outer_item.split('.')[0:2]) }}"
+- set_fact:
+    python_version: "{{ outer_item }}"
+    python_maj_min: "{{ '.'.join(outer_item.split('.')[0:2]) }}"
 
 - name: checa versão instalada
-  shell: "/opt/python{{ python_maj_min }}/bin/python{{ python_maj_min }} -V 2>&1 | cut -d' ' -f2"
+  shell: >
+    "/opt/python{{ python_maj_min }}/bin/python{{ python_maj_min }} -V 2>&1 | cut -d' ' -f2"
   register: python_register_version
   changed_when: False
   failed_when: False
