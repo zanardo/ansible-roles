@@ -27,4 +27,4 @@ roles:
 
 - É criado o diretório `/var/lib/rrd` para conter os dados.
 
-- O Supervisor é configurado para inicializar os processos `rrd' e `rrdweb'.
+- O Supervisor é configurado para inicializar os processos `rrd` e `rrdweb`.
