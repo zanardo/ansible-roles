@@ -3,6 +3,9 @@
     python_version: "{{ outer_item }}"
     python_maj_min: "{{ '.'.join(outer_item.split('.')[0:2]) }}"
 
+- assert:
+    that: '".." not in python_maj_min'
+
 - name: checa versão instalada
   shell: >
     "/opt/python{{ python_maj_min }}/bin/python{{ python_maj_min }} -V 2>&1 | cut -d' ' -f2"
