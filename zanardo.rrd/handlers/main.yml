@@ -1,6 +1,8 @@
 ---
 - name: reinicia rrd
-  shell: >
-    warn=no
-    supervisorctl update &&
-    supervisorctl restart rrd rrdweb
+  supervisorctl:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - rrd
+    - rrdweb
