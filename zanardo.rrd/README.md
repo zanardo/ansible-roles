@@ -3,7 +3,7 @@ Ansible Role para instalar e configurar o servidor
 
 # Como usar
 
-Para usar este Role, adicione dentro do grupo `roles' do Playbook:
+Para usar este Role, adicione dentro do grupo `roles` do Playbook:
 
 ```yaml
 roles:
@@ -15,7 +15,7 @@ roles:
 
 - `rrd_version`: versão do `rrd` a ser instalada.
 
-- `rrd_port`: porta UDP que o servidor `rrd' escutará para receber as coletas.
+- `rrd_port`: porta UDP que o servidor `rrd` escutará para receber as coletas.
 
 - `rrdweb_port`: porta TCP que o servidor `rrdweb` escutará para o acesso web.
 
