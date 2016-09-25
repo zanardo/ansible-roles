@@ -8,7 +8,7 @@
 
 - name: checa versão instalada
   shell: >
-    "/opt/python{{ python_maj_min }}/bin/python{{ python_maj_min }} -V 2>&1 | cut -d' ' -f2"
+    "/opt/python{{ python_maj_min }}/bin/python{{ python_maj_min }}" -V 2>&1 | cut -d' ' -f2
   register: python_register_version
   changed_when: False
   failed_when: False
