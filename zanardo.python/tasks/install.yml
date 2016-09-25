@@ -15,10 +15,16 @@
     - liblzma-dev
     - ca-certificates
 
-- name: download do tarball
-  get_url: >
-    url="https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz"
-    dest="/tmp/Python-{{ python_version }}.tar.xz"
+- name: download do tarball para cache local
+  connection: local
+  get_url:
+    url: "https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz"
+    dest: "~/.cache/ansible/Python-{{ python_version }}.tar.xz"
+
+- name: faz upload do tarball
+  copy:
+    src: "~/.cache/ansible/Python-{{ python_version }}.tar.xz"
+    dest: "/tmp/Python-{{ python_version }}.tar.xz"
 
 - name: extrai o tarball
   shell: >
@@ -29,20 +35,20 @@
       -xJf "/tmp/Python-{{ python_version }}.tar.xz" &&
     chown -R nobody:nogroup "Python-{{ python_version }}/"
 
-- name: cria diretório /opt/python..
-  file: >
-    state=directory
-    path="/opt/python{{ python_maj_min }}"
-    owner=nobody
-    group=nogroup
+- name: cria diretório /opt/pythonXY
+  file:
+    state: directory
+    path: "/opt/python{{ python_maj_min }}"
+    owner: nobody
+    group: nogroup
 
 - name: corrige permissões
-  file: >
-    state=directory
-    owner=nobody
-    group=nogroup
-    path="/opt/python{{ python_maj_min }}"
-    recurse=yes
+  file:
+    state: directory
+    owner: nobody
+    group: nogroup
+    path: "/opt/python{{ python_maj_min }}"
+    recurse: yes
 
 - name: compila e instala
   become: yes
@@ -54,16 +60,16 @@
     make install
 
 - name: corrige permissões para root
-  file: >
-    state=directory
-    owner=root
-    group=root
-    path="/opt/python{{ python_maj_min }}"
-    recurse=yes
+  file:
+    state: directory
+    owner: root
+    group: root
+    path: "/opt/python{{ python_maj_min }}"
+    recurse: yes
 
 - name: remove arquivos temporários
   become: yes
   become_user: nobody
-  file: >
-    state=absent
-    path="/tmp/Python-{{ python_version }}"
+  file:
+    state: absent
+    path: "/tmp/Python-{{ python_version }}"
