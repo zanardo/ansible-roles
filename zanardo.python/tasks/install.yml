@@ -35,6 +35,11 @@
       -xJf "/tmp/Python-{{ python_version }}.tar.xz" &&
     chown -R nobody:nogroup "Python-{{ python_version }}/"
 
+- name: remove instalação anterior
+  file:
+    state: absent
+    path: "/opt/python{{ python_maj_min }}"
+
 - name: cria diretório /opt/pythonXY
   file:
     state: directory
