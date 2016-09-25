@@ -1,9 +1,0 @@
----
-- name: verifica versão instalada do docker
-  shell: /usr/local/bin/docker --version | cut -d" " -f3 | cut -d, -f1
-  register: docker_register_version
-  changed_when: False
-  failed_when: False
-
-- include: install.yml
-  when: docker_register_version.stdout != docker_version or docker_force_install is defined
