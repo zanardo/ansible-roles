@@ -15,6 +15,7 @@
       group: root
     notify: reinicia chrony
     when: chrony_conf is not defined
+    tags: ["chrony:conf"]
 
   - name: copia arquivo de configuração customizado
     template:
