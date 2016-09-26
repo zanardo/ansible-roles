@@ -25,5 +25,6 @@
       group: root
     notify: reinicia chrony
     when: chrony_conf is defined
+    tags: ["chrony:conf"]
 
   tags: chrony
