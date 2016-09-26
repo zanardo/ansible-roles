@@ -9,6 +9,13 @@
     
     - role: zanardo.chrony
 
+- hosts: ansible-test
+
+  roles:
+    
+    - role: zanardo.chrony
+      chrony_conf: chrony.conf
+
 - hosts: localhost
   tasks:
     - include: ../../tests/destroy-ansible-test.yml

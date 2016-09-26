@@ -6,7 +6,7 @@
       state: present
       name: chrony
 
-  - name: copia arquivo de configuração customizado
+  - name: copia arquivo de configuração default do role
     copy:
       src: chrony.conf
       dest: /etc/chrony/chrony.conf
@@ -14,11 +14,16 @@
       owner: root
       group: root
     notify: reinicia chrony
+    when: chrony_conf is not defined
 
-  - name: ativa chrony
-    service:
-      name: chrony
-      state: started
-      enabled: yes
+  - name: copia arquivo de configuração customizado
+    template:
+      src: "{{ chrony_conf }}"
+      dest: /etc/chrony/chrony.conf
+      mode: 0755
+      owner: root
+      group: root
+    notify: reinicia chrony
+    when: chrony_conf is defined
 
   tags: chrony
