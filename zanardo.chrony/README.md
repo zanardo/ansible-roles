@@ -12,10 +12,18 @@ roles:
   - { role: zanardo.chrony }
 ```
 
+# Variáveis
+
+- `chrony_conf`: path local para o arquivo de configurações a ser usado.
+  Opcional.
+
 # Ações
 
-O pacote `chrony` é instalado no Debian, e o arquivo de configurações utilizado
-é o default, com exceção do uso dos servidores `ntp.br`.
+- O pacote `chrony` é instalado no Debian, e o arquivo de configurações
+  utilizado é o default, com exceção do uso dos servidores `ntp.br`.
+
+- Caso a variável `chrony_conf` seja usada, pode-se instalar um arquivo de
+  configurações customizado.
 
 # Tags
 
