@@ -1,0 +1,24 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      state: present
+      name: chrony
+
+  - name: copia arquivo de configuração customizado
+    copy:
+      src: chrony.conf
+      dest: /etc/chrony/chrony.conf
+      mode: 0755
+      owner: root
+      group: root
+    notify: reinicia chrony
+
+  - name: ativa chrony
+    service:
+      name: chrony
+      state: started
+      enabled: yes
+
+  tags: chrony
