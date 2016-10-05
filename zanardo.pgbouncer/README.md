@@ -66,6 +66,6 @@ unix_socket_dir = /tmp
 
 # Tags
 
-- `pgbounce`: Executa todo o role.
+- `pgbouncer`: Executa todo o role.
 
 - `pgbouncer:conf`: Atualiza a configuração.
