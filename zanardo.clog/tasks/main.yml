@@ -1,0 +1,33 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      state: present
+      name: "{{ item }}"
+    with_items:
+      - ca-certificates
+
+  - name: faz download do clog para cache local
+    connection: local
+    get_url:
+      url: "https://raw.githubusercontent.com/zanardo/clog/v{{ clog_version }}/scripts/clog"
+      dest: "~/.cache/ansible/clog-{{ clog_version }}"
+
+  - name: faz upload do script clog
+    copy:
+      src: "~/.cache/ansible/clog-{{ clog_version }}"
+      dest: "/usr/local/bin/clog"
+      owner: root
+      group: root
+      mode: 0755
+
+  - name: agenda clog send-queue para usuários
+    cron:
+      user: "{{ item }}"
+      name: agenda clog send-queue
+      minute: "*/{{ clog_send_queue_interval_minutes }}"
+      job: "/usr/local/bin/clog send-queue {{ clog_send_queue_server }} 1>/dev/null 2>/dev/null"
+    with_items: "{{ clog_users }}"
+
+  tags: clog

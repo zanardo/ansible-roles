@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  tasks:
+    - include: ../../tests/prepare-ansible-test.yml
+  
+- hosts: ansible-test
+
+  roles:
+    
+    - role: zanardo.clog
+      clog_version: "0.5beta1"
+      clog_users: nobody
+      clog_send_queue_server: "http://clog:7890"
+
+- hosts: localhost
+  tasks:
+    - include: ../../tests/destroy-ansible-test.yml
