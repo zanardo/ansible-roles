@@ -33,3 +33,6 @@ As seguintes configurações são feitas:
 - Configura o servidor de SSH para não validar o DNS reverso do cliente.
 
 - Configura o Grub para somente aguardar 1 segundo no menu do bootloader.
+
+- Instala o `apt-dater-host' para gerenciar as atualizações de segurança via
+  `apt-dater'.
