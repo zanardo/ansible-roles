@@ -1,0 +1,6 @@
+---
+- name: reinicia clogd
+  shell:
+    warn=no
+    supervisorctl update &&
+    supervisorctl restart clogd

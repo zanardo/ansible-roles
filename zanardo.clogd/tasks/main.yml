@@ -1,0 +1,124 @@
+---
+- block:
+
+  - name: cria usuário clogd
+    user:
+      name: clogd
+      state: present
+      shell: /bin/bash
+      createhome: no
+
+  - name: cria diretório para logs
+    file:
+      state: directory
+      path: /var/opt/log/clogd
+      owner: clogd
+      group: clogd
+      mode: 0700
+
+  - name: cria diretório para configurações
+    file:
+      state: directory
+      path: /etc/opt/clogd
+      owner: clogd
+      group: clogd
+      mode: 0700
+
+  - name: verifica versão instalada
+    stat:
+      path: "/opt/clogd/.version-{{ clogd_version }}"
+    register: clogd_version_register
+
+  - name: instala pacotes necessários
+    apt:
+      state: present
+      name: "{{ item }}"
+    with_items:
+      - ca-certificates
+      - supervisor
+      - python-virtualenv
+      - build-essential
+      - python-dev
+      - libpq-dev
+
+  - block:
+
+    - name: faz download do clogd para cache local
+      connection: local
+      get_url:
+        url: "https://github.com/zanardo/clog/archive/v{{ clogd_version }}.tar.gz"
+        dest: "~/.cache/ansible/clogd-{{ clogd_version }}.tar.gz"
+
+    - name: faz upload do tarball
+      copy:
+        src: "~/.cache/ansible/clogd-{{ clogd_version }}.tar.gz"
+        dest: "/tmp/clogd.tar.gz"
+
+    - name: remove instalação anterior
+      file:
+        state: absent
+        path: "/opt/clogd"
+
+    - name: cria diretório /opt/clogd
+      file:
+        state: directory
+        path: "/opt/clogd"
+
+    - name: descompacta tarball
+      shell:
+        warn=no
+        tar --strip-components=1 -C /opt/clogd -xf /tmp/clogd.tar.gz
+
+    - name: altera permissões
+      file:
+        recurse: yes
+        state: directory
+        owner: clogd
+        group: clogd
+        path: /opt/clogd
+
+    - name: cria virtualenv
+      become: yes
+      become_user: clogd
+      shell: >
+        warn=no
+        chdir=/opt/clogd
+        virtualenv -p python2.7 .venv &&
+        .venv/bin/pip install -r requirements.txt
+
+    - name: altera permissões
+      file:
+        recurse: yes
+        state: directory
+        owner: root
+        group: root
+        path: /opt/clogd
+
+    - name: registra versão instalada
+      file:
+        state: touch
+        path: "/opt/clogd/.version-{{ clogd_version }}"
+
+    - name: remove arquivos temporários
+      file:
+        state: absent
+        path: "/tmp/{{ item }}"
+      with_items:
+        - "clogd.tar.gz"
+  
+    when: clogd_version_register.stat.exists == False
+
+
+  - name: configura inicialização pelo supervisor
+    template:
+      src: clogd.supervisor.j2
+      dest: /etc/supervisor/conf.d/clogd.conf
+    notify: reinicia clogd
+
+  - name: configura clogd
+    template:
+      src: clogd.yml.j2
+      dest: /etc/opt/clogd/clogd.yml
+    notify: reinicia clogd
+
+  tags: clogd

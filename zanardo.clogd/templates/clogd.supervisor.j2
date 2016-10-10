@@ -1,0 +1,8 @@
+[program:clogd]
+command=/opt/clogd/.venv/bin/waitress-serve --host {{ clogd_bind_host }} --port {{ clogd_bind_port }} clogd:app
+directory=/opt/clogd
+user=clogd
+environment=CLOGD_CONF=/etc/opt/clogd/clogd.yml
+stdout_logfile=/var/opt/log/clogd/clogd.log
+stdout_logfile_backups=10
+redirect_stderr=true
