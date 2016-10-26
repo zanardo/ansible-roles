@@ -1,0 +1,32 @@
+---
+- name: cria usuário para os backups
+  user:
+    shell: /bin/bash
+    name: "{{ backup_borg_server_user }}"
+    home: "{{ backup_borg_server_home }}"
+    state: present
+
+- block:
+
+  - name: cria diretório para ssh
+    file:
+      state: directory
+      mode: 0700
+      path: ~/.ssh
+
+  - name: libera chaves do ssh em ~/.ssh/authorized_keys
+    template:
+      src: authorized_keys.j2
+      dest: ~/.ssh/authorized_keys
+      mode: 0600
+
+  - name: cria diretórios para backups
+    file:
+      state: directory
+      mode: 0700
+      path: "~/{{ item.name }}"
+    with_items: "{{ backup_borg_server_ssh_keys }}"
+
+
+  become: yes
+  become_user: "{{ backup_borg_server_user }}"

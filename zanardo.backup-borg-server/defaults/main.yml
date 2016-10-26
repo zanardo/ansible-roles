@@ -1,0 +1,4 @@
+---
+backup_borg_server_user: borg
+backup_borg_server_home: "/home/borg"
+backup_borg_server_ssh_keys: {}
