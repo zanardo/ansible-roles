@@ -2,8 +2,8 @@
 - name: cria usuário para os backups
   user:
     shell: /bin/bash
-    name: "{{ backup_borg_server_user }}"
-    home: "{{ backup_borg_server_home }}"
+    name: "{{ borg_server_user }}"
+    home: "{{ borg_server_home }}"
     state: present
 
 - block:
@@ -25,8 +25,8 @@
       state: directory
       mode: 0700
       path: "~/{{ item.name }}"
-    with_items: "{{ backup_borg_server_ssh_keys }}"
+    with_items: "{{ borg_server_ssh_keys }}"
 
 
   become: yes
-  become_user: "{{ backup_borg_server_user }}"
+  become_user: "{{ borg_server_user }}"
