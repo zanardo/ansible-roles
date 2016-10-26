@@ -47,6 +47,6 @@ As seguintes mudanças são feitas no sistema:
   dos backups acessíveis para cada chave de SSH.
 
 - As chaves públicas definidas na variável `borg_server_ssh_keys` são liberadas
-  em ~/.ssh/authorized_keys`, para o usuário `borg_server_user`. É configurada
+  em `~/.ssh/authorized_keys`, para o usuário `borg_server_user`. É configurada
   uma restrição para que somente possa ser executado o Borg, com acesso a
   repositórios na pasta liberada para cada chave.
