@@ -15,19 +15,24 @@ roles:
 
 # Variáveis
 
-- `shorewall_conf_local_path`: Diretório local, relativo ao playbook que
-  incluiu o role,  onde os arquivos do Shorewall devem ser encontrados.
-  Exemplo: `files/shorewall`.
+- `shorewall_conf`: diretório absoluto onde os arquivos que deverão ser
+  copiados estão salvos. Todos os arquivos desse diretório serão copiados para
+  `/etc/shorewall` no destino. Default: `{{ playbook_dir }}/files/{{
+  ansible_hostname }}/shorewall/*`.
 
-- `shorewall_conf_files`: Lista contendo o nome dos arquivos de configurações,
-  salvos em `shorewall_conf_local_path`, que serão copiados para
-  `/etc/shorewall` da instalação sendo provisionada. Ex: `[zones, interfaces,
-  rules]`. Os arquivos são copiados pelo módulo `template` do Ansible, portanto
-  podem ter lógicas do Jinja2.
+# Ações
+
+- Instala os pacotes do Shorewall.
+
+- Configura o Shorewall para ser carregado na inicialização.
+
+- Copia os arquivos de configuração, checa-os e reinicia o Shorewall, aplicando
+  as regras de firewall.
 
 # Tags
 
-- `shorewall`: Executa o role completo.
+- `shorewall`: executa o role completo.
 
-- `shorewall:conf`: Copia arquivos de configuração e reinicia Shorewall caso
+- `shorewall:conf`: copia arquivos de configuração e reinicia Shorewall caso
   exista alguma mudança.
+

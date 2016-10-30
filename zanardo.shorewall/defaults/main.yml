@@ -1,0 +1,2 @@
+---
+shorewall_conf: "{{ playbook_dir }}/files/{{ inventory_hostname }}/shorewall/*"

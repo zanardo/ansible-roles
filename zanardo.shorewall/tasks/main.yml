@@ -23,10 +23,11 @@
 
 - name: copia arquivos de configuração
   template:
-    src: "{{ shorewall_conf_local_path }}/{{ item }}"
-    dest: /etc/shorewall/
+    src: "{{ item }}"
+    dest: "/etc/shorewall/{{ item|basename() }}"
     owner: root
     mode: 0600
-  with_items: "{{ shorewall_conf_files }}"
+  with_fileglob:
+    - "{{ shorewall_conf }}"
   notify: reconfigura shorewall
   tags: ["shorewall", "shorewall:conf"]
