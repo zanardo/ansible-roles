@@ -1,13 +1,40 @@
 ---
 - block:
-  - name: configura proxy para apt
+
+  - block:
+
+    - name: verifica se proxy apt está ativo
+      wait_for:
+        host: "{{ apt_proxy_host }}"
+        port: "{{ apt_proxy_port }}"
+        timeout: 5
+      when: apt_proxy_host|d
+      register: apt_proxy_active
+
+    rescue:
+
+    - name: proxy inativo
+      debug:
+        msg: "apt_proxy_host:apt_proxy_port não alcançável"
+
+  - name: ativa proxy para apt
     copy:
       dest: /etc/apt/apt.conf.d/01proxy
-      content: "Acquire::http::Proxy \"{{ apt_proxy }}\";"
+      content: "Acquire::http::Proxy \"http://{{ apt_proxy_host }}:{{ apt_proxy_port }}/\";\n"
       owner: root
       group: root
       mode: 0644
-    when: apt_proxy is defined
+    when: apt_proxy_host|d and apt_proxy_active|succeeded
+    register: apt_proxy_set
+
+  - name: desativa proxy para apt
+    copy:
+      dest: /etc/apt/apt.conf.d/01proxy
+      content: ""
+      owner: root
+      group: root
+      mode: 0644
+    when: apt_proxy_set|skipped
 
   - name: desativa proxy para repositórios https para apt
     copy:
