@@ -47,11 +47,12 @@
 
   - name: configura apt sources.list
     copy:
-      src: sources.list
+      src: "sources.{{ ansible_distribution_release }}"
       dest: /etc/apt/sources.list
       owner: root
       group: root
       mode: 0644
+    when: ansible_distribution_release in ('jessie')
     notify: atualiza apt
 
   - name: desativa dns para ssh
