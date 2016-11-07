@@ -8,17 +8,35 @@
     - build-essential
     - libx11-6
     - libxext6
-    - libjpeg62-turbo
     - libpng12-0
     - cmake
     - zlib1g-dev
     - libx11-dev 
-    - libjpeg62-turbo-dev
     - gettext
     - libxext-dev
     - libpng12-dev
     - ca-certificates
     - procps
+
+- name: instala pacotes necessários - debian jessie
+  apt:
+    state: present
+    name: "{{ item }}"
+    install_recommends: no
+  with_items:
+    - libjpeg62-turbo-dev
+    - libjpeg62-turbo
+  when: ansible_distribution_release in ('jessie')
+
+- name: instala pacotes necessários - ubuntu xenial
+  apt:
+    state: present
+    name: "{{ item }}"
+    install_recommends: no
+  with_items:
+    - libjpeg-turbo8-dev
+    - libjpeg-turbo8
+  when: ansible_distribution_release in ('xenial')
 
 - name: download do fltk para cache local
   connection: local
