@@ -1,19 +1,25 @@
 ---
-- name: volta snapshot vm ansible-test
+- name: volta snapshot vms
   connection: local
-  command: virsh snapshot-revert --current ansible-test
+  command: virsh snapshot-revert --current {{ item }}
+  with_items:
+    - debian-jessie
 
-- name: inicia vm ansible-test
+- name: inicia vms
   connection: local
   virt:
-    name: ansible-test
+    name: "{{ item }}"
     state: running
+  with_items:
+    - debian-jessie
 
-- name: aguarda vm ansible-test iniciar
+- name: aguarda vms iniciarem
   connection: local
   wait_for:
     delay: 5
     connect_timeout: 2
-    host: 10.27.38.100
+    host: "{{ hostvars[item]['ansible_host'] }}"
     port: 22
     state: started
+  with_items:
+    - debian-jessie

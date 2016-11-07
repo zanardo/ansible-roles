@@ -1,6 +1,8 @@
 ---
-- name: destrói vm ansible-test
+- name: destrói vms
   connection: local
   virt:
-    name: ansible-test
+    name: "{{ item }}"
     state: destroyed
+  with_items:
+    - debian-jessie

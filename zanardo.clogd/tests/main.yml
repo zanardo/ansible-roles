@@ -3,7 +3,7 @@
   tasks:
     - include: ../../tests/prepare-ansible-test.yml
   
-- hosts: ansible-test
+- hosts: test-vms
 
   roles:
     
@@ -14,8 +14,8 @@
       clogd_pg_host: "127.0.0.1"
       clogd_pg_port: 5432
       clogd_pg_db: clog
-      clogd_db_user: clog
-      clogd_db_pass: a_secure_password
+      clogd_pg_user: clog
+      clogd_pg_pass: a_secure_password
 
 - hosts: localhost
   tasks:

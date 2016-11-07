@@ -3,13 +3,13 @@
   tasks:
     - include: ../../tests/prepare-ansible-test.yml
   
-- hosts: ansible-test
+- hosts: test-vms
 
   roles:
     
     - role: zanardo.chrony
 
-- hosts: ansible-test
+- hosts: test-vms
 
   roles:
     
