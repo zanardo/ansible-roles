@@ -2,16 +2,14 @@
 - name: volta snapshot vms
   connection: local
   command: virsh snapshot-revert --current {{ item }}
-  with_items:
-    - debian-jessie
+  with_items: '{{ hostvars }}'
 
 - name: inicia vms
   connection: local
   virt:
     name: "{{ item }}"
     state: running
-  with_items:
-    - debian-jessie
+  with_items: '{{ hostvars }}'
 
 - name: aguarda vms iniciarem
   connection: local
@@ -21,5 +19,4 @@
     host: "{{ hostvars[item]['ansible_host'] }}"
     port: 22
     state: started
-  with_items:
-    - debian-jessie
+  with_items: '{{ hostvars }}'

@@ -4,5 +4,4 @@
   virt:
     name: "{{ item }}"
     state: destroyed
-  with_items:
-    - debian-jessie
+  with_items: '{{ hostvars }}'
