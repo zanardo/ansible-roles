@@ -23,6 +23,14 @@
   when: locale_gen|changed()
   tags: ["postgresql"]
 
+- set_fact:
+    postgresql_version: 9.4
+  when: ansible_distribution_release in ('jessie')
+
+- set_fact:
+    postgresql_version: 9.5
+  when: ansible_distribution_release in ('xenial')
+
 - name: instala postgresql
   apt:
     name: "{{ item }}"
