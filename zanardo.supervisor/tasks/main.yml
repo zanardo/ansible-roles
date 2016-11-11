@@ -12,4 +12,5 @@
   service:
     name: supervisor
     state: started
+    enabled: yes
   tags: ["supervisor"]

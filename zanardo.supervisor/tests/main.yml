@@ -21,6 +21,11 @@
         that:
           - "supervisor_stat.stat.issock is defined"
 
+    - name: testa update
+      shell:
+        warn=no
+        supervisorctl update
+
 - hosts: localhost
   tasks:
     - include: ../../tests/destroy-ansible-test.yml
