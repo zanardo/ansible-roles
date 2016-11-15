@@ -18,7 +18,7 @@ roles:
 - `virt_install_args`: lista com argumentos passados diretamente ao
   `virt-install`. Note que somente os argumentos `connect` (o qual usa
   `qemu+ssh://{{ ansible_host }}/system`) e `name` (`virt_install_name`) são
-  passados para o `virt_install`.
+  passados para o `virt-install`.
 
 # Ações
 
