@@ -1,0 +1,21 @@
+---
+- name: verifica se máquina virtual existe
+  virt:
+    command: list_vms
+  register: virt_vms
+
+- block:
+
+  - name: instala vm {{ virt_install_name }}
+    connection: local
+    shell: virt-install
+      --connect qemu+ssh://{{ ansible_host }}/system 
+      --name {{ virt_install_name }} 
+      {{ virt_install_args|join(' ') }}
+
+  - name: remove chave de ssh em know_hosts local
+    connection: local
+    failed_when: False
+    command: ssh-keygen -R {{ virt_install_ip }}
+
+  when: virt_install_name not in virt_vms.list_vms
