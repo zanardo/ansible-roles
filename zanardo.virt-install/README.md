@@ -35,3 +35,37 @@ As seguintes mudanças são feitas no sistema:
 
 - A máquina executando o Ansible deve ter o `virt-install` e o `virt-viewer`
   instalados.
+
+# Exemplo
+
+```yaml
+- role: zanardo.virt-install
+  virt_install_name: prod-squid
+  virt_install_ip: 10.27.38.8
+  virt_install_args:
+	- "--graphics vnc"
+	- "--memory 512"
+	- "--clock offset=utc"
+	- "--network bridge=kvm0,model=virtio"
+	- "--os-variant debianwheezy"
+	- "--disk /srv/kvm2/kvm/prod-squid.qcow2,size=50,bus=virtio,format=qcow2,cache=writeback"
+	- "--location http://ftp.br.debian.org/debian/dists/jessie/main/installer-amd64/"
+	- "--extra-args \"
+		quiet
+		priority=critical
+		auto
+		hostname=prod-squid
+		url=tftp://preseed.1/jessie.cfg
+		debian-installer/locale=en_US.UTF-8
+		debian-installer/language=en
+		debian-installer/country=BR
+		keyboard-configuration/xkb-keymap=br
+		interface=eth0
+		netcfg/disable_autoconfig=true
+		netcfg/get_ipaddress={{ virt_install_ip }}
+		netcfg/get_netmask=255.255.255.0
+		netcfg/get_gateway=10.27.38.1
+		netcfg/get_nameservers=10.27.38.2
+		netcfg/confirm_static=true
+	  \""
+```
