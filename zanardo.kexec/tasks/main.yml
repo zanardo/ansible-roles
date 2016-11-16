@@ -1,0 +1,6 @@
+---
+- name: instala kexec-tools
+  apt:
+    name: kexec-tools
+    state: present
+  tags: kexec

@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  tasks:
+    - include: ../../tests/prepare-ansible-test.yml
+  
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.kexec
+
+- hosts: localhost
+  tasks:
+    - include: ../../tests/destroy-ansible-test.yml
