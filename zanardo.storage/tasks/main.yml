@@ -5,28 +5,36 @@
     apt:
       name: lvm2
       state: present
-    when: storage_lvm_lvs|d or storage_lvm_vgs|d
+    when: 'storage_lvm_lvs|d or storage_lvm_vgs|d'
 
   - name: configura volume groups do lvm
     lvg:
       vg: '{{ item.name }}'
       pvs: '{{ item.pvs }}'
-    with_items: '{{ storage_lvm_vgs }}'
-    when: storage_lvm_vgs|d
+    with_items: '{{ storage_lvm_vgs|d([]) }}'
 
   - name: configura logical volumes do lvm
     lvol:
       lv: '{{ item.name }}'
       vg: '{{ item.vg }}'
       size: '{{ item.size }}'
-    with_items: '{{ storage_lvm_lvs }}'
-    when: storage_lvm_lvs|d
+    with_items: '{{ storage_lvm_lvs|d([]) }}'
 
   - name: cria filesystems
     filesystem:
       dev: '{{ item.dev }}'
       fstype: '{{ item.fstype }}'
-    with_items: '{{ storage_fs }}'
-    when: storage_fs|d
+    with_items: '{{ storage_fs|d([]) }}'
+
+  - name: configura montagem em /etc/fstab
+    mount:
+      fstype: '{{ item.fstype }}'
+      dump: '{{ item.dump|d("0") }}'
+      name: '{{ item.name }}'
+      opts: '{{ item.opts|d("defaults") }}'
+      passno: '{{ item.passno|d("0") }}'
+      src: '{{ item.src }}'
+      state: '{{ item.state|d("present") }}'
+    with_items: '{{ storage_mount|d([]) }}'
 
   tags: storage

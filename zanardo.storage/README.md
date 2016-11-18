@@ -44,6 +44,16 @@ storage_fs:
     fstype: ext4
 ```
 
+- `storage_mount`: (opcional) lista de dicionários com os filesystems a serem
+  configurados para montagem em `/etc/fstab`. Ex:
+
+```yaml
+storage_mount:
+  - fstype: ext4
+    name: /var/spool/squid3
+	src: /dev/vg0/squid_cache
+```
+
 # Tags
 
 - `storage`: Executa todo o role.
