@@ -1,0 +1,24 @@
+---
+- block:
+
+  - name: instala pacote lvm2
+    apt:
+      name: lvm2
+      state: present
+
+  - name: configura volume groups
+    lvg:
+      vg: '{{ item.name }}'
+      pvs: '{{ item.pvs }}'
+    with_items: '{{ lvm_vgs }}'
+    when: lvm_vgs|d
+
+  - name: configura logical volumes
+    lvol:
+      lv: '{{ item.name }}'
+      vg: '{{ item.vg }}'
+      size: '{{ item.size }}'
+    with_items: '{{ lvm_lvs }}'
+    when: lvm_lvs|d
+
+  tags: lvm
