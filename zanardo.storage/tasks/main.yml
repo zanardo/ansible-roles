@@ -1,0 +1,32 @@
+---
+- block:
+
+  - name: instala pacote lvm2
+    apt:
+      name: lvm2
+      state: present
+    when: storage_lvm_lvs|d or storage_lvm_vgs|d
+
+  - name: configura volume groups do lvm
+    lvg:
+      vg: '{{ item.name }}'
+      pvs: '{{ item.pvs }}'
+    with_items: '{{ storage_lvm_vgs }}'
+    when: storage_lvm_vgs|d
+
+  - name: configura logical volumes do lvm
+    lvol:
+      lv: '{{ item.name }}'
+      vg: '{{ item.vg }}'
+      size: '{{ item.size }}'
+    with_items: '{{ storage_lvm_lvs }}'
+    when: storage_lvm_lvs|d
+
+  - name: cria filesystems
+    filesystem:
+      dev: '{{ item.dev }}'
+      fstype: '{{ item.fstype }}'
+    with_items: '{{ storage_fs }}'
+    when: storage_fs|d
+
+  tags: storage
