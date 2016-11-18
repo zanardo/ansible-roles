@@ -1,0 +1,11 @@
+---
+- block:
+
+  - name: cria filesystems
+    filesystem:
+      dev: '{{ item.dev }}'
+      fstype: '{{ item.fstype }}'
+    with_items: '{{ filesystem_fs }}'
+    when: filesystem_fs|d
+
+  tags: filesystem
