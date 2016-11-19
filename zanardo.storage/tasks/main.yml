@@ -37,4 +37,12 @@
       state: '{{ item.state|d("present") }}'
     with_items: '{{ storage_mount|d([]) }}'
 
+  - name: configura owner dos diretórios raiz montados
+    file:
+      state: directory
+      owner: '{{ item.owner }}'
+      path: '{{ item.name }}'
+    when: item.state == 'mounted' and item.owner|d(False)
+    with_items: '{{ storage_mount|d([]) }}'
+
   tags: storage

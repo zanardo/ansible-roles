@@ -52,6 +52,8 @@ storage_mount:
   - fstype: ext4
     name: /var/spool/squid3
 	src: /dev/vg0/squid_cache
+	state: mounted
+	owner: proxy	# chown, sem recursivo (somente raíz)
 ```
 
 # Tags
