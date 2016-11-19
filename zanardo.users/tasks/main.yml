@@ -1,0 +1,11 @@
+---
+- name: cria usuários
+  user:
+    name: '{{ item.name }}'
+    createhome: '{{ item.createhome|d(True) }}'
+    home: '{{ item.home|d("/home/" + item.name) }}'
+    shell: '{{ item.shell|d("/bin/bash") }}'
+    skeleton: '{{ item.skeleton|d("/etc/skel") }}'
+    system: '{{ item.system|d(False) }}'
+  with_items: '{{ users_users|d([]) }}'
+  tags: users
