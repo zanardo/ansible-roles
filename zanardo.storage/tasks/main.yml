@@ -41,6 +41,7 @@
     file:
       state: directory
       owner: '{{ item.owner }}'
+      group: '{{ item.group|d(item.owner) }}'
       path: '{{ item.name }}'
     when: item.state == 'mounted' and item.owner|d(False)
     with_items: '{{ storage_mount|d([]) }}'

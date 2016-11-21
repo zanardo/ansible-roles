@@ -54,6 +54,7 @@ storage_mount:
 	src: /dev/vg0/squid_cache
 	state: mounted
 	owner: proxy	# chown, sem recursivo (somente raíz)
+	group: proxy
 ```
 
 # Tags
