@@ -6,12 +6,21 @@
 
 - block:
 
-  - name: instala vm {{ virt_install_name }}
+  - name: instala máquina virtual {{ virt_install_name }}
     connection: local
     shell: virt-install
       --connect qemu+ssh://{{ ansible_host }}/system 
       --name {{ virt_install_name }} 
       {{ virt_install_args|join(' ') }}
+
+  - name: aguarda porta tcp {{ virt_waitfor_port }} em {{ virt_install_ip }}
+    connection: local
+    wait_for:
+      host: '{{ virt_install_ip }}'
+      port: '{{ virt_waitfor_port }}'
+      state: present
+      timeout: '{{ virt_waitfor_timeout }}'
+    when: 'virt_waitfor_port|d'
 
   - name: remove chave de ssh em know_hosts local
     connection: local

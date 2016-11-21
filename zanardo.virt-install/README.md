@@ -19,6 +19,9 @@ roles:
   `virt-install`. Note que somente os argumentos `connect` (o qual usa
   `qemu+ssh://{{ ansible_host }}/system`) e `name` (`virt_install_name`) são
   passados para o `virt-install`.
+- `virt_waitfor_port`: porta TCP para aguardar a máquina responder em
+  `virt_install_ip`. Pode ser usado quando é passado o argumento
+  `--noautoconsole` para o `virt-install`.
 
 # Ações
 
