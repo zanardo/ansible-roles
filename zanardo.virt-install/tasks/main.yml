@@ -1,4 +1,11 @@
 ---
+- name: instala pacotes necessários
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-libvirt
+
 - name: verifica se máquina virtual existe
   virt:
     command: list_vms
