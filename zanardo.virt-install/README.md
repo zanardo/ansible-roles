@@ -16,6 +16,8 @@ roles:
 
 - `virt_install_vmhost`: nome do host de virtualização (deverá estar no
    inventário).
+- `virt_install_http_proxy`: proxy http passado para o `virt-install`, para
+  agilizar downloads consecutivos para netinstall (kernel, initrd, etc).
 - `virt_install_name`: nome da máquina virtual.
 - `virt_install_ip`: IP da máquina virtual (usado para reciclar a entrada
    em `known_hosts` do SSH).
