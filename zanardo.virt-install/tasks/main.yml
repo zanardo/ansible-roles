@@ -3,8 +3,10 @@
   apt:
     name: "{{ item }}"
     state: present
+    install_recommends: no
   with_items:
     - python-libvirt
+    - virtinst
   delegate_to: "{{ virt_install_vmhost }}"
 
 - name: verifica se máquina virtual existe
