@@ -1,0 +1,16 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.redis
+
+  tasks:
+
+    - name: verifica se redis está rodando
+      command: redis-cli ping
+      register: cmd
+
+    - name: verifica saída
+      assert:
+        that: "'PONG' in cmd.stdout"

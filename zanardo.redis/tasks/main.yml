@@ -1,16 +1,15 @@
 ---
-- name: verifica se variável 'redis_version' está definida
-  assert: that="redis_version is defined"
+- name: instala pacotes necessários
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - redis-server
+  tags: ["redis"]
 
-- name: checa se redis está instalado, e qual versão
-  shell: "/usr/local/bin/redis-server --version | cut -f3 -d' ' | cut -f2 -d="
-  register: redis_register_version
-  changed_when: False
-  failed_when: False
-
-- name: download do código-fonte, compila e instala
-  include: install.yml
-  when: redis_register_version.stdout != redis_version or redis_force_install is defined
-
-- name: prepara a instância
-  include: instance.yml
+- name: copia arquivo de configuração
+  template:
+    src: "{{ redis_conf }}"
+    dest: /etc/redis/redis.conf
+  when: redis_conf|d
+  tags: ["redis", "redis:conf"]
