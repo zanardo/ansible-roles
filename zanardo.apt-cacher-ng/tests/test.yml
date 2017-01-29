@@ -1,0 +1,19 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.apt-cacher-ng
+
+  tasks:
+
+    - name: instala pacotes necessários para teste
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - net-tools
+  
+    - name: verifica se apt-cacher-ng está rodando
+      shell:
+        netstat -tlnup | grep -q "0.0.0.0:3142"

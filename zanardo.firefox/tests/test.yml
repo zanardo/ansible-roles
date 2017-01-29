@@ -1,0 +1,7 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.firefox
+      firefox_version: "51.0.1"

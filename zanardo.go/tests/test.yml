@@ -1,0 +1,7 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.go
+      go_version: "1.7.5"

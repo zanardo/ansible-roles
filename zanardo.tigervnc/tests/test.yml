@@ -1,0 +1,7 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.tigervnc
+      tigervnc_version: "1.7.0"

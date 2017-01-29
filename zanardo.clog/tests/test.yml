@@ -1,0 +1,9 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.clog
+      clog_version: "0.5beta1"
+      clog_users: nobody
+      clog_send_queue_server: "http://clog:7890"

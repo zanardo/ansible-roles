@@ -1,0 +1,13 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.chrony
+
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.chrony
+      chrony_conf: chrony.conf

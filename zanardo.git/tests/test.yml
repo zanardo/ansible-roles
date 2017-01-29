@@ -1,0 +1,20 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.git
+      git_version: "2.11.0"
+
+  tasks:
+
+    - name: executa git version
+      command: /opt/git/bin/git --version
+      args:
+        warn: no
+      register: git_version
+
+    - name: verifica saída do comando
+      assert:
+        that:
+          - "'git version' in git_version.stdout"

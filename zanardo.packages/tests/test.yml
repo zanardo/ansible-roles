@@ -1,0 +1,10 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.packages
+      packages_install:
+        - rsync
+        - tmux
+

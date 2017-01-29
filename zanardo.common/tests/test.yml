@@ -1,0 +1,7 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.common
+      apt_proxy: "http://aptcache:3142/"

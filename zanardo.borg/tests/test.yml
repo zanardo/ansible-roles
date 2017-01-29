@@ -1,0 +1,13 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.borg
+      borg_version: "1.0.9"
+
+  tasks:
+
+    - name: verifica se borg está instalado
+      shell:
+        borg --version

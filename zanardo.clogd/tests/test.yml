@@ -1,0 +1,15 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.clogd
+      clogd_version: "0.5beta1"
+      clogd_bind_host: "0.0.0.0"
+      clogd_bind_port: 7890
+      clogd_pg_host: "127.0.0.1"
+      clogd_pg_port: 5432
+      clogd_pg_db: clog
+      clogd_pg_user: clog
+      clogd_pg_pass: a_secure_password
+

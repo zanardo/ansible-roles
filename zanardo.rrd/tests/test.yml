@@ -1,0 +1,7 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.rrd
+      rrd_version: 0.3

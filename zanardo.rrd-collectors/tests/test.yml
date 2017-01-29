@@ -1,0 +1,15 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.rrd-collectors
+      rrd_collectors_host: "localhost"
+      rrd_collectors_port: 34567
+      rrd_collectors_iftraff_interfaces: ["eth0"]
+      rrd_collectors_df_mounts:
+        - mount: "/"
+          name: "root"
+        - mount: "/home"
+          name: "home"
+

@@ -1,7 +1,0 @@
----
-- name: destrói vms
-  connection: local
-  virt:
-    name: "{{ item }}"
-    state: destroyed
-  with_items: '{{ hostvars }}'

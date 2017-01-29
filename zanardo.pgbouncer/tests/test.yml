@@ -1,0 +1,10 @@
+---
+- hosts: test-vms
+
+  roles:
+    
+    - role: zanardo.pgbouncer
+      pgbouncer_version: "1.7.2"
+      pgbouncer_conf: "files/pgbouncer.ini"
+      pgbouncer_userlist_conf: "files/userlist.txt"
+
