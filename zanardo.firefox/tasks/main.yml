@@ -1,11 +1,21 @@
 ---
-- name: checa versão instalada
-  shell: /opt/firefox/firefox --version | cut -d' ' -f3
-  register: firefox_register_version
-  changed_when: False
-  failed_when: False
-  tags: ["firefox"]
+- block:
 
-- include: install.yml
-  when: firefox_register_version.stdout != firefox_version or firefox_force_install is defined
+  - name: instala chave gpg do repositório
+    apt_key:
+      url: "http://mozilla.debian.net/archive.asc"
+      id: 06C4AE2A
+      state: present
+
+  - name: adiciona repositório
+    apt_repository:
+      repo: "deb http://mozilla.debian.net/ jessie-backports firefox-release"
+      state: present
+
+  - name: instala firefox
+    apt:
+      name: firefox
+      state: present
+      default_release: jessie-backports
+
   tags: ["firefox"]
