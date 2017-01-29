@@ -4,6 +4,6 @@
   roles:
     
     - role: zanardo.gitolite
-      gitolite_dir: /srv/git
-      gitolite_version: "3.6.6"
-      gitolite_admin_ssh_public_key: "test.pub"
+      gitolite_gitdir: "/srv/git"
+      gitolite_gituser: "git"
+      gitolite_adminkey: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

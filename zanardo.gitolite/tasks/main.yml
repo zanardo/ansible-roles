@@ -1,57 +1,28 @@
 ---
 - block:
-  # tags
 
   - name: instala pacotes necessários
     apt:
-      state: present
       name: "{{ item }}"
-    with_items:
-      - git
-      - ca-certificates
-      - openssh-server
-
-  - name: cria usuário "git"
-    user:
-      name: git
-      home: "{{ gitolite_dir }}"
-      shell: "/bin/bash"
       state: present
+    with_items:
+      - debconf
+      - debconf-utils
 
-  - block:
-    # sudo git
+  - name: configura gitolite
+    debconf:
+      vtype: string
+      name: gitolite3
+      question: "{{ item.question }}"
+      value: "{{ item.value }}"
+    with_items:
+      - { question: "gitolite3/gitdir", value: "{{ gitolite_gitdir }}" }
+      - { question: "gitolite3/gituser", value: "{{ gitolite_gituser }}" }
+      - { question: "gitolite3/adminkey", value: "{{ gitolite_adminkey }}" }
 
-    - name: cria ~/dir
-      file:
-        state: directory
-        path: "{{ gitolite_dir }}/bin"
-
-    - name: clona repositório do gitolite
-      git:
-        dest: "{{ gitolite_dir }}/gitolite"
-        repo: "https://github.com/sitaramc/gitolite"
-        update: no
-        version: "v{{ gitolite_version }}"
-
-    - name: executa o script de instalação
-      shell: >
-        chdir="{{ gitolite_dir }}"
-        creates="{{ gitolite_dir }}/bin/gitolite"
-        gitolite/install -ln "{{ gitolite_dir }}/bin"
-
-    - name: copia a chave pública do ssh
-      copy:
-        src: "{{ gitolite_admin_ssh_public_key }}"
-        dest: "{{ gitolite_dir }}/"
-      register: ssh_key_copied
-
-    - name: executa o setup
-      shell: >
-        chdir="{{ gitolite_dir }}"
-        ~/bin/gitolite setup -pk "{{ gitolite_admin_ssh_public_key|basename }}"
-      when: ssh_key_copied.changed
-
-    become: yes
-    become_user: git
+  - name: instala gitolite
+    apt:
+      name: gitolite3
+      state: present
 
   tags: ["gitolite"]

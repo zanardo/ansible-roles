@@ -1,0 +1,3 @@
+---
+gitolite_gitdir: "/var/lib/gitolite3"
+gitolite_gituser: "gitolite3"
