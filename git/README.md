@@ -3,15 +3,6 @@ código-fonte.
 
 # Como usar
 
-Para usar este Role, adicione dentro do grupo `roles` do Playbook e 
-configure a versão do Git a ser instalada:
-
-```yaml
-roles:
-
-  - { role: zanardo.git, git_version: "x.y.z" }
-```
-
 Configure o PATH e carregue o script de completion adicionando as seguintes
 linhas no seu `~/.bashrc`:
 
