@@ -1,7 +1,0 @@
----
-- hosts: test-vms
-
-  roles:
-    
-    - role: zanardo.winbox
-      winbox_version: "3.10"

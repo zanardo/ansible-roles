@@ -1,9 +1,0 @@
----
-- hosts: test-vms
-
-  roles:
-    
-    - role: zanardo.gitolite
-      gitolite_gitdir: "/srv/git"
-      gitolite_gituser: "git"
-      gitolite_adminkey: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

@@ -1,7 +1,0 @@
----
-- hosts: test-vms
-
-  roles:
-    
-    - role: zanardo.postgresql
-

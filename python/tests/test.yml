@@ -1,9 +1,0 @@
----
-- hosts: test-vms
-
-  roles:
-    
-    - role: zanardo.python
-      python_versions:
-        - 2.7.13
-        - 3.4.5

@@ -1,7 +1,0 @@
----
-- hosts: test-vms
-
-  roles:
-    
-    - role: zanardo.dnsmasq
-      dnsmasq_conf: dnsmasq.conf
