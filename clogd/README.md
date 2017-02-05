@@ -1,16 +1,5 @@
 Ansible Role para instalar o servidor [clogd](https://github.com/zanardo/clog).
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook e 
-configure a versão do clogd a ser instalado:
-
-```yaml
-roles:
-
-  - { role: zanardo.clogd }
-```
-
 # Variáveis
 
 - `clogd_version`: versão do clogd a ser instalado.
