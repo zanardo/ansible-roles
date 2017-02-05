@@ -4,16 +4,6 @@ Debian.
 O **libvirt** abstrai o gerenciamento de máquinas virtuais e cuida do início e
 shutdown dos guests.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - role: { zanardo.libvirt }
-```
-
 # Ações
 
 - Instala o libvirt e carrega o serviço.
