@@ -2,17 +2,6 @@ Ansible Role para instalar o [Winbox](http://www.mikrotik.com/), gerenciador
 gráfico para roteadores Mikrotik. O Winbox é um arquivo executável para
 Windows, e roda emulado no Wine.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook e configure a
-versão do Winbox a ser instalada:
-
-```yaml
-roles:
-
-  - { role: zanardo.winbox, winbox_version: "x.y.z" }
-```
-
 # Variáveis
 
 - `winbox_version`: Versão do Winbox a ser instalada.
