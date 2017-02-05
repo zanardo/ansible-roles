@@ -1,16 +1,6 @@
 Ansible Role para configurar uma instalação básica do Debian, para uso no
 Brasil.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.common }
-  ```
-
 # Variáveis
 
 - `apt_proxy_host`: opcional, define host para proxy para cache dos pacotes do
