@@ -1,17 +1,6 @@
 Ansible Role para instalar o [TigerVNC](http://tigervnc.org/), compilado do
 código-fonte.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook e configure a
-versão do TigerVNC a ser instalada:
-
-```yaml
-roles:
-
-  - { role: zanardo.tigervnc, tigervnc_version: "x.y.z" }
-```
-
 # Variáveis
 
 - `tigervnc_version`: Versão do TigerVNC a ser instalada.
