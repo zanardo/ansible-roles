@@ -2,20 +2,6 @@ Ansible Role para instalar e configurar o
 **[pgbouncer](https://pgbouncer.github.io/)** no Debian, compilado do
 código-fonte.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook, e configure
-a variável com a versão a ser instalada:
-
-````yaml
-roles:
-
-  - role: zanardo.pgbouncer
-  	pgbouncer_version: "x.y.z"
-	pgbouncer_conf: "files/pgbouncer.ini"
-	pgbouncer_userlist_conf: "files/userlist.txt"
-````
-
 # Variáveis
 
 - `pgbouncer_version`: Versão do pgbouncer a ser instalada em `/usr/local`.
