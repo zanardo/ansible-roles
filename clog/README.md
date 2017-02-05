@@ -1,17 +1,6 @@
 Ansible Role para instalar o script do cliente do
 [clog](https://github.com/zanardo/clog).
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook e 
-configure a versão do Borg a ser instalada:
-
-```yaml
-roles:
-
-  - { role: zanardo.clog }
-```
-
 # Variáveis
 
 - `clog_version`: versão do script do clog a ser instalado.
