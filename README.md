@@ -8,17 +8,12 @@ repositório.
 
 # Como usar
 
-- Clonar o repositório:
+- Configurar um submódulo do Git para os roles:
 
 ```bash
-git clone https://github.com/zanardo/ansible-roles ~/ansible-roles-zanardo
-```
-
-- Configurar o caminho dos roles no arquivo `ansible.cfg` dos playbooks:
-
-```ini
-roles_path = ~/ansible-roles-zanardo
-```
+mkdir -p roles/zanardo
+git submodule add https://github.com/zanardo/ansible-roles \
+  roles/zanardo
 
 - Criar o diretório para o cache local dos downloads:
 
