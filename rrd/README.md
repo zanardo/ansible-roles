@@ -1,16 +1,6 @@
 Ansible Role para instalar e configurar o servidor
 **[rrd](https://github.com/zanardo/rrd)** no Debian.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-- { role: zanardo.rrd, rrd_version: "x.y.z" }
-```
-
 # Variáveis
 
 - `rrd_version`: versão do `rrd` a ser instalada.
