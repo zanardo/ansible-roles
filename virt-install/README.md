@@ -2,16 +2,6 @@ Ansible Role para provisionar uma máquina virtual usando o `virt-install`.
 Deve-se usar `preseed` (Debian e derivados) ou tecnologias semelhantes para uma
 instalação automatizada do sistema operacional.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.virt-install }
-```
-
 # Variáveis
 
 - `virt_install_vmhost`: nome do host de virtualização (deverá estar no
