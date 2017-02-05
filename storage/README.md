@@ -2,16 +2,6 @@ Ansible Role para definir storage, como criação de physical volumes (PVs),
 volume groups (VGs) e logical volumes (LVs) no LVM2, criação de sistema de
 arquivos, e configuração de montagem em `/etc/fstab`.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.storage }
-```
-
 # Variáveis
 
 - `storage_lvm_vgs`: (opcional) lista de dicionários com os volume groups (VGs)
