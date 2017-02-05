@@ -14,6 +14,7 @@ repositório.
 mkdir -p roles/zanardo
 git submodule add https://github.com/zanardo/ansible-roles \
   roles/zanardo
+```
 
 - Criar o diretório para o cache local dos downloads:
 
