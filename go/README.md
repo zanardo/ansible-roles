@@ -1,12 +1,6 @@
 Ansible Role para instalar o [Go](https://golang.org/), com binário baixado
 diretamente do site oficial. O Go é instalado em `/usr/local/go`.
 
-# Como usar
+# Variáveis
 
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.go, go_version: "x.y.x" }
-```
+- `go_version`: Versão do Go a ser instalada.
