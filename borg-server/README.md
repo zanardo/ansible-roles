@@ -3,17 +3,6 @@ Ansible Role para configurar um servidor de backups para o
 via SSH por liberação de chave pública, e apenas um usuário de sistema para
 receber os backups, com restrição de diretório.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook e 
-configure a versão do Borg a ser instalada:
-
-```yaml
-roles:
-
-  - { role: zanardo.borg-server }
-```
-
 # Variáveis
 
 - `borg_version`: versão do Borg a ser instalada (pelo role `zanardo.borg`).
