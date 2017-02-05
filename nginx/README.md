@@ -1,15 +1,5 @@
 Ansible Role para instalar e configurar o [Nginx](http://www.nginx.org/).
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.nginx }
-```
-
 # Variáveis
 
 - `nginx_conf`: Caminho local para o arquivo de configurações `nginx.conf`.
