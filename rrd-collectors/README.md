@@ -1,16 +1,6 @@
 Ansible Role para instalar os coletores básicos do rrd, diretamente dos scripts
 em `https://github.com/zanardo/rrd-collectors`.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.rrd-collectors }
-```
-
 # Variáveis
 
 - `rrd_collectors_version`: versão a ser instalada. Ex: `0.1`.
