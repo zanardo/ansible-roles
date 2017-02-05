@@ -1,15 +1,5 @@
 Ansible Role para instalar e configurar o [HAProxy](http://www.haproxy.org/).
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.haproxy }
-```
-
 # Variáveis
 
 - `haproxy_conf`: Caminho local para o arquivo de configurações `haproxy.cfg`.
