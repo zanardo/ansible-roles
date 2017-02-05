@@ -3,16 +3,6 @@ Ansible Role para instalar e configurar o [Shorewall](http://www.shorewall.net/)
 O Shorewall é um wrapper para configurar o firewall do iptables no Linux, e
 permite manter as configurações em arquivos-textos organizados.
 
-# Como usar
-
-Para usar este Role, adicione dentro do grupo `roles` do Playbook:
-
-```yaml
-roles:
-
-  - { role: zanardo.shorewall }
-```
-
 # Variáveis
 
 - `shorewall_conf`: diretório absoluto onde os arquivos que deverão ser
