@@ -1,0 +1,27 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - nfs-common
+
+  - name: cria diretórios de ponto de montagem
+    file:
+      state: directory
+      path: "{{ item.dest }}"
+      recurse: yes
+    with_items: "{{ nfs_client_mounts }}"
+
+  - name: configura pontos de montagem no fstab
+    mount:
+      fstype: "{{ item.fstype|d('nfs4') }}"
+      name: "{{ item.dest }}"
+      opts: "{{ item.opts|d('rw,hard') }}"
+      src: "{{ item.src }}"
+      state: "{{ item.state|d('present') }}"
+    with_items: "{{ nfs_client_mounts }}"
+
+  tags: ["nfs"]
