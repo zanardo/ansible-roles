@@ -11,7 +11,6 @@ repositório.
 - Configurar um submódulo do Git para os roles:
 
 ```bash
-mkdir -p roles/zanardo
 git submodule add https://github.com/zanardo/ansible-roles roles/zanardo
 ```
 
