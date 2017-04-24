@@ -7,6 +7,7 @@
       /usr/local/go/bin/go version | cut -d' ' -f3 | sed -e 's/^go//'
     register: go_register_version
     changed_when: False
+    check_mode: no
     failed_when: False
 
   - include: install.yml
