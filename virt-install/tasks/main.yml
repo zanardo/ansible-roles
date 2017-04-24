@@ -13,6 +13,7 @@
   virt:
     command: list_vms
   register: virt_vms
+  check_mode: no
   delegate_to: "{{ virt_install_vmhost }}"
 
 - block:
