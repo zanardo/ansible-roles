@@ -52,7 +52,7 @@
       owner: root
       group: root
       mode: 0644
-    when: ansible_distribution_release in ('jessie')
+    when: ansible_distribution_release in ('jessie', 'stretch')
     notify: atualiza apt
 
   - name: desativa dns para ssh
