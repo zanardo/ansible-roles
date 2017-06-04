@@ -1,0 +1,16 @@
+---
+- block:
+
+    - name: copia sources.list do debian
+      template:
+        src: "{{ sources_list_path|d(ansible_distribution_release + '.list') }}"
+        dest: /etc/apt/sources.list
+      when: ansible_distribution == "Debian"
+      register: sources_list_register
+
+    - name: recarrega repositórios debian
+      apt:
+        update_cache: yes
+      when: "sources_list_register|changed"
+
+  tags: ["sources_list"]
