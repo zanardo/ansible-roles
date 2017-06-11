@@ -14,6 +14,12 @@
   notify: reconfigura shorewall
   tags: ["shorewall"]
 
+- name: habilita serviço do systemd
+  systemd:
+    name: shorewall
+    enabled: yes
+  tags: ["shorewall"]
+
 - name: verifica se a reconfiguração falhou
   file:
     path: /tmp/ansible-shorewall-restart
