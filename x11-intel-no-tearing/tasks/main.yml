@@ -1,0 +1,11 @@
+---
+- name: cria diretórios necessários
+  file:
+    state: directory
+    recurse: yes
+    path: "/etc/X11/xorg.conf.d"
+
+- name: copia arquivo de configuracão
+  copy:
+    src: "20-intel.conf"
+    dest: "/etc/X11/xorg.conf.d/20-intel.conf"
