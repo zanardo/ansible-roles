@@ -39,7 +39,7 @@
   - name: desativa proxy para repositórios https para apt
     copy:
       dest: /etc/apt/apt.conf.d/01proxy_nohttps
-      content: "Acquire::https::Proxy \"false\";"
+      content: "Acquire::https::Proxy false;"
       owner: root
       group: root
       mode: 0644
