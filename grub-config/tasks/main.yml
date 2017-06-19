@@ -1,0 +1,23 @@
+---
+- block:
+
+  - name: configura timeout
+    lineinfile:
+      path: "/etc/default/grub"
+      regexp: "^GRUB_TIMEOUT="
+      line: "GRUB_TIMEOUT={{ grub_config_timeout }}"
+    when: grub_config_timeout|d
+    notify: reconfigura grub
+
+  - name: configura command line
+    lineinfile:
+      path: "/etc/default/grub"
+      regexp: "^{{ item }}="
+      line: "{{ item }}=\"{{ grub_config_cmdline }}\""
+    with_items:
+      - "GRUB_CMDLINE_LINUX_DEFAULT"
+      - "GRUB_CMDLINE_LINUX"
+    when: grub_config_cmdline|d
+    notify: reconfigura grub
+
+  tags: ["grub:conf"]
