@@ -12,10 +12,20 @@
 
   - meta: flush_handlers
 
-  - name: instala pacotes necessários
+  - name: instala pacotes necessários - debian jessie
     apt:
       state: present
       name: "wine:i386"
+    when: ansible_distribution_release == "jessie"
+
+  - name: instala pacotes necessários - debian stretch
+    apt:
+      state: present
+      name: "{{ item }}"
+    with_items:
+        - wine
+        - wine32
+    when: ansible_distribution_release == "stretch"
 
   - name: download do winbox para cache local
     connection: local
