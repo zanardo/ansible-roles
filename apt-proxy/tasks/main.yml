@@ -1,6 +1,14 @@
 ---
 - block:
 
+  - name: remove configurações antigas de proxy
+    file:
+      name: "/etc/apt/apt.conf.d/{{ item }}"
+      state: absent
+    with_items:
+        - 01proxy
+        - 01proxy_nohttps
+
   - block:
 
     - name: verifica se proxy apt está ativo
@@ -18,31 +26,34 @@
         msg: "apt_proxy_host:apt_proxy_port não alcançável"
 
   - name: ativa proxy para apt
-    copy:
-      dest: /etc/apt/apt.conf.d/01proxy
-      content: "Acquire::http::Proxy \"http://{{ apt_proxy_host }}:{{ apt_proxy_port }}/\";\n"
-      owner: root
-      group: root
-      mode: 0644
+    lineinfile:
+      path: /etc/apt/apt.conf
+      line: "Acquire::http::Proxy \"http://{{ apt_proxy_host }}:{{ apt_proxy_port }}/\";"
+      regexp: "^Acquire::http::Proxy "
+      state: present
     when: apt_proxy_host|d and apt_proxy_active|succeeded
     register: apt_proxy_set
 
   - name: desativa proxy para apt
-    copy:
-      dest: /etc/apt/apt.conf.d/01proxy
-      content: ""
-      owner: root
-      group: root
-      mode: 0644
+    lineinfile:
+      path: /etc/apt/apt.conf
+      regexp: "^Acquire::http::Proxy "
+      state: absent
     when: apt_proxy_set|skipped
 
   - name: desativa proxy para repositórios https para apt
-    copy:
-      dest: /etc/apt/apt.conf.d/01proxy_nohttps
-      content: "Acquire::https::Proxy false;"
-      owner: root
-      group: root
-      mode: 0644
+    lineinfile:
+      path: /etc/apt/apt.conf
+      line: "Acquire::https::Proxy \"\";"
+      regexp: "^Acquire::https::Proxy "
+      state: present
     when: apt_proxy_no_https is defined
+
+  - name: ativa proxy para repositórios https para apt
+    lineinfile:
+      path: /etc/apt/apt.conf
+      regexp: "^Acquire::https::Proxy "
+      state: absent
+    when: apt_proxy_no_https is not defined
 
   tags: apt-proxy
