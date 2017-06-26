@@ -1,0 +1,7 @@
+---
+- name: cria diretório de cache local
+  connection: local
+  file:
+    path: "~/.cache/ansible"
+    state: directory
+    recurse: yes
