@@ -13,9 +13,3 @@ repositório.
 ```bash
 git submodule add https://github.com/zanardo/ansible-roles roles/zanardo
 ```
-
-- Criar o diretório para o cache local dos downloads:
-
-```bash
-mkdir -p ~/.cache/ansible
-```
