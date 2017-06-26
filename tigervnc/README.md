@@ -19,3 +19,7 @@ As seguintes mudanças são feitas no sistema:
 ```bash
 /opt/tigervnc/bin/vncviewer ....
 ```
+
+# Compatibilidade
+
+- Debian Jessie
