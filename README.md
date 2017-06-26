@@ -17,5 +17,5 @@ git submodule add https://github.com/zanardo/ansible-roles roles/zanardo
 
 Observe que os roles devem permanecer no subdiretório `zanardo` dentro de um
 diretório contido no seu `roles_path`, e os roles devem ser chamados via
-`zanardo/nome- do-role`, para manter a compatibilidade com as dependências
-entre roles e não poluir seu /namespace/ de roles locais.
+`zanardo/nome-do-role`, para manter a compatibilidade com as dependências
+entre roles e não poluir seu *namespace* de roles locais.
