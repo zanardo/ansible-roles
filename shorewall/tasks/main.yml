@@ -3,6 +3,12 @@
   apt:
     name: shorewall
     state: present
+  register: shorewall_install_register
+  tags: ["shorewall"]
+
+- name: habilita serviço do systemd
+  shell: systemctl enable shorewall
+  when: shorewall_install_register|changed
   tags: ["shorewall"]
 
 - name: habilita início no boot
@@ -12,12 +18,6 @@
     regexp: "^startup="
     state: present
   notify: reconfigura shorewall
-  tags: ["shorewall"]
-
-- name: habilita serviço do systemd
-  systemd:
-    name: shorewall
-    enabled: yes
   tags: ["shorewall"]
 
 - name: verifica se a reconfiguração falhou
