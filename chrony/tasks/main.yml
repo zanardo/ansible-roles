@@ -28,4 +28,10 @@
     when: chrony_conf is defined
     tags: ["chrony:conf"]
 
+  - name: habilita chrony no systemd
+    systemd:
+      name: chrony
+      enabled: yes
+      state: started
+
   tags: chrony
