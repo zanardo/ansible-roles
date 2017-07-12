@@ -1,0 +1,38 @@
+---
+- hosts:
+    - ansible-debian-7
+    - ansible-debian-8
+    - ansible-debian-9
+
+  vars:
+    borg_version: "1.0.10"
+
+  roles:
+    - { role: zanardo/borg }
+
+  tasks:
+
+    - name: verifica se borg está instalado
+      command: borg --version
+      register: out
+    - assert:
+        that: "out.stdout.startswith('borg ')"
+
+    - name: cria repositório teste
+      shell:
+        warn=no
+        rm -rf /tmp/borg &&
+        borg init -e none /tmp/borg
+
+    - name: faz backup teste
+      shell:
+        warn=no
+        borg create /tmp/borg::teste /etc
+
+    - name: faz restauração teste
+      shell:
+        warn=no
+        rm -rf /tmp/borg-rest &&
+        mkdir /tmp/borg-rest &&
+        cd /tmp/borg-rest &&
+        borg extract /tmp/borg::teste
