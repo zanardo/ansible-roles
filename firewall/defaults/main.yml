@@ -1,2 +1,11 @@
 ---
 firewall_enabled: yes
+
+firewall_clear_commands: |
+  /sbin/iptables -P INPUT ACCEPT
+  /sbin/iptables -P FORWARD ACCEPT
+  /sbin/iptables -P OUTPUT ACCEPT
+  /sbin/iptables -t filter -F
+  /sbin/iptables -t nat -F
+  /sbin/iptables -t mangle -F
+  /sbin/iptables -X
