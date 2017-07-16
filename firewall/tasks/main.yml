@@ -27,9 +27,10 @@
   notify: reinicia firewall
   tags: ["firewall"]
 
-- name: habilita firewall no systemd
+- name: ativa ou desativa firewall no systemd
   systemd:
     name: firewall
-    enabled: yes
+    enabled: "{{ firewall_enabled }}"
+    state: "{{ firewall_enabled|bool and 'started' or 'stopped' }}"
     daemon_reload: yes
   tags: ["firewall"]
