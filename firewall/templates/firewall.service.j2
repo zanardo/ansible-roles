@@ -1,0 +1,12 @@
+[Unit]
+Description=iptables firewall
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.firewall start
+ExecStop=/etc/rc.firewall stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

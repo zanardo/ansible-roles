@@ -1,0 +1,35 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - iptables
+  tags: ["firewall"]
+
+- name: copia script do firewall
+  template:
+    src: rc.firewall.j2
+    dest: /etc/rc.firewall
+    owner: root
+    group: root
+    mode: 0700
+  notify: reinicia firewall
+  tags: ["firewall"]
+
+- name: copia unit do systemd para firewall
+  template:
+    src: firewall.service.j2
+    dest: /etc/systemd/system/firewall.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: reinicia firewall
+  tags: ["firewall"]
+
+- name: habilita firewall no systemd
+  systemd:
+    name: firewall
+    enabled: yes
+    daemon_reload: yes
+  tags: ["firewall"]
