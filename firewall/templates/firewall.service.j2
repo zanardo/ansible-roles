@@ -4,62 +4,8 @@ After=network.target
 
 [Service]
 Type=oneshot
-{% if firewall_clear_commands|d -%}
-# <firewall_clear_commands>
-{% for line in firewall_clear_commands.splitlines() %}
-ExecStop={{ line }}
-{% endfor %}
-# </firewall_clear_commands>
-{% endif %}
-{% if firewall_stop_commands_pre|d -%}
-# <firewall_stop_commands_pre>
-{% for line in firewall_stop_commands_pre.splitlines() %}
-ExecStop={{ line }}
-{% endfor %}
-# </firewall_stop_commands_pre>
-{% endif %}
-{% if firewall_stop_commands|d -%}
-# <firewall_stop_commands>
-{% for line in firewall_stop_commands.splitlines() %}
-ExecStop={{ line }}
-{% endfor %}
-# </firewall_stop_commands>
-{% endif %}
-{% if firewall_stop_commands_pos|d -%}
-# <firewall_stop_commands_pos>
-{% for line in firewall_stop_commands_pos.splitlines() %}
-ExecStop={{ line }}
-{% endfor %}
-# </firewall_stop_commands_pos>
-{% endif %}
-{% if firewall_clear_commands|d -%}
-# <firewall_clear_commands>
-{% for line in firewall_clear_commands.splitlines() %}
-ExecStart={{ line }}
-{% endfor %}
-# </firewall_clear_commands>
-{% endif %}
-{% if firewall_start_commands_pre|d -%}
-# <firewall_start_commands_pre>
-{% for line in firewall_start_commands_pre.splitlines() %}
-ExecStart={{ line }}
-{% endfor %}
-# </firewall_start_commands_pre>
-{% endif %}
-{% if firewall_start_commands|d -%}
-# <firewall_start_commands>
-{% for line in firewall_start_commands.splitlines() %}
-ExecStart={{ line }}
-{% endfor %}
-# </firewall_start_commands>
-{% endif %}
-{% if firewall_start_commands_pos|d -%}
-# <firewall_start_commands_pos>
-{% for line in firewall_start_commands_pos.splitlines() %}
-ExecStart={{ line }}
-{% endfor %}
-# </firewall_start_commands_pos>
-{% endif %}
+ExecStop=/etc/firewall.sh stop
+ExecStart=/etc/firewall.sh start
 RemainAfterExit=yes
 
 [Install]

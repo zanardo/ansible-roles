@@ -1,0 +1,42 @@
+#!/bin/sh
+# Script de firewall criado pelo role do Ansible zanardo/firewall
+# https://github.com/zanardo/ansible-roles
+# O script é carregado pelo service "firewall" do systemd.
+
+set -e -x
+
+case $1 in
+	start)
+
+# firewall_clear_commands
+{{ firewall_clear_commands|d('') }}
+
+# firewall_start_commands_pre
+{{ firewall_start_commands_pre|d('') }}
+
+# firewall_start_commands
+{{ firewall_start_commands|d('') }}
+
+# firewall_start_commands_post
+{{ firewall_start_commands_post|d('') }}
+
+		;;
+	stop)
+
+# firewall_clear_commands
+{{ firewall_clear_commands|d('') }}
+
+# firewall_stop_commands_pre
+{{ firewall_stop_commands_pre|d('') }}
+
+# firewall_stop_commands
+{{ firewall_stop_commands|d('') }}
+
+# firewall_stop_commands_post
+{{ firewall_stop_commands_post|d('') }}
+
+		;;
+
+esac
+
+exit 0

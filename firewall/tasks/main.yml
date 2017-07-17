@@ -13,7 +13,19 @@
     dest: /etc/systemd/system/firewall.service
     owner: root
     group: root
-    mode: 0600
+    mode: 0644
+  notify:
+    - recarrega units systemd
+    - reinicia firewall
+  tags: ["firewall"]
+
+- name: copia script do firewall
+  template:
+    src: firewall.sh.j2
+    dest: /etc/firewall.sh
+    owner: root
+    group: root
+    mode: 0700
   notify: reinicia firewall
   tags: ["firewall"]
 
@@ -22,5 +34,4 @@
     name: firewall
     enabled: "{{ firewall_enabled }}"
     state: "{{ firewall_enabled|bool and 'started' or 'stopped' }}"
-    daemon_reload: yes
   tags: ["firewall"]
