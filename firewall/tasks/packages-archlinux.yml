@@ -1,0 +1,8 @@
+---
+- name: instala pacotes necessários - arch linux
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - iptables
+  tags: ["firewall"]

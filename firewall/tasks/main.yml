@@ -1,10 +1,10 @@
 ---
-- name: instala pacotes necessários
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - iptables
+- include: "packages-debian.yml"
+  when: ansible_os_family|lower == 'debian'
+  tags: ["firewall"]
+
+- include: "packages-archlinux.yml"
+  when: ansible_os_family|lower == 'archlinux'
   tags: ["firewall"]
 
 - name: copia unit do systemd para firewall
