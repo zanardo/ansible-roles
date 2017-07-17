@@ -1,5 +1,8 @@
 ---
-- name: instala pacotes necessários
+- setup:
+  delegate_to: "{{ virt_install_vmhost }}"
+
+- name: instala pacotes necessários - debian
   apt:
     name: "{{ item }}"
     state: present
@@ -8,6 +11,17 @@
     - python-libvirt
     - virtinst
   delegate_to: "{{ virt_install_vmhost }}"
+  when: ansible_os_family|lower == "debian"
+
+- name: instala pacotes necessários - arch linux
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libvirt-python2
+    - virt-install
+  delegate_to: "{{ virt_install_vmhost }}"
+  when: ansible_os_family|lower == "archlinux"
 
 - name: verifica se máquina virtual existe
   virt:
@@ -51,3 +65,5 @@
     command: ssh-keygen -R {{ virt_install_ip }}
 
   when: virt_install_name not in virt_vms.list_vms
+
+- setup: {}
