@@ -34,20 +34,10 @@
 
   - name: instala máquina virtual {{ virt_install_name }}
     connection: local
-    shell: virt-install
+    shell: http_proxy="{{ virt_install_http_proxy|d('') }}" virt-install
       --connect qemu:///system 
       --name {{ virt_install_name }} 
       {{ virt_install_args|join(' ') }}
-    when: virt_install_http_proxy is not defined
-    delegate_to: "{{ virt_install_vmhost }}"
-
-  - name: instala máquina virtual {{ virt_install_name }}
-    connection: local
-    shell: http_proxy="{{ virt_install_http_proxy }}" virt-install
-      --connect qemu:///system 
-      --name {{ virt_install_name }} 
-      {{ virt_install_args|join(' ') }}
-    when: virt_install_http_proxy is defined
     delegate_to: "{{ virt_install_vmhost }}"
 
   - name: aguarda porta tcp {{ virt_waitfor_port }} em {{ virt_install_ip }}
