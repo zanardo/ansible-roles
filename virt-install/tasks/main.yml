@@ -59,10 +59,14 @@
       timeout: '{{ virt_waitfor_timeout }}'
     when: 'virt_waitfor_port|d'
 
-  - name: remove chave de ssh em know_hosts local
+  - name: remove chaves de ssh em know_hosts local
     connection: local
-    failed_when: False
-    command: ssh-keygen -R {{ virt_install_ip }}
+    known_hosts:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - "{{ virt_install_ip }}"
+      - "{{ virt_install_name }}"
 
   when: virt_install_name not in virt_vms.list_vms
 
