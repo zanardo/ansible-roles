@@ -1,0 +1,20 @@
+---
+- name: remove arquivo /reboot-me
+  file:
+    path: /reboot-me
+    state: absent
+  register: reboot_register
+
+- name: reinicia máquina
+  shell: shutdown -r &
+  when: reboot_register|changed
+
+- name: aguarda ssh responder
+  connection: local
+  wait_for:
+    host: '{{ inventory_hostname }}'
+    port: 22
+    state: present
+    timeout: 300
+    delay: 15
+  when: reboot_register|changed
