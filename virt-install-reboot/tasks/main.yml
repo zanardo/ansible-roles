@@ -6,7 +6,7 @@
   register: reboot_register
 
 - name: reinicia máquina
-  shell: shutdown -r &
+  shell: ( sleep 3 && reboot & )
   when: reboot_register|changed
 
 - name: aguarda ssh responder
