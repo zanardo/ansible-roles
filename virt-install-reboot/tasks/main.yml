@@ -1,4 +1,6 @@
 ---
+- meta: flush_handlers
+
 - name: remove arquivo /reboot-me
   file:
     path: /reboot-me
