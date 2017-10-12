@@ -12,3 +12,7 @@ Ansible Role para instalar e configurar o [Nginx](http://www.nginx.org/).
 
 - `nginx:conf`: Copia o arquivo de configuração e reinicia o Nginx caso exista
   alguma mudança.
+
+# Compatibilidade
+
+- Debian Jessie
