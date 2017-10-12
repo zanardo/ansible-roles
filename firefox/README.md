@@ -6,3 +6,7 @@ instalada.
 # Tags
 
 - `firefox`: Executa o role completo.
+
+# Distribuições Linux suportadas
+
+ - Debian Jessie
