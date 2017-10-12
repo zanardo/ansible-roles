@@ -1,0 +1,8 @@
+deb http://cdn-fastly.deb.debian.org/debian wheezy main contrib non-free
+deb-src http://cdn-fastly.deb.debian.org/debian wheezy main contrib non-free
+deb http://cdn-fastly.deb.debian.org/debian-security wheezy/updates main contrib non-free
+deb-src http://cdn-fastly.deb.debian.org/debian-security wheezy/updates main contrib non-free
+deb http://cdn-fastly.deb.debian.org/debian/ wheezy-updates main contrib non-free
+deb-src http://cdn-fastly.deb.debian.org/debian/ wheezy-updates main contrib non-free
+deb http://cdn-fastly.deb.debian.org/debian/ wheezy-backports main contrib non-free
+deb-src http://cdn-fastly.deb.debian.org/debian/ wheezy-backports main contrib non-free
