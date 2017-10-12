@@ -28,8 +28,8 @@
   when: ansible_distribution_release in ('jessie')
 
 - set_fact:
-    postgresql_version: 9.5
-  when: ansible_distribution_release in ('xenial')
+    postgresql_version: 9.6
+  when: ansible_distribution_release in ('stretch')
 
 - name: instala postgresql
   apt:

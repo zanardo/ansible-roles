@@ -14,3 +14,8 @@ Ansible Role para instalar e configurar o servidor
 - `postgresql`: executa todo o role.
 
 - `postgresql:conf`: atualiza a configuração.
+
+# Compatibilidade
+
+- Debian Jessie
+- Debian Stretch
