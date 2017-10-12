@@ -1,0 +1,9 @@
+---
+- name: set sysctl configurations
+  sysctl:
+    sysctl_file: /etc/sysctl.d/local.conf
+    state: present
+    name: '{{ item }}'
+    value: '{{ sysctl_set[item] }}'
+  with_items: '{{ sysctl_set }}'
+  tags: sysctl
