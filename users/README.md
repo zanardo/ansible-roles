@@ -8,10 +8,10 @@ Ansible Role para definir usuários (através de chamadas ao módulo `user`).
 users_users:
   - name: joe
     createhome: yes
-	home: /home/joe
-	shell: /bin/bash
-	skeleton: /etc/skel
-	system: no
+    home: /home/joe
+    shell: /bin/bash
+    skeleton: /etc/skel
+    system: no
 ```
 
 # Tags

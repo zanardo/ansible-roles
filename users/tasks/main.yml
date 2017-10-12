@@ -9,3 +9,12 @@
     system: '{{ item.system|d(False) }}'
   with_items: '{{ users_users|d([]) }}'
   tags: users
+
+# No Debian, instalar o pacote whois e usar:
+# mkpasswd --method=sha-512
+- name: define senhas de usuários
+  user:
+    name: '{{ item.name }}'
+    password: '{{ item.pass }}'
+  with_items: '{{ users_password|d([]) }}'
+  tags: users
