@@ -1,0 +1,19 @@
+---
+- name: install kernel headers
+  apt:
+    name: "linux-headers-{{ ansible_kernel }}"
+    state: present
+  tags: zfs
+
+- name: install zfs-dkms from backports
+  apt:
+    name: zfs-dkms
+    default_release: "{{ ansible_distribution_release }}-backports"
+    state: present
+  tags: zfs
+
+- name: load zfs kernel modules
+  modprobe:
+    name: zfs
+    state: present
+  tags: zfs
