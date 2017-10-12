@@ -1,0 +1,16 @@
+---
+- block:
+
+  - name: copy interfaces file to /etc/network/interfaces
+    template:
+      src: "{{ interfaces_path }}"
+      dest: /etc/network/interfaces
+    when: interfaces_path|d
+
+  - name: update interfaces files in /etc/network/interfaces
+    template:
+      src: interfaces.j2
+      dest: /etc/network/interfaces
+    when: interfaces|d
+
+  tags: interfaces
