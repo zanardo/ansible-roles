@@ -6,3 +6,7 @@ O tema é obtido diretamente do repositório upstream e salvo dentro de
 # Variáveis
 
 - `gtk_theme_greybird_user`: Usuário em que o tema será instalado (em `~/.themes`).
+
+# Compatibilidade
+
+- Debian Jessie
