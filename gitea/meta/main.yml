@@ -1,0 +1,4 @@
+---
+dependencies:
+  - zanardo/supervisor
+  - zanardo/ansible-local-cache

@@ -1,0 +1,6 @@
+[program:gitea]
+command=/srv/git/gitea web
+directory=/srv/git
+user=git
+redirect_stderr=True 
+environment=HOME="/srv/git",USER="git"
