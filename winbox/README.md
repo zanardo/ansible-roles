@@ -23,3 +23,8 @@ Em uma sessão do X:
 ```bash
 wine /opt/winbox/winbox.exe
 ```
+
+# Compatibilidade
+
+- Debian Jessie
+- Debian Stretch
