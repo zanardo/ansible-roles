@@ -11,3 +11,8 @@ O **dnsmasq** fornece um resolvedor recursivo de DNS, além de um servidor DHCP.
 - `dnsmasq`: Instala e configura.
 
 - `dnsmasq:conf`: Atualiza a configuração.
+
+# Compatibilidade
+
+- Debian Jessie
+- Debian Stretch
