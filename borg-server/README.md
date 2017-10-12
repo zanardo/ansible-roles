@@ -17,10 +17,10 @@ receber os backups, com restrição de diretório.
 
 ```yaml
 borg_server_ssh_keys:
-	- name: fulano
-	  key: "ssh-rsa 123ABC123ABC...."
-	- name: ciclano
-	  key: "ssh-rsa ABC123ABC123...."
+  - name: fulano
+    key: "ssh-rsa 123ABC123ABC...."
+  - name: ciclano
+    key: "ssh-rsa ABC123ABC123...."
 ```
 
 
