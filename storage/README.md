@@ -11,8 +11,8 @@ arquivos, e configuração de montagem em `/etc/fstab`.
 storage_lvm_vgs:
   - name: vg0
     pvs:
-	  - /dev/vdb
-	  - /dev/vdc
+      - /dev/vdb
+      - /dev/vdc
 ```
 
 - `storage_lvm_lvs`: (opcional) lista de dicionários com os logical volumes
@@ -22,7 +22,7 @@ storage_lvm_vgs:
 storage_lvm_lvs:
   - name: squid_cache
     vg: vg0
-	size: 50G
+    size: 50G
 ```
 
 - `storage_fs`: (opcional) lista de dicionários com os filesystems a serem
@@ -41,10 +41,10 @@ storage_fs:
 storage_mount:
   - fstype: ext4
     name: /var/spool/squid3
-	src: /dev/vg0/squid_cache
-	state: mounted
-	owner: proxy	# chown, sem recursivo (somente raíz)
-	group: proxy
+    src: /dev/vg0/squid_cache
+    state: mounted
+    owner: proxy    # chown, sem recursivo (somente raíz)
+    group: proxy
 ```
 
 # Tags
