@@ -6,8 +6,8 @@ Ansible Role para instalar pacotes via apt.
 
 ```yaml
 packages_install:
-	- rsync
-	- tmux
+  - rsync
+  - tmux
 ```
 
 # Tags
