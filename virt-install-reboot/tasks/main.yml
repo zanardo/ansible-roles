@@ -11,11 +11,11 @@
   shell: ( sleep 3 && reboot & )
   when: reboot_register|changed
 
-- name: aguarda ssh responder
+- name: aguarda porta tcp {{ virt_waitfor_port }} em {{ virt_install_ip }}
   connection: local
   wait_for:
-    host: '{{ inventory_hostname }}'
-    port: 22
+    host: '{{ virt_install_ip }}'
+    port: '{{ virt_waitfor_port }}'
     state: present
     timeout: 300
     delay: 15
