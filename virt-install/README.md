@@ -70,3 +70,8 @@ As seguintes mudanças são feitas no sistema:
            netcfg/confirm_static=true
         \""
 ```
+
+# Compatibilidade
+
+- Debian Jessie
+- Debian Stretch
