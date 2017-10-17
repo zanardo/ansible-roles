@@ -1,21 +1,31 @@
-Este repositório contém roles do
-[Ansible](https://docs.ansible.com/ansible/index.html).
+# What is this?
 
-Os roles são desenvolvidos e testados apenas no **Debian**, exceto
-discriminado na documentação específica do role.
+This repository contains [Ansible](https://docs.ansible.com/ansible/index.html) roles.
 
-Os termos de uso podem ser encontrados no arquivo `COPYING` na raíz deste
-repositório.
+Each role lives inside a subdirectory. The roles are aggregated inside a monolithic repository (instead of split ones) because it is easier to maintain.
 
-# Como usar
+# How to use the roles?
 
-- Configurar um submódulo do Git para os roles:
+The roles need to be added to `zanardo/` namespace, because some roles have dependencies on other roles inside this repository. The best way is using a Git submodule:
 
 ```bash
 git submodule add https://github.com/zanardo/ansible-roles roles/zanardo
 ```
 
-Observe que os roles devem permanecer no subdiretório `zanardo` dentro de um
-diretório contido no seu `roles_path`, e os roles devem ser chamados via
-`zanardo/nome-do-role`, para manter a compatibilidade com as dependências
-entre roles e não poluir seu *namespace* de roles locais.
+Then, you can use the roles inside your playbooks. Example:
+
+```yaml
+- { role: zanardo/dnsmasq }
+```
+
+# Some notes
+
+- The roles are developed and tested only on Debian. Each role should have the compatibility matrix inside their own README.
+
+- There is no guarantee of "ABI" stability. These roles are created solely for my own needs, and shared so people can adapt them for their needs or get some ideas from them. They will be modified or deleted without notice.
+
+- Some roles and READMEs are in Portuguese, as the most Git commit history. Sorry about the language mess :)
+
+# Copyright
+
+- The terms of use can be found in `COPYING` file, at the root of this repository.
