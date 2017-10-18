@@ -1,5 +1,9 @@
 ---
-- hosts: all
+- hosts:
+    - debian-wheezy
+    - debian-jessie
+    - debian-stretch
+
   vars:
     packages_install:
       - build-essential
