@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars:
+    packages_install:
+      - build-essential
+      - git
+  
+  roles:
+
+    - { role: zanardo/packages }
