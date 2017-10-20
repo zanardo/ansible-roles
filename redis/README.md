@@ -1,14 +1,11 @@
-Ansible Role para instalar o [Redis](http://redis.io/) no Debian.
+Ansible role for installing [Redis](http://redis.io/).
 
-O **Redis** é um serviço de estrutura de dados em memória RAM.
+# Variables
 
-# Variáveis
-
-- `redis_conf`: Opcional, define o path local para o template que irá
-  substituir o arquivo de configurações do Redis.
+- `redis_conf`: Optional. Defines the local path to the template that will replace Redis configuration file.
 
 # Tags
 
-- `redis`: Executa todo o role.
+- `redis`: Runs the entire role.
 
-- `redis:conf`: Atualiza o arquivo de configurações.
+- `redis:conf`: Update the configuration file.
