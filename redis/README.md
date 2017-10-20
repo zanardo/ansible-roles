@@ -9,3 +9,9 @@ Ansible role for installing [Redis](http://redis.io/).
 - `redis`: Runs the entire role.
 
 - `redis:conf`: Update the configuration file.
+
+# Compatibility
+
+- Debian Wheezy
+- Debian Jessie
+- Debian Stretch
