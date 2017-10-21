@@ -6,3 +6,9 @@ processos, e é usado nos outros roles.
 # Tags
 
 - `supervisor`: Executa todo o role.
+
+# Compatibilidade
+
+- Debian Wheezy
+- Debian Jessie
+- Debian Stretch
