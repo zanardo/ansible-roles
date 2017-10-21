@@ -1,0 +1,8 @@
+---
+- hosts:
+    - debian-wheezy
+    - debian-jessie
+    - debian-stretch
+
+  roles:
+    - zanardo/libvirt
