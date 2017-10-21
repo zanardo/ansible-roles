@@ -1,0 +1,12 @@
+---
+- hosts:
+    - debian-wheezy
+    - debian-jessie
+    - debian-stretch
+
+  vars:
+    go_version: "1.9.1"
+
+  roles:
+
+    - zanardo/go
