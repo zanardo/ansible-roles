@@ -1,16 +1,16 @@
-Ansible role for installing [Redis](http://redis.io/).
+Ansible role para instalar e configurar o [Redis](http://redis.io/).
 
 # Variables
 
-- `redis_conf`: Optional. Defines the local path to the template that will replace Redis configuration file.
+- `redis_conf`: Opcional. Define o caminho local para o template que irá substituir o arquivo de configurações do Redis.
 
 # Tags
 
-- `redis`: Runs the entire role.
+- `redis`: Executa o role completo.
 
-- `redis:conf`: Update the configuration file.
+- `redis:conf`: Atualiza o arquivo de configurações e reinicia o Redis.
 
-# Compatibility
+# Compatibilidade
 
 - Debian Wheezy
 - Debian Jessie
