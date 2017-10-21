@@ -1,19 +1,14 @@
-Ansible Role for installing ZFS on Linux.
+Ansible Role para instalar o ZFS On Linux.
 
-ZFS is installed from Debian Backports, and the kernel module is loaded.
+O ZFS é instalado via Debian Backports, e o módulo do kernel é carregado.
 
-This role does not manage ZFS pools or filesystems.
-
-# How to use
-
-```yaml
-- { role: zanardo/zfs }
-```
+Eles role não gerencia *pools* e *filesystems* do ZFS.
 
 # Tags
 
-- `zfs`: Run entire role.
+- `zfs`: Executa todo o role.
 
-# Compatibility
+# Compatibilidade
 
+- Debian Jessie
 - Debian Stretch
