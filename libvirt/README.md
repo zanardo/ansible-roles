@@ -44,3 +44,8 @@ shutdown dos guests.
 # Tags
 
 - `libvirt`: executa todo o role.
+
+# Compatibilidade
+
+- Debian Jessie
+- Debian Stretch
