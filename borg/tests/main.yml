@@ -1,0 +1,12 @@
+---
+- hosts:
+    - debian-wheezy
+    - debian-jessie
+    - debian-stretch
+
+  vars:
+    borg_version: "1.1.0"
+
+  roles:
+
+    - zanardo/borg
