@@ -1,37 +1,40 @@
 ---
-- include: "packages-debian.yml"
-  when: ansible_os_family|lower == 'debian'
-  tags: ["firewall"]
+- block:
 
-- include: "packages-archlinux.yml"
-  when: ansible_os_family|lower == 'archlinux'
-  tags: ["firewall"]
+  - name: instala pacotes necessários
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - iptables
+    tags: ["firewall"]
 
-- name: copia unit do systemd para firewall
-  template:
-    src: firewall.service.j2
-    dest: /etc/systemd/system/firewall.service
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-    - recarrega units systemd
-    - reinicia firewall
-  tags: ["firewall"]
+  - name: copia unit do systemd para firewall
+    template:
+      src: firewall.service.j2
+      dest: /etc/systemd/system/firewall.service
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - recarrega units systemd
+      - reinicia firewall
+    tags: ["firewall"]
 
-- name: copia script do firewall
-  template:
-    src: firewall.sh.j2
-    dest: /etc/firewall.sh
-    owner: root
-    group: root
-    mode: 0700
-  notify: reinicia firewall
-  tags: ["firewall"]
+  - name: copia script do firewall
+    template:
+      src: firewall.sh.j2
+      dest: /etc/firewall.sh
+      owner: root
+      group: root
+      mode: 0700
+    notify: reinicia firewall
+    tags: ["firewall"]
 
-- name: ativa ou desativa firewall no systemd
-  systemd:
-    name: firewall
-    enabled: "{{ firewall_enabled }}"
-    state: "{{ firewall_enabled|bool and 'started' or 'stopped' }}"
+  - name: ativa ou desativa firewall no systemd
+    systemd:
+      name: firewall
+      enabled: "{{ firewall_enabled }}"
+      state: "{{ firewall_enabled|bool and 'started' or 'stopped' }}"
+
   tags: ["firewall"]
