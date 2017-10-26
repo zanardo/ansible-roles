@@ -10,6 +10,5 @@ com as versões mais atuais do `pip`.
 
 # Compatibilidade
 
-- Debian Wheezy
 - Debian Jessie
 - Debian Stretch
