@@ -10,7 +10,8 @@
     check_mode: no
     failed_when: False
 
-  - include: install.yml
+  - name: inclui tasks de instalação do go
+    include_tasks: install.yml
     when: go_register_version.stdout != go_version or go_force_install is defined
 
   tags: ["go"]
