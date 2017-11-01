@@ -8,9 +8,12 @@
       line: i386
       regexp: "^i386$"
       create: yes
-    notify: recarrega repositórios apt
+    register: dpkg_arch_reg
 
-  - meta: flush_handlers
+  - name: recarrega repositórios apt
+    apt:
+      update_cache: yes
+    when: dpkg_arch_reg | changed
 
   - name: instala pacotes necessários - debian jessie
     apt:
