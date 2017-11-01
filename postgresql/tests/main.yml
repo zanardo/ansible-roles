@@ -1,0 +1,8 @@
+---
+- hosts:
+    - debian-jessie
+    - debian-stretch
+
+  roles:
+
+    - zanardo/postgresql
