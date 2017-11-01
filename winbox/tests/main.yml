@@ -1,0 +1,10 @@
+---
+- hosts:
+    - debian-jessie
+    - debian-stretch
+
+  vars:
+    winbox_version: "3.11"
+
+  roles:
+    - zanardo/winbox
