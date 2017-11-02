@@ -3,10 +3,10 @@
   systemd:
     daemon_reload: yes
     name: firewall
-  tags: ["firewall"]
+  tags: firewall
 
 - name: reinicia firewall
   systemd:
     name: firewall
     state: "{{ firewall_enabled|bool and 'restarted' or 'stopped' }}"
-  tags: ["firewall"]
+  tags: firewall
