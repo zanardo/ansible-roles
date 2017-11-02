@@ -1,8 +1,0 @@
----
-- name: instala pacotes necessários - debian
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - iptables
-  tags: ["firewall"]
