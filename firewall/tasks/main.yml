@@ -7,7 +7,6 @@
       state: present
     with_items:
       - iptables
-    tags: ["firewall"]
 
   - name: copia unit do systemd para firewall
     template:
@@ -19,7 +18,6 @@
     notify:
       - recarrega units systemd
       - reinicia firewall
-    tags: ["firewall"]
 
   - name: copia script do firewall
     template:
@@ -29,7 +27,6 @@
       group: root
       mode: 0700
     notify: reinicia firewall
-    tags: ["firewall"]
 
   - name: ativa ou desativa firewall no systemd
     systemd:
@@ -37,4 +34,4 @@
       enabled: "{{ firewall_enabled }}"
       state: "{{ firewall_enabled|bool and 'started' or 'stopped' }}"
 
-  tags: ["firewall"]
+  tags: firewall
