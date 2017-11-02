@@ -6,16 +6,6 @@ Windows, e roda emulado no Wine.
 
 - `winbox_version`: Versão do Winbox a ser instalada.
 
-# Ações
-
-As seguintes mudanças são feitas no sistema:
-
-- O dpkg é configurado para suportar a arquitetura `i386`.
-
-- O Wine é instalado.
-
-- O executável do Winbox é instalado em `/opt/winbox`.
-
 # Como rodar o Winbox
 
 Em uma sessão do X:
