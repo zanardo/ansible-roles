@@ -1,0 +1,33 @@
+---
+- block:
+
+  - name: adiciona arquitetura i386 para dpkg
+    lineinfile:
+      state: present
+      dest: /var/lib/dpkg/arch
+      line: i386
+      regexp: "^i386$"
+      create: yes
+    register: dpkg_arch_reg
+
+  - name: recarrega repositórios apt
+    apt:
+      update_cache: yes
+    when: dpkg_arch_reg | changed
+
+  - name: instala pacotes necessários - debian jessie
+    apt:
+      state: present
+      name: "wine:i386"
+    when: ansible_distribution_release == "jessie"
+
+  - name: instala pacotes necessários - debian stretch
+    apt:
+      state: present
+      name: "{{ item }}"
+    with_items:
+        - wine
+        - wine32
+    when: ansible_distribution_release == "stretch"
+
+  tags: wine

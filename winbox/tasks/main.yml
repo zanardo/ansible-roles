@@ -1,35 +1,6 @@
 ---
 - block:
 
-  - name: configura arquitetura i386 para apt
-    lineinfile:
-      state: present
-      dest: /var/lib/dpkg/arch
-      line: i386
-      regexp: "^i386$"
-      create: yes
-    register: dpkg_arch_reg
-
-  - name: recarrega repositórios apt
-    apt:
-      update_cache: yes
-    when: dpkg_arch_reg | changed
-
-  - name: instala pacotes necessários - debian jessie
-    apt:
-      state: present
-      name: "wine:i386"
-    when: ansible_distribution_release == "jessie"
-
-  - name: instala pacotes necessários - debian stretch
-    apt:
-      state: present
-      name: "{{ item }}"
-    with_items:
-        - wine
-        - wine32
-    when: ansible_distribution_release == "stretch"
-
   - name: download do winbox para cache local
     connection: local
     get_url:
@@ -52,4 +23,4 @@
       src: "/opt/winbox/winbox-{{ winbox_version }}.exe"
       dest: "/opt/winbox/winbox.exe"
 
-  tags: ["winbox"]
+  tags: winbox
