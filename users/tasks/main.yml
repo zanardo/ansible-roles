@@ -17,4 +17,5 @@
     name: '{{ item.name }}'
     password: '{{ item.pass }}'
   with_items: '{{ users_password|d([]) }}'
+  no_log: yes
   tags: users
