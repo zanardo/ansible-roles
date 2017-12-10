@@ -45,7 +45,7 @@
   - name: desativa proxy para repositórios https para apt
     lineinfile:
       path: /etc/apt/apt.conf
-      line: "Acquire::https::Proxy \"\";"
+      line: "Acquire::https::Proxy \"DIRECT\";"
       regexp: "^Acquire::https::Proxy "
       state: present
     when: apt_proxy_no_https is defined
