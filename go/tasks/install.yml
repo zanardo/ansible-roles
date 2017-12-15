@@ -37,3 +37,10 @@
     group: root
     path: /usr/local/go
     recurse: yes
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /tmp/go-{{ go_version }}.tar.gz
