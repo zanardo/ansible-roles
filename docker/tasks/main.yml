@@ -1,0 +1,44 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg2
+      - software-properties-common
+
+  - name: adiciona chave gpg no apt para docker
+    apt_key:
+      state: present
+      id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+      keyserver: pgp.mit.edu
+
+  - name: adiciona repositório do docker
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+      state: present
+      filename: docker
+
+  - name: instala docker
+    apt:
+      state: present
+      name: docker-ce
+
+  - name: cria diretório de configurações
+    file:
+      state: directory
+      path: /etc/docker
+
+  - name: configura docker
+    copy:
+      content: "{{ docker_daemon_config | to_json }}"
+      dest: /etc/docker/daemon.json
+    when: docker_daemon_config|d
+    notify: reinicia docker
+
+  tags: docker
