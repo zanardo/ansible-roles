@@ -69,7 +69,9 @@
 
 - name: configura locale default do container
   copy:
-    content: "en_US.UTF-8"
+    content: |
+      LANG="en_US.UTF-8"
+      LANGUAGE="en_US:en"
     dest: "/var/lib/machines/{{ systemd_container_name }}/etc/default/locale"
   delegate_to: "{{ systemd_container_host }}"
 
