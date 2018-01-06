@@ -1,0 +1,43 @@
+---
+- setup:
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: instala pacotes necessários
+  apt:
+    state: present
+    name: "{{ item }}"
+    install_recommends: no
+  with_items:
+    - debootstrap
+    - systemd-container
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria diretório de configurações dos containers
+  file:
+    state: directory
+    path: /etc/systemd/nspawn
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria configurações do container
+  copy:
+    content: "{{ systemd_container_nspawn_config }}"
+    dest: "/etc/systemd/nspawn/{{ systemd_container_name }}.nspawn"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria container via debootstrap
+  environment:
+    http_proxy: "{{ systemd_container_http_proxy }}"
+  command:
+    creates="/var/lib/machines/{{ systemd_container_name }}"
+    debootstrap \
+      --include=systemd,dbus,locales,python,sudo,openssh-server \
+      "{{ systemd_container_debian }}" \
+      "/var/lib/machines/{{ systemd_container_name }}" \
+      "{{ systemd_container_debian_mirror }}"
+  delegate_to: "{{ systemd_container_host }}"
+  register: container_created
+
+- name: bootstrap inicial do container
+  include_tasks:
+    create.yml
+  when: container_created|changed
