@@ -13,7 +13,6 @@ Ansible Role para configurar os repositórios de pacotes do Debian (em
 
 # Compatibilidade
 
-- Debian Wheezy
 - Debian Jessie
 - Debian Stretch
 - Debian Buster (preliminar)
