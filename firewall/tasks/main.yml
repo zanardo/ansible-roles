@@ -1,12 +1,17 @@
 ---
 - block:
 
-  - name: instala pacotes necessários
+  - name: instala iptables - debian
     apt:
-      name: "{{ item }}"
+      name: iptables
       state: present
-    with_items:
-      - iptables
+    when: ansible_distribution == "Debian"
+
+  - name: instala iptables - arch
+    pacman:
+      name: iptables
+      state: present
+    when: ansible_distribution == "Archlinux"
 
   - name: copia unit do systemd para firewall
     template:
