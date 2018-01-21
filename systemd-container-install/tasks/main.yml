@@ -53,3 +53,5 @@
   include_tasks:
     create.yml
   when: container_created|changed
+
+- setup: {}
