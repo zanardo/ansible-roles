@@ -2,7 +2,7 @@
 - setup:
   delegate_to: "{{ systemd_container_host }}"
 
-- name: instala pacotes necessários
+- name: instala pacotes necessários - debian
   apt:
     state: present
     name: "{{ item }}"
@@ -11,6 +11,18 @@
     - debootstrap
     - systemd-container
   delegate_to: "{{ systemd_container_host }}"
+  when: ansible_distribution == "Debian"
+
+- name: instala pacotes necessários - arch
+  environment:
+    http_proxy: "{{ systemd_container_http_proxy }}"
+  pacman:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - debootstrap
+  delegate_to: "{{ systemd_container_host }}"
+  when: ansible_distribution == "Archlinux"
 
 - name: cria diretório de configurações dos containers
   file:
