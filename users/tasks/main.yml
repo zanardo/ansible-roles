@@ -8,6 +8,8 @@
     skeleton: '{{ item.skeleton|d("/etc/skel") }}'
     system: '{{ item.system|d(False) }}'
   with_items: '{{ users_users|d([]) }}'
+  loop_control:
+    label: "{{ item.name }}"
   tags: users
 
 # No Debian, instalar o pacote whois e usar:
@@ -17,5 +19,6 @@
     name: '{{ item.name }}'
     password: '{{ item.pass }}'
   with_items: '{{ users_password|d([]) }}'
-  no_log: yes
+  loop_control:
+    label: "{{ item.name }}"
   tags: users
