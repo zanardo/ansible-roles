@@ -1,0 +1,12 @@
+---
+- hosts:
+    - debian8
+    - debian9
+
+  vars:
+    users_password:
+      - name: root
+        pass: $6$D3BNVP2wLya$9mcvRPQHogbbdpo3Z0yzezz1oSQbSeAxKCHOk4zor3NqUdJyCVH.YvMgFQlZgbkP3uNdWZoH1vkKxJPssDFhx0
+
+  roles:
+    - zanardo/users
