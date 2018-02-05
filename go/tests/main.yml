@@ -1,7 +1,7 @@
 ---
 - hosts:
-    - debian-jessie
-    - debian-stretch
+    - debian8
+    - debian9
 
   vars:
     go_version: "1.9.2"
