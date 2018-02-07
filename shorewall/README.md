@@ -26,3 +26,9 @@ permite manter as configurações em arquivos-textos organizados.
 - `shorewall:conf`: copia arquivos de configuração e reinicia Shorewall caso
   exista alguma mudança.
 
+
+# Compatibilidade
+
+- Debian Jessie
+- Debian Stretch
+- CentOS 7

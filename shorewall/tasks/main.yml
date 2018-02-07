@@ -1,9 +1,18 @@
 ---
-- name: instala pacotes
+- name: instala pacotes - debian
   apt:
     name: shorewall
     state: present
   register: shorewall_install_register
+  when: ansible_distribution == "Debian"
+  tags: ["shorewall"]
+
+- name: instala pacotes - centos
+  yum:
+    name: shorewall
+    state: present
+  register: shorewall_install_register
+  when: ansible_distribution == "CentOS"
   tags: ["shorewall"]
 
 - name: habilita serviço do systemd
@@ -11,13 +20,24 @@
   when: shorewall_install_register|changed
   tags: ["shorewall"]
 
-- name: habilita início no boot
+- name: habilita início no boot - debian
   lineinfile:
     dest: /etc/default/shorewall
     line: "startup=1"
     regexp: "^startup="
     state: present
   notify: reconfigura shorewall
+  when: ansible_distribution == "Debian"
+  tags: ["shorewall"]
+
+- name: habilita início no boot - centos
+  lineinfile:
+    dest: /etc/shorewall/shorewall.conf
+    regexp: "^STARTUP_ENABLED="
+    line: "STARTUP_ENABLED=Yes"
+    state: present
+  notify: reconfigura shorewall
+  when: ansible_distribution == "CentOS"
   tags: ["shorewall"]
 
 - name: verifica se a reconfiguração falhou
