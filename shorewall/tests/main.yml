@@ -1,0 +1,9 @@
+---
+- hosts:
+    - debian8
+    - debian9
+
+  roles:
+
+    - role: zanardo/shorewall
+      shorewall_conf: "{{ playbook_dir }}/shorewall/*"
