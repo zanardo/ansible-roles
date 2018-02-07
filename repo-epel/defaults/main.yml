@@ -1,2 +1,2 @@
 ---
-epel_repo: "http://download.fedoraproject.org/pub/epel"
+epel_mirror: "http://download.fedoraproject.org/pub/epel"
