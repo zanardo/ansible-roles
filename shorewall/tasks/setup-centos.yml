@@ -1,0 +1,21 @@
+---
+- name: instala pacotes
+  yum:
+    name: shorewall
+    state: present
+  tags: ["shorewall"]
+
+- name: habilita serviço
+  systemd:
+    name: shorewall
+    enabled: yes
+
+- name: habilita início no boot - centos
+  lineinfile:
+    dest: /etc/shorewall/shorewall.conf
+    regexp: "^STARTUP_ENABLED="
+    line: "STARTUP_ENABLED=Yes"
+    state: present
+  notify: reconfigura shorewall
+  tags: ["shorewall"]
+

@@ -1,0 +1,24 @@
+---
+- name: instala pacotes
+  apt:
+    name: shorewall
+    state: present
+  register: shorewall_install_register
+  tags: ["shorewall"]
+
+# Aparentemente o Debian Stretch precisa que forcemos a carga
+# via comando, pois o Shorewall volta parado no reboot.
+- name: habilita serviço do systemd
+  shell: systemctl enable shorewall
+  when: shorewall_install_register|changed
+  tags: ["shorewall"]
+
+- name: habilita início no boot
+  lineinfile:
+    dest: /etc/default/shorewall
+    line: "startup=1"
+    regexp: "^startup="
+    state: present
+  notify: reconfigura shorewall
+  tags: ["shorewall"]
+
