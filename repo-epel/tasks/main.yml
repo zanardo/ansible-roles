@@ -1,0 +1,10 @@
+---
+- name: instala pacote para epel
+  yum:
+    name: epel-release
+    state: present
+
+- name: copia arquivo com repositório
+  template:
+    src: epel.repo
+    dest: /etc/yum.repos.d/epel.repo
