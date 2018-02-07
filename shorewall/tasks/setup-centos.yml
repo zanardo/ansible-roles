@@ -1,4 +1,8 @@
 ---
+- name: instala role zanardo/repo-epel
+  import_role:
+    name: zanardo/repo-epel
+
 - name: instala pacotes
   yum:
     name: shorewall
