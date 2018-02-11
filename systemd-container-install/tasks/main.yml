@@ -40,7 +40,7 @@
   environment:
     http_proxy: "{{ systemd_container_http_proxy }}"
   command:
-    creates="/var/lib/machines/{{ systemd_container_name }}"
+    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
     debootstrap \
       --include=systemd,dbus,locales,python,sudo,openssh-server \
       "{{ systemd_container_debian }}" \
