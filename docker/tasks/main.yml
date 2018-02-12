@@ -28,6 +28,7 @@
     apt:
       state: present
       name: docker-ce
+      install_recommends: no
 
   - name: cria diretório de configurações
     file:
