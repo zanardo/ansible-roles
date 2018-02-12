@@ -24,12 +24,6 @@
       state: present
       filename: docker
 
-  - name: instala docker
-    apt:
-      state: present
-      name: docker-ce
-      install_recommends: no
-
   - name: cria diretório de configurações
     file:
       state: directory
@@ -41,5 +35,11 @@
       dest: /etc/docker/daemon.json
     when: docker_daemon_config|d
     notify: reinicia docker
+
+  - name: instala docker
+    apt:
+      state: present
+      name: docker-ce
+      install_recommends: no
 
   tags: docker
