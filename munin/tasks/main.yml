@@ -1,0 +1,40 @@
+---
+- block:
+
+  # Instalamos o Apache separadamente, pois na instalação do Munin,
+  # o arquivo de configuração do Apache já é copiado.
+  - name: instala apache
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - apache2
+      - libapache2-mod-fcgid
+    notify: reinicia apache
+
+  - name: ativa módulo fastcgi para apache
+    apache2_module:
+      name: fcgid
+      state: present
+    notify: reinicia apache
+
+  - name: instala munin
+    apt:
+      name: munin
+      state: present
+
+  - name: libera acesso ao munin
+    replace:
+      path: /etc/munin/apache24.conf
+      regexp: '^(\s*)Require local$'
+      replace: '\1Require all granted'
+    notify: reinicia apache
+
+  - name: copia arquivo de configuração do munin
+    template:
+      src: "{{ munin_conf }}"
+      dest: /etc/munin/munin.conf
+    tags:
+      - munin:conf
+
+  tags: munin
