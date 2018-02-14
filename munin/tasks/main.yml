@@ -24,17 +24,12 @@
       state: present
 
   - name: copia arquivo de configuração do apache
-    copy:
+    template:
       src: apache24.conf
       dest: /etc/munin/apache24.conf
     notify: reinicia apache
-
-  - name: libera acesso ao munin
-    replace:
-      path: /etc/munin/apache24.conf
-      regexp: '^(\s*)Require local$'
-      replace: '\1Require all granted'
-    notify: reinicia apache
+    tags:
+      - munin:conf
 
   - name: copia arquivo de configuração do munin
     template:
