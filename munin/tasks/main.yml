@@ -23,6 +23,12 @@
       name: munin
       state: present
 
+  - name: copia arquivo de configuração do apache
+    copy:
+      src: apache24.conf
+      dest: /etc/munin/apache24.conf
+    notify: reinicia apache
+
   - name: libera acesso ao munin
     replace:
       path: /etc/munin/apache24.conf
