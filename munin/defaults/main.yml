@@ -1,5 +1,8 @@
 ---
 munin_conf: munin.conf
+munin_max_processes: 16
 munin_fcgi_max_process: 4
 munin_fcgi_process_idle: 3600
+munin_html_strategy: cgi
+munin_graph_strategy: cgi
 munin_hosts: []
