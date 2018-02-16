@@ -1,0 +1,4 @@
+---
+prometheus_conf: "prometheus.yml"
+prometheus_args: ""
+prometheus_data_path: "/srv/prometheus"
