@@ -9,6 +9,7 @@ ExecStart=/opt/prometheus/prometheus --config.file=/opt/prometheus/prometheus.ym
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=20s
 SendSIGKILL=no
+WorkingDirectory=/opt/prometheus
 
 [Install]
 WantedBy=multi-user.target
