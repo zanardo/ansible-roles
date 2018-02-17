@@ -12,7 +12,7 @@
     url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/{{ item }}"
     dest: "~/.cache/ansible/{{ item }}"
   with_items:
-    - "prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
   tags: prometheus
 
 - name: obtém versão instalada do prometheus
@@ -37,7 +37,7 @@
     src: "~/.cache/ansible/{{ item }}"
     dest: "/tmp/{{ item }}"
   with_items:
-    - "prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
   when: version.stdout != prometheus_version
   tags: prometheus
 
@@ -71,7 +71,7 @@
     tar --strip-components=1 -xf "/tmp/{{ item }}" && \
     chown -R root:root /opt/prometheus/
   with_items:
-    - "prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
   when: version.stdout != prometheus_version
   tags: prometheus
 
@@ -103,5 +103,5 @@
     path: "/tmp/{{ item }}"
     state: absent
   with_items:
-    - "prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
   tags: prometheus
