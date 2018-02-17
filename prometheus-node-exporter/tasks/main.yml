@@ -12,7 +12,7 @@
     url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/{{ item }}"
     dest: "~/.cache/ansible/{{ item }}"
   with_items:
-    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64.tar.gz"
+    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
   tags: prometheus-node-exporter
 
 - name: obtém versão instalada do prometheus node exporter
@@ -30,7 +30,7 @@
     src: "~/.cache/ansible/{{ item }}"
     dest: "/tmp/{{ item }}"
   with_items:
-    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64.tar.gz"
+    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
   when: version.stdout != prometheus_node_exporter_version
   tags: prometheus-node-exporter
 
@@ -49,7 +49,7 @@
     tar --strip-components=1 -xf "/tmp/{{ item }}" "{{ item|replace(".tar.gz", "") }}/node_exporter" && \
     chown root:root node_exporter
   with_items:
-    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64.tar.gz"
+    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
   when: version.stdout != prometheus_node_exporter_version
   tags: prometheus-node-exporter
 
@@ -74,5 +74,5 @@
     path: "/tmp/{{ item }}"
     state: absent
   with_items:
-    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64.tar.gz"
+    - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
   tags: prometheus-node-exporter

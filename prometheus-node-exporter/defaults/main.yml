@@ -1,2 +1,3 @@
 ---
 prometheus_node_exporter_args: ""
+prometheus_node_exporter_arch: amd64
