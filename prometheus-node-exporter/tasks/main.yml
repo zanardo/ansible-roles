@@ -40,6 +40,7 @@
     state: present
     shell: /bin/bash
     system: yes
+    createhome: no
   tags: prometheus-node-exporter
 
 - name: descompacta tarball

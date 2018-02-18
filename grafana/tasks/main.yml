@@ -45,6 +45,7 @@
       state: present
       shell: /bin/bash
       system: yes
+    createhome: no
 
   - name: cria diretório de instalação
     file:

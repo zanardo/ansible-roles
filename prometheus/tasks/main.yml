@@ -47,6 +47,7 @@
     state: present
     shell: /bin/bash
     system: yes
+    createhome: no
   tags: prometheus
 
 - name: cria diretório de instalação
