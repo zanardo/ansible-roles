@@ -52,6 +52,6 @@
 - name: bootstrap inicial do container
   include_tasks:
     create.yml
-  when: container_created|changed
+  when: container_created is changed
 
 - setup: {}

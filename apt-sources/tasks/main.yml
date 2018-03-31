@@ -11,6 +11,6 @@
     - name: recarrega repositórios debian
       apt:
         update_cache: yes
-      when: "sources_list_register|changed"
+      when: sources_list_register is changed
 
   tags: ["sources_list"]
