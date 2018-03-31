@@ -13,7 +13,7 @@
   - name: recarrega repositórios apt
     apt:
       update_cache: yes
-    when: dpkg_arch_reg | changed
+    when: dpkg_arch_reg is changed
 
   - name: instala pacotes necessários - debian jessie
     apt:
