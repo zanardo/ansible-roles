@@ -10,7 +10,7 @@
   tags: borg
 
 - name: instala borg
-  include_tasks:
+  import_tasks:
     install.yml
   when: borg_register_version.stdout != "borg " + borg_version
   tags: borg
