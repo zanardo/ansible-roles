@@ -9,7 +9,7 @@
 
 - name: reinicia máquina
   shell: ( sleep 3 && reboot & )
-  when: reboot_register|changed
+  when: reboot_register is changed
 
 - name: aguarda porta tcp {{ virt_waitfor_port }} em {{ virt_install_ip }}
   connection: local
@@ -19,4 +19,4 @@
     state: present
     timeout: 300
     delay: 15
-  when: reboot_register|changed
+  when: reboot_register is changed
