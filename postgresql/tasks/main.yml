@@ -20,7 +20,7 @@
 
 - name: recompila locale
   command: locale-gen
-  when: locale_gen|changed()
+  when: locale_gen is changed
   tags: ["postgresql"]
 
 - set_fact:
