@@ -9,7 +9,7 @@
   failed_when: False
   tags: go
 
-- name: inclui tasks de instalação do go
-  import_tasks: install.yml
+- name: instala go
+  include_tasks: install.yml
   when: go_register_version.stdout != go_version or go_force_install is defined
   tags: go

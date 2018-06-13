@@ -1,46 +1,50 @@
 ---
-- name: instala pacotes necessários
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - ca-certificates
+- block:
 
-- name: download do tarball para cache local
-  connection: local
-  get_url:
-    url: "https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
-    dest: "~/.cache/ansible/go-{{ go_version }}.tar.gz"
+  - name: instala pacotes necessários
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - ca-certificates
 
-- name: upload do tarball
-  copy:
-    src: "~/.cache/ansible/go-{{ go_version }}.tar.gz"
-    dest: "/tmp/go-{{ go_version }}.tar.gz"
+  - name: download do tarball para cache local
+    connection: local
+    get_url:
+      url: "https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
+      dest: "~/.cache/ansible/go-{{ go_version }}.tar.gz"
 
-- name: remove instalação anterior
-  file:
-    state: absent
-    path: /usr/local/go
+  - name: upload do tarball
+    copy:
+      src: "~/.cache/ansible/go-{{ go_version }}.tar.gz"
+      dest: "/tmp/go-{{ go_version }}.tar.gz"
 
-- name: extrai o tarball
-  shell: >
-    warn=no
-    chdir="/tmp"
-    mkdir /usr/local/go &&
-    tar -C /usr/local/go --strip-components=1 \
-      -xzf "/tmp/go-{{ go_version }}.tar.gz"
+  - name: remove instalação anterior
+    file:
+      state: absent
+      path: /usr/local/go
 
-- name: corrige permissões para root
-  file:
-    state: directory
-    owner: root
-    group: root
-    path: /usr/local/go
-    recurse: yes
+  - name: extrai o tarball
+    shell: >
+      warn=no
+      chdir="/tmp"
+      mkdir /usr/local/go &&
+      tar -C /usr/local/go --strip-components=1 \
+        -xzf "/tmp/go-{{ go_version }}.tar.gz"
 
-- name: remove arquivos temporários
-  file:
-    state: absent
-    path: "{{ item }}"
-  with_items:
-    - /tmp/go-{{ go_version }}.tar.gz
+  - name: corrige permissões para root
+    file:
+      state: directory
+      owner: root
+      group: root
+      path: /usr/local/go
+      recurse: yes
+
+  - name: remove arquivos temporários
+    file:
+      state: absent
+      path: "{{ item }}"
+    with_items:
+      - /tmp/go-{{ go_version }}.tar.gz
+
+  tags: go
