@@ -1,51 +1,53 @@
 ---
-- name: instala locales
-  apt:
-    name: locales
-    state: present
+- block:
 
-- name: ativa locales necessários
-  lineinfile:
-    dest: /etc/locale.gen
-    line: "{{ item }}"
-    regexp: "^(?# *){{ item }}"
-    state: present
-  with_items:
-    - "pt_BR ISO-8859-1"
-    - "pt_BR.UTF-8 UTF-8"
-    - "en_US ISO-8859-1"
-    - "en_US.UTF-8 UTF-8"
-  register: locale_gen
-  tags: ["postgresql"]
+  - name: instala locales
+    apt:
+      name: locales
+      state: present
 
-- name: recompila locale
-  command: locale-gen
-  when: locale_gen is changed
-  tags: ["postgresql"]
+  - name: ativa locales necessários
+    lineinfile:
+      dest: /etc/locale.gen
+      line: "{{ item }}"
+      regexp: "^(?# *){{ item }}"
+      state: present
+    with_items:
+      - "pt_BR ISO-8859-1"
+      - "pt_BR.UTF-8 UTF-8"
+      - "en_US ISO-8859-1"
+      - "en_US.UTF-8 UTF-8"
+    register: locale_gen
 
-- set_fact:
-    postgresql_version: 9.4
-  when: ansible_distribution_release in ('jessie')
+  - name: recompila locale
+    command: locale-gen
+    when: locale_gen is changed
 
-- set_fact:
-    postgresql_version: 9.6
-  when: ansible_distribution_release in ('stretch')
+  - set_fact:
+      postgresql_version: 9.4
+    when: ansible_distribution_release in ('jessie')
 
-- name: instala postgresql
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - "postgresql-{{ postgresql_version }}"
-    - "postgresql-contrib-{{ postgresql_version }}"
-  tags: ["postgresql"]
+  - set_fact:
+      postgresql_version: 9.6
+    when: ansible_distribution_release in ('stretch')
 
-- name: copia arquivos de configuração
-  template:
-    src: "{{ postgresql_conf }}/{{ item }}"
-    dest: "/etc/postgresql/{{ postgresql_version }}/main/{{ item }}"
-  notify: 
-    - reinicia postgresql
-    - aguarda postgresql iniciar
-  with_items: "{{ postgresql_conf_files }}"
-  tags: ["postgresql", "postgresql:conf"]
+  - name: instala postgresql
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - "postgresql-{{ postgresql_version }}"
+      - "postgresql-contrib-{{ postgresql_version }}"
+
+  - name: copia arquivos de configuração
+    template:
+      src: "{{ postgresql_conf }}/{{ item }}"
+      dest: "/etc/postgresql/{{ postgresql_version }}/main/{{ item }}"
+    notify: 
+      - reinicia postgresql
+      - aguarda postgresql iniciar
+    with_items: "{{ postgresql_conf_files }}"
+    tags:
+      - postgresql:conf
+
+  tags: postgresql
