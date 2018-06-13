@@ -11,7 +11,7 @@
   # via comando, pois o Shorewall volta parado no reboot.
   - name: habilita serviço do systemd
     shell: systemctl enable shorewall
-    when: shorewall_install_register|changed
+    when: shorewall_install_register is changed
 
   - name: habilita início no boot
     lineinfile:
