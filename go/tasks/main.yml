@@ -10,6 +10,6 @@
   tags: go
 
 - name: inclui tasks de instalação do go
-  include_tasks: install.yml
+  import_tasks: install.yml
   when: go_register_version.stdout != go_version or go_force_install is defined
   tags: go
