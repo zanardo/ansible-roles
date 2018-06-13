@@ -2,6 +2,7 @@
 - block:
 
   - name: instala pacotes necessários
+    connection: local
     apt:
       name: "{{ item }}"
       state: present
