@@ -1,0 +1,42 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name: "{{ item }}"
+    with_items:
+      - git
+      - apache2
+      - cgit
+      - python3-markdown
+      - python3-pygments
+
+  - name: ativa módulo cgid do apache
+    apache2_module:
+      name: cgid
+    notify: reinicia apache
+
+  - name: copia arquivo de configuração
+    template:
+      src: "{{ cgit_conf }}"
+      dest: /etc/cgitrc
+    when: cgit_conf|d('')
+    tags:
+      - cgit:conf
+
+  - name: cria usuário git
+    user:
+      name: git
+      home: /srv/git
+      shell: /bin/bash
+
+  - name: ajusta permissões de /srv/git
+    file:
+      state: directory
+      mode: 0755
+      owner: git
+      group: git
+      path: /srv/git
+
+  tags:
+    - cgit
