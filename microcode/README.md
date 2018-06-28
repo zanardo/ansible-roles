@@ -2,9 +2,10 @@ Ansible Role para instalar as atualizações de microcode dos processadores Inte
 
 # Ações
 
-- Instala os pacotes `intel-microcode` e `amd64-microcode`.
+- Instala os pacotes necessários.
 
 # Compatibilidade
 
 - Debian Jessie
 - Debian Stretch
+- Arch Linux
