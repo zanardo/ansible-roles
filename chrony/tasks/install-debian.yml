@@ -1,0 +1,6 @@
+---
+- name: instala pacotes necessários
+  apt:
+    state: present
+    name: chrony
+  tags: chrony
