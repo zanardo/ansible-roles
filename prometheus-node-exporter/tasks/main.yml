@@ -2,21 +2,16 @@
 - block:
 
   - name: instala pacotes necessários
-    connection: local
-    apt:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - ca-certificates
+    include_tasks: "install-{{ ansible_distribution|lower }}.yml"
 
   - name: download do tarball para cache local
     connection: local
+    run_once: true
     get_url:
       url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/{{ item }}"
       dest: "~/.cache/ansible/{{ item }}"
     with_items:
       - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
-    tags: prometheus-node-exporter
 
   - name: obtém versão instalada do prometheus node exporter
     shell:
@@ -58,9 +53,7 @@
       src: prometheus-node-exporter.service
       dest: /etc/systemd/system/prometheus-node-exporter.service
     notify: reinicia prometheus-node-exporter
-    tags: 
-      - prometheus-node-exporter
-      - prometheus-node-exporter:conf
+    tags: prometheus-node-exporter:conf
 
   - name: ativa serviço no systemd
     systemd:

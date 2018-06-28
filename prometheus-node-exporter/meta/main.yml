@@ -1,0 +1,3 @@
+---
+dependencies:
+  - zanardo/ansible-local-cache
