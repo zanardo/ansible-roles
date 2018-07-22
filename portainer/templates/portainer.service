@@ -1,0 +1,14 @@
+[Unit]
+Description=Portainer
+
+[Service]
+Restart=always
+User=portainer
+ExecStart=/opt/portainer/portainer {{ portainer_args }}
+ExecReload=/bin/kill -HUP $MAINPID
+WorkingDirectory=/opt/portainer
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target

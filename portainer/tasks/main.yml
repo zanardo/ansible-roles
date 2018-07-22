@@ -1,0 +1,86 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      state: present
+      name: "{{ item }}"
+    with_items:
+      - ca-certificates
+
+  - name: download do tarball para cache local
+    connection: local
+    run_once: true
+    get_url:
+      url: "https://github.com/portainer/portainer/releases/download/{{ portainer_version }}/{{ item }}"
+      dest: "~/.cache/ansible/{{ item }}"
+    with_items:
+      - "portainer-{{ portainer_version }}-linux-{{ portainer_arch }}.tar.gz"
+
+  - name: obtém versão instalada
+    shell:
+      /opt/portainer/portainer --version 2>&1
+    changed_when: False
+    failed_when: false
+    check_mode: no
+    register: version
+
+  - name: upload do tarball para o destino
+    copy:
+      src: "~/.cache/ansible/{{ item }}"
+      dest: "/tmp/{{ item }}"
+    with_items:
+      - "portainer-{{ portainer_version }}-linux-{{ portainer_arch }}.tar.gz"
+    when: version.stdout != portainer_version
+
+  - name: cria usuário para execução
+    user:
+      name: portainer
+      state: present
+      shell: /bin/bash
+      system: yes
+      createhome: no
+
+  - name: remove instalação anterior
+    file:
+      state: absent
+      path: /opt/portainer
+    when: version.stdout != portainer_version
+
+  - name: cria diretório de instalação
+    file:
+      state: directory
+      path: /opt/portainer
+
+  - name: descompacta tarball
+    shell:
+      warn=no
+      chdir=/opt/portainer
+      tar --strip-components=1 -xzf "/tmp/{{ item }}" && \
+      chown -R root:root /opt/portainer
+    with_items:
+      - "portainer-{{ portainer_version }}-linux-{{ portainer_arch }}.tar.gz"
+    when: version.stdout != portainer_version
+
+  - name: copia unit do systemd
+    template:
+      src: portainer.service
+      dest: /etc/systemd/system/portainer.service
+    notify: reinicia portainer
+    tags: portainer:conf
+
+  - name: ativa serviço no systemd
+    systemd:
+      name: portainer
+      enabled: yes
+      state: started
+    notify: reinicia portainer
+
+  - name: remove arquivos temporários
+    file:
+      path: "/tmp/{{ item }}"
+      state: absent
+    with_items:
+      - "portainer-{{ portainer_version }}-linux-{{ portainer_arch }}.tar.gz"
+
+  tags: portainer
