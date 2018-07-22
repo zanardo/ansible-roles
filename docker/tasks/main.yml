@@ -29,11 +29,36 @@
       state: directory
       path: /etc/docker
 
+  # Ver https://github.com/moby/moby/issues/22339.
+
+  - name: configura endpoints da API - cria diretório de override
+    file:
+      path: /etc/systemd/system/docker.service.d/
+      state: directory
+    when: 'docker_daemon_config["hosts"]|d()'
+    notify: reinicia docker
+
+  - name: configura endpoints da API - cria override
+    copy:
+      dest: /etc/systemd/system/docker.service.d/override_hosts.conf
+      content: |
+        [Service]
+        ExecStart=
+        ExecStart=/usr/bin/dockerd
+    when: 'docker_daemon_config["hosts"]|d()'
+    notify: reinicia docker
+
+  - name: remove override de endpoints da API
+    file:
+      state: absent
+      path: /etc/systemd/system/docker.service.d/override_hosts.conf
+    when: 'not docker_daemon_config["hosts"]|d()'
+    notify: reinicia docker
+
   - name: configura docker
     copy:
       content: "{{ docker_daemon_config | to_json }}"
       dest: /etc/docker/daemon.json
-    when: docker_daemon_config|d
     notify: reinicia docker
 
   - name: instala docker
