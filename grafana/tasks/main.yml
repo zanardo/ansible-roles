@@ -14,7 +14,7 @@
       url: "https://s3-us-west-2.amazonaws.com/grafana-releases/release/{{ item }}"
       dest: "~/.cache/ansible/{{ item }}"
     with_items:
-      - "grafana-{{ grafana_version }}.linux-x64.tar.gz"
+      - "grafana-{{ grafana_version }}.linux-{{ grafana_arch }}.tar.gz"
 
   - name: obtém versão instalada do grafana
     shell:
@@ -36,7 +36,7 @@
       src: "~/.cache/ansible/{{ item }}"
       dest: "/tmp/{{ item }}"
     with_items:
-      - "grafana-{{ grafana_version }}.linux-x64.tar.gz"
+      - "grafana-{{ grafana_version }}.linux-{{ grafana_arch }}.tar.gz"
     when: version.stdout != grafana_version
 
   - name: cria usuário para execução
@@ -67,7 +67,7 @@
       tar --strip-components=1 -xf "/tmp/{{ item }}" && \
       chown -R root:root /opt/grafana/
     with_items:
-      - "grafana-{{ grafana_version }}.linux-x64.tar.gz"
+      - "grafana-{{ grafana_version }}.linux-{{ grafana_arch }}.tar.gz"
     when: version.stdout != grafana_version
 
   - name: copia unit do systemd
@@ -94,6 +94,6 @@
       path: "/tmp/{{ item }}"
       state: absent
     with_items:
-      - "grafana-{{ grafana_version }}.linux-x64.tar.gz"
+      - "grafana-{{ grafana_version }}.linux-{{ grafana_arch }}.tar.gz"
 
   tags: grafana

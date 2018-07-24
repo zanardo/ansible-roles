@@ -1,3 +1,4 @@
 ---
 grafana_conf: "grafana.ini"
 grafana_data_path: "/srv/grafana"
+grafana_arch: "amd64"
