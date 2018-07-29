@@ -46,11 +46,13 @@
       state: absent
       path: /opt/portainer
     when: version.stdout != portainer_version
+    notify: reinicia portainer
 
   - name: cria diretório de instalação
     file:
       state: directory
       path: /opt/portainer
+    notify: reinicia portainer
 
   - name: descompacta tarball
     shell:
@@ -61,6 +63,7 @@
     with_items:
       - "portainer-{{ portainer_version }}-linux-{{ portainer_arch }}.tar.gz"
     when: version.stdout != portainer_version
+    notify: reinicia portainer
 
   - name: copia unit do systemd
     template:
