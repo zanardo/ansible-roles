@@ -1,3 +1,3 @@
 ---
 portainer_arch: "amd64"
-portainer_args: "--data /srv/portainer --bind :3333"
+portainer_args: "--data /srv/portainer --bind :3333 --no-analytics"
