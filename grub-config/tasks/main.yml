@@ -12,11 +12,8 @@
   - name: configura command line
     lineinfile:
       path: "/etc/default/grub"
-      regexp: "^{{ item }}="
-      line: "{{ item }}=\"{{ grub_config_cmdline }}\""
-    with_items:
-      - "GRUB_CMDLINE_LINUX_DEFAULT"
-      - "GRUB_CMDLINE_LINUX"
+      regexp: "^GRUB_CMDLINE_LINUX="
+      line: "GRUB_CMDLINE_LINUX=\"{{ grub_config_cmdline }}\""
     when: grub_config_cmdline|d
     notify: reconfigura grub
 

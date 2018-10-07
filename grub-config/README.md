@@ -5,7 +5,7 @@ Ansible Role para configurações básicas do Grub via `/etc/default/grub`.
 - `grub_config_timeout`: timeout do Grub a ser configurado em `GRUB_TIMEOUT`.
 
 - `grub_config_cmdline`: linha de comando passada ao kernel pelo Grub a ser
-  configurada em `GRUB_CMDLINE_LINUX` e `GRUB_CMDLINE_LINUX_DEFAULT`.
+  configurada em `GRUB_CMDLINE_LINUX`.
 
 # Ações
 
