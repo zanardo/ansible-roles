@@ -3,12 +3,11 @@
 
   - name: instala pacotes necessários
     apt:
-      name: "{{ item }}"
+      name:
+        - libvirt-daemon
+        - libvirt-daemon-system
+        - qemu-kvm
       state: present
-    with_items:
-      - libvirt-daemon
-      - libvirt-daemon-system
-      - qemu-kvm
 
   - name: configura política do libvirt-guests ao iniciar (on_boot)
     lineinfile:

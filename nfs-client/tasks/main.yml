@@ -3,10 +3,9 @@
 
   - name: instala pacotes necessários
     apt:
-      name: "{{ item }}"
+      name:
+        - nfs-common
       state: present
-    with_items:
-      - nfs-common
 
   - name: cria diretórios de ponto de montagem
     file:

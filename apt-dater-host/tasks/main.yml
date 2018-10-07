@@ -1,7 +1,6 @@
 ---
 - name: instala pacotes necessários
   apt:
-    name: "{{ item }}"
+    name:
+      - apt-dater-host
     state: present
-  with_items:
-    - apt-dater-host

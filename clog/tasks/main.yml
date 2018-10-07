@@ -4,9 +4,8 @@
   - name: instala pacotes necessários
     apt:
       state: present
-      name: "{{ item }}"
-    with_items:
-      - ca-certificates
+      name:
+        - ca-certificates
 
   - name: faz download do clog para cache local
     connection: local

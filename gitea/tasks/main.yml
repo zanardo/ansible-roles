@@ -4,9 +4,8 @@
   - name: install needed packages
     apt:
       state: present
-      name: "{{ item }}"
-    with_items:
-      - git
+      name:
+        - git
 
   - name: create user for gitea
     user:

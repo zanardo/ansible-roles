@@ -4,12 +4,11 @@
 
 - name: instala pacotes necessários - debian
   apt:
-    name: "{{ item }}"
+    name:
+      - python-libvirt
+      - virtinst
     state: present
     install_recommends: no
-  with_items:
-    - python-libvirt
-    - virtinst
   delegate_to: "{{ virt_install_vmhost }}"
   when: ansible_os_family|lower == "debian"
 
@@ -35,8 +34,8 @@
   - name: instala máquina virtual {{ virt_install_name }}
     connection: local
     shell: http_proxy="{{ virt_install_http_proxy|d('') }}" virt-install
-      --connect qemu:///system 
-      --name {{ virt_install_name }} 
+      --connect qemu:///system
+      --name {{ virt_install_name }}
       {{ virt_install_args|join(' ') }}
     delegate_to: "{{ virt_install_vmhost }}"
 

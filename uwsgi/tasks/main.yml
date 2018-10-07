@@ -3,9 +3,8 @@
 
   - name: instala pacotes necessários
     apt:
-      name: "{{ item }}"
-    with_items:
-      - uwsgi
+      name:
+        - uwsgi
 
   - name: copia arquivos de configurações
     template:

@@ -33,17 +33,16 @@
 
   - name: instala postgresql
     apt:
-      name: "{{ item }}"
+      name:
+        - "postgresql-{{ postgresql_version }}"
+        - "postgresql-contrib-{{ postgresql_version }}"
       state: present
-    with_items:
-      - "postgresql-{{ postgresql_version }}"
-      - "postgresql-contrib-{{ postgresql_version }}"
 
   - name: copia arquivos de configuração
     template:
       src: "{{ postgresql_conf }}/{{ item }}"
       dest: "/etc/postgresql/{{ postgresql_version }}/main/{{ item }}"
-    notify: 
+    notify:
       - reinicia postgresql
       - aguarda postgresql iniciar
     with_items: "{{ postgresql_conf_files }}"

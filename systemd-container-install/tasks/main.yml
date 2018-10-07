@@ -5,11 +5,10 @@
 - name: instala pacotes necessários - debian
   apt:
     state: present
-    name: "{{ item }}"
+    name:
+      - debootstrap
+      - systemd-container
     install_recommends: no
-  with_items:
-    - debootstrap
-    - systemd-container
   delegate_to: "{{ systemd_container_host }}"
   when: ansible_distribution == "Debian"
 

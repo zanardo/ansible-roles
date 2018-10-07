@@ -1,17 +1,16 @@
 ---
 - name: instala pacotes necessários
   apt:
-    name: "{{ item }}"
+    name:
+      - make
+      - gcc
+      - libc6-dev
+      - libevent-dev
+      - libevent-2.0-5
+      - libssl-dev
+      - libssl1.0.0
+      - ca-certificates
     state: present
-  with_items:
-    - make
-    - gcc
-    - libc6-dev
-    - libevent-dev
-    - libevent-2.0-5
-    - libssl-dev
-    - libssl1.0.0
-    - ca-certificates
 
 - name: cria usuário opt-pgbouncer
   user:

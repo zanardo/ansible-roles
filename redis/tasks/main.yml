@@ -1,10 +1,9 @@
 ---
 - name: instala pacotes necessários
   apt:
-    name: "{{ item }}"
+    name:
+      - redis-server
     state: present
-  with_items:
-    - redis-server
   tags: ["redis"]
 
 - name: copia arquivo de configuração

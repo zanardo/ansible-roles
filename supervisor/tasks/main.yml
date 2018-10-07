@@ -1,11 +1,10 @@
 ---
 - name: instala pacotes necessários
   apt:
-    name: "{{ item }}"
+    name:
+      - supervisor
     state: present
     install_recommends: no
-  with_items:
-    - supervisor
   tags: ["supervisor"]
 
 - name: carrega supervisor

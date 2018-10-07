@@ -3,12 +3,11 @@
 
   - name: instala pacotes necessários
     apt:
-      name: "{{ item }}"
-    with_items:
-      - git
-      - cgit
-      - python3-markdown
-      - python3-pygments
+      name:
+        - git
+        - cgit
+        - python3-markdown
+        - python3-pygments
 
   - name: copia arquivo de configuração
     template:

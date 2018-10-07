@@ -2,6 +2,5 @@
 - name: instala pacotes
   apt:
     state: present
-    name: '{{ item }}'
-  with_items: '{{ packages_install|d([]) }}'
+    name: '{{ packages_install|d([]) }}'
   tags: packages

@@ -1,10 +1,9 @@
 ---
 - name: instala pacotes necessários
   apt:
-    name: "{{ item }}"
+    name:
+      - nginx-light
     state: present
-  with_items:
-    - nginx-light
   tags: ["nginx"]
 
 - name: copia arquivo de configuração

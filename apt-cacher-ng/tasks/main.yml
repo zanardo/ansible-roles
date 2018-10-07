@@ -1,10 +1,9 @@
 ---
 - name: instala pacotes
   apt:
-    name: "{{item}}"
+    name:
+      - apt-cacher-ng
     state: present
-  with_items:
-    - apt-cacher-ng
 
 - name: copia configuração
   template:

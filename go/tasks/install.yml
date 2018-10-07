@@ -3,10 +3,9 @@
 
   - name: instala pacotes necessários
     apt:
-      name: "{{ item }}"
+      name:
+        - ca-certificates
       state: present
-    with_items:
-      - ca-certificates
 
   - name: download do tarball para cache local
     connection: local

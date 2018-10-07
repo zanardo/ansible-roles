@@ -1,13 +1,12 @@
 ---
 - name: instala pacotes necessários
   apt:
-    name: "{{ item }}"
+    name:
+      - python
+      - python-tornado
+      - rrdtool
+      - python-rrdtool
     state: present
-  with_items:
-    - python
-    - python-tornado
-    - rrdtool
-    - python-rrdtool
 
 - name: remove instalação anterior
   file:

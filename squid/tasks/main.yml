@@ -1,10 +1,9 @@
 ---
 - name: instala pacotes necessários
   apt:
-    name: "{{ item }}"
+    name:
+      - squid3
     state: present
-  with_items:
-    - squid3
   tags: ["squid"]
 
 - name: copia arquivo de configurações customizado (jessie)

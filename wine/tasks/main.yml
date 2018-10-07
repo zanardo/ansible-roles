@@ -24,8 +24,7 @@
   - name: instala pacotes necessários - debian stretch
     apt:
       state: present
-      name: "{{ item }}"
-    with_items:
+      name:
         - wine
         - wine32
     when: ansible_distribution_release == "stretch"
