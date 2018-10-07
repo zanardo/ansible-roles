@@ -1,8 +1,0 @@
----
-- hosts:
-    - centos7
-
-  roles:
-
-    - role: zanardo/repo-epel
-      epel_mirror: http://mirror.1/epel
