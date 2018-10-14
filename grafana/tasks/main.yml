@@ -79,6 +79,9 @@
     template:
       src: "{{ grafana_conf }}"
       dest: /opt/grafana/conf/grafana.ini
+      owner: grafana
+      group: grafana
+      mode: 0600
     notify: reinicia grafana
     tags: grafana:conf
 
