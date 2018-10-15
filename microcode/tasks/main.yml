@@ -1,3 +1,8 @@
 ---
-- include_tasks: "{{ ansible_distribution|lower }}.yml"
+- name: instala pacotes necessários
+  apt:
+    name:
+      - intel-microcode
+      - amd64-microcode
+    state: present
   tags: microcode

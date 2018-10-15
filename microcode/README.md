@@ -8,4 +8,3 @@ Ansible Role para instalar as atualizações de microcode dos processadores Inte
 
 - Debian Jessie
 - Debian Stretch
-- Arch Linux

@@ -1,8 +1,0 @@
----
-- name: instala pacotes necessários
-  pacman:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - intel-ucode
-  tags: microcode
