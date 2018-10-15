@@ -31,4 +31,3 @@ permite manter as configurações em arquivos-textos organizados.
 
 - Debian Jessie
 - Debian Stretch
-- CentOS 7
