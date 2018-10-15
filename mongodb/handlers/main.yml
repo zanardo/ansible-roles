@@ -1,0 +1,6 @@
+---
+- name: reinicia mongodb
+  service:
+    name: mongodb
+    state: restarted
+  tags: mongodb

@@ -1,0 +1,16 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name: mongodb
+      state: present
+
+  - name: copia arquivo de configuração customizado
+    template:
+      src: "{{ mongodb_conf }}"
+      dest: /etc/mongodb.conf
+    when: mongodb_conf|d
+    notify: reinicia mongodb
+
+  tags: mongodb
