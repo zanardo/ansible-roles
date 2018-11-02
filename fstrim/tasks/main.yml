@@ -1,0 +1,19 @@
+---
+- block:
+
+    - name: prepara serviço e timer para fstrim
+      file:
+        state: link
+        src: /usr/share/doc/util-linux/examples/fstrim.{{ item }}
+        dest: /etc/systemd/system/fstrim.{{ item }}
+      loop:
+        - service
+        - timer
+
+    - name: habilita timer para fstrim
+      systemd:
+        name: fstrim.timer
+        enabled: yes
+        daemon_reload: yes
+
+  tags: fstrim
