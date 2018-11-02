@@ -1,0 +1,17 @@
+---
+- block:
+
+    - name: configura apt
+      copy:
+        dest: "/etc/apt/apt.conf.d/99ansible-local"
+        content: |
+          {{ apt_conf_1|d }}
+          {{ apt_conf_2|d }}
+          {{ apt_conf_3|d }}
+          {{ apt_conf_4|d }}
+          {{ apt_conf_5|d }}
+        owner: root
+        group: root
+        mode: 0644
+
+  tags: apt-conf
