@@ -35,12 +35,12 @@
   - name: importa chave do gpg no keyring
     shell: >
       chdir=/tmp
-      gpg --no-default-keyring --homedir=. --import thomas.pub
+      gpg --batch --no-default-keyring --homedir=. --import thomas.pub
 
   - name: verifica assinatura gpg
     shell: >
       chdir=/tmp
-      gpg --homedir=. --verify "borg-{{ borg_version}}.asc" "borg-{{ borg_version }}"
+      gpg --batch --homedir=. --verify "borg-{{ borg_version}}.asc" "borg-{{ borg_version }}"
 
   - name: instala executável para /usr/local/bin
     copy:
