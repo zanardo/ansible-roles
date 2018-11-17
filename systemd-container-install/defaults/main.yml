@@ -4,3 +4,6 @@ systemd_container_debian_mirror: "http://cdn-fastly.deb.debian.org/debian"
 systemd_container_autostart: yes
 systemd_container_interface: "host0"
 systemd_container_http_proxy: ""
+systemd_container_lvm_vg: "vg0"
+systemd_container_lvm_fs: "ext4"
+systemd_container_lvm_size: "10G"
