@@ -4,7 +4,7 @@
     - debian9
 
   vars:
-    go_version: "1.9.2"
+    go_version: "1.11.2"
 
   roles:
 
