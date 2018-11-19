@@ -14,8 +14,7 @@
   - name: adiciona chave gpg no apt para docker
     apt_key:
       state: present
-      id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
-      keyserver: pgp.mit.edu
+      url: "https://download.docker.com/linux/debian/gpg"
 
   - name: adiciona repositório do docker
     apt_repository:
