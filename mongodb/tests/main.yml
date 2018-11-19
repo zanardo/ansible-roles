@@ -1,0 +1,7 @@
+---
+- hosts:
+    - debian9
+
+  roles:
+
+    - zanardo/mongodb
