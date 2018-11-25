@@ -29,6 +29,7 @@
     size: "{{ systemd_container_lvm_size }}"
     vg: "{{ systemd_container_lvm_vg }}"
     lv: "{{ systemd_container_name }}"
+    opts: -W y
   delegate_to: "{{ systemd_container_host }}"
 
 - name: cria filesystem no volume lógico
