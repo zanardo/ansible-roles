@@ -1,0 +1,52 @@
+---
+- name: pára container
+  failed_when: False
+  register: stop_res
+  command: |
+    warn=no
+    machinectl terminate {{ systemd_container_name }}
+  changed_when: "stop_res.rc == 0"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: desativa container
+  failed_when: False
+  register: disable_res
+  command: |
+    warn=no
+    machinectl disable {{ systemd_container_name }}
+  changed_when: "disable_res.rc == 0"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: remove arquivo de configuração do container
+  file:
+    path: /etc/systemd/nspawn/{{ systemd_container_name }}.nspawn
+    state: absent
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: desmonta sistema de arquivos do container
+  mount:
+    path: /var/lib/machines/{{ systemd_container_name }}
+    state: unmounted
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: desativa sistema de arquivos do container
+  mount:
+    path: /var/lib/machines/{{ systemd_container_name }}
+    state: absent
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: limpa superbloco do volume
+  command:
+    wipefs --all /dev/{{ systemd_container_lvm_vg }}/{{ systemd_container_name }}
+  register: wipe_res
+  failed_when: False
+  changed_when: "wipe_res.rc == 0"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: remove volume do lvm
+  lvol:
+    lv: "{{ systemd_container_name }}"
+    state: absent
+    vg: "{{ systemd_container_lvm_vg }}"
+    force: yes
+  delegate_to: "{{ systemd_container_host }}"

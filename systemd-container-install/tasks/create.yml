@@ -1,4 +1,99 @@
 ---
+- name: instala pacotes necessários - debian
+  apt:
+    state: present
+    name:
+      - debootstrap
+      - systemd-container
+      - zstd
+    install_recommends: no
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria diretório de configurações dos containers
+  file:
+    state: directory
+    path: /etc/systemd/nspawn
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria configurações do container
+  copy:
+    content: "{{ systemd_container_nspawn_config }}"
+    dest: "/etc/systemd/nspawn/{{ systemd_container_name }}.nspawn"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria volume lógico no lvm do container
+  lvol:
+    size: "{{ systemd_container_lvm_size }}"
+    vg: "{{ systemd_container_lvm_vg }}"
+    lv: "{{ systemd_container_name }}"
+    opts: -W y
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria filesystem no volume lógico
+  filesystem:
+    dev: "/dev/{{ systemd_container_lvm_vg }}/{{ systemd_container_name }}"
+    fstype: "{{ systemd_container_lvm_fs }}"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria diretório de montagem para o container
+  file:
+    state: directory
+    path: "/var/lib/machines/{{ systemd_container_name }}"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: monta o filesystem do container
+  mount:
+    fstype: "{{ systemd_container_lvm_fs }}"
+    path: "/var/lib/machines/{{ systemd_container_name }}"
+    src: "/dev/{{ systemd_container_lvm_vg }}/{{ systemd_container_name }}"
+    state: mounted
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria diretório de cache
+  file:
+    path: "{{ systemd_container_template_cache_dir }}"
+    state: directory
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: verifica se cache do template existe
+  find:
+    age: "-{{ systemd_container_cache_max_age }}"
+    paths: "{{ systemd_container_template_cache_dir }}"
+    patterns: "template-debian-{{ systemd_container_debian }}.tar.zstd"
+  register: cache_find
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria container via template em cache
+  shell: |
+    warn=no
+    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
+    chdir=/var/lib/machines/{{ systemd_container_name }}
+    zstd -d < "{{ systemd_container_template_cache_file }}" | \
+      tar xf -
+  when: 'cache_find.matched == 1'
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria container via debootstrap
+  environment:
+    http_proxy: "{{ systemd_container_http_proxy }}"
+  command:
+    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
+    debootstrap \
+      --include=systemd,dbus,locales,python,sudo,openssh-server \
+      "{{ systemd_container_debian }}" \
+      "/var/lib/machines/{{ systemd_container_name }}" \
+      "{{ systemd_container_debian_mirror }}"
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria template em cache
+  shell: |
+    warn=no
+    chdir=/var/lib/machines/{{ systemd_container_name }}
+    tar cf - . | \
+      zstd -c -o "{{ systemd_container_template_cache_file }}"
+  when: 'cache_find.matched == 0'
+  delegate_to: "{{ systemd_container_host }}"
+
 - name: configura o ssh no container
   lineinfile:
     path: "/var/lib/machines/{{ systemd_container_name }}/etc/ssh/sshd_config"
@@ -49,36 +144,6 @@
     state: present
   delegate_to: "{{ systemd_container_host }}"
 
-- name: configura timezone do container
-  copy:
-    content: "America/Sao_Paulo"
-    dest: "/var/lib/machines/{{ systemd_container_name }}/etc/timezone"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: configura timezone do container
-  command: systemd-nspawn -D /var/lib/machines/{{ systemd_container_name }} /usr/sbin/dpkg-reconfigure -f noninteractive tzdata
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: configura locales do container
-  copy:
-    content: |
-      pt_BR.UTF-8 UTF-8
-      en_US.UTF-8 UTF-8
-    dest: "/var/lib/machines/{{ systemd_container_name }}/etc/locale.gen"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: configura locale default do container
-  copy:
-    content: |
-      LANG="en_US.UTF-8"
-      LANGUAGE="en_US:en"
-    dest: "/var/lib/machines/{{ systemd_container_name }}/etc/default/locale"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: gera locales do container
-  command: systemd-nspawn -D /var/lib/machines/{{ systemd_container_name }} /usr/sbin/locale-gen
-  delegate_to: "{{ systemd_container_host }}"
-
 - name: configura inicialização de container - ativo
   command:
     warn=no
@@ -118,5 +183,34 @@
   with_items:
     - "{{ systemd_container_ip }}"
     - "{{ systemd_container_name }}"
+
+- name: configura timezone do container
+  copy:
+    content: "America/Sao_Paulo"
+    dest: "/etc/timezone"
+  register: timezone_changed
+
+- name: configura timezone do container
+  command: /usr/sbin/dpkg-reconfigure -f noninteractive tzdata
+  when: timezone_changed is changed
+
+- name: configura locales do container
+  copy:
+    content: |
+      pt_BR.UTF-8 UTF-8
+      en_US.UTF-8 UTF-8
+    dest: "/etc/locale.gen"
+  register: locales_changed
+
+- name: configura locale default do container
+  copy:
+    content: |
+      LANG="en_US.UTF-8"
+      LANGUAGE="en_US:en"
+    dest: "/etc/default/locale"
+
+- name: gera locales do container
+  command: "/usr/sbin/locale-gen"
+  when: locales_changed is changed
 
 - setup: {}

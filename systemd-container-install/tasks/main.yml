@@ -2,106 +2,34 @@
 - setup:
   delegate_to: "{{ systemd_container_host }}"
 
-- name: instala pacotes necessários - debian
-  apt:
-    state: present
-    name:
-      - debootstrap
-      - systemd-container
-      - zstd
-    install_recommends: no
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria diretório de configurações dos containers
-  file:
-    state: directory
-    path: /etc/systemd/nspawn
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria configurações do container
-  copy:
-    content: "{{ systemd_container_nspawn_config }}"
-    dest: "/etc/systemd/nspawn/{{ systemd_container_name }}.nspawn"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria volume lógico no lvm do container
-  lvol:
-    size: "{{ systemd_container_lvm_size }}"
-    vg: "{{ systemd_container_lvm_vg }}"
-    lv: "{{ systemd_container_name }}"
-    opts: -W y
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria filesystem no volume lógico
-  filesystem:
-    dev: "/dev/{{ systemd_container_lvm_vg }}/{{ systemd_container_name }}"
-    fstype: "{{ systemd_container_lvm_fs }}"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria diretório de montagem para o container
-  file:
-    state: directory
-    path: "/var/lib/machines/{{ systemd_container_name }}"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: monta o filesystem do container
-  mount:
-    fstype: "{{ systemd_container_lvm_fs }}"
-    path: "/var/lib/machines/{{ systemd_container_name }}"
-    src: "/dev/{{ systemd_container_lvm_vg }}/{{ systemd_container_name }}"
-    state: mounted
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria diretório de cache
-  file:
-    path: "{{ systemd_container_template_cache_dir }}"
-    state: directory
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: verifica se cache do template existe
-  find:
-    age: "-{{ systemd_container_cache_max_age }}"
-    paths: "{{ systemd_container_template_cache_dir }}"
-    patterns: "template-debian-{{ systemd_container_debian }}.tar.zstd"
-  register: cache_find
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria container via template em cache
-  shell: |
-    warn=no
-    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
-    chdir=/var/lib/machines/{{ systemd_container_name }}
-    zstd -d < "{{ systemd_container_template_cache_file }}" | \
-      tar xf -
-  when: 'cache_find.matched == 1'
-  register: container_created_cache
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria container via debootstrap
-  environment:
-    http_proxy: "{{ systemd_container_http_proxy }}"
-  command:
-    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
-    debootstrap \
-      --include=systemd,dbus,locales,python,sudo,openssh-server \
-      "{{ systemd_container_debian }}" \
-      "/var/lib/machines/{{ systemd_container_name }}" \
-      "{{ systemd_container_debian_mirror }}"
-  register: container_created_debootstrap
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria template em cache
-  shell: |
-    warn=no
-    chdir=/var/lib/machines/{{ systemd_container_name }}
-    tar cf - . | \
-      zstd -c -o "{{ systemd_container_template_cache_file }}"
-  when: 'cache_find.matched == 0'
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: bootstrap inicial do container
+- name: executa tasks de criação do container
   include_tasks:
     create.yml
-  when: container_created_cache is changed or container_created_debootstrap is changed
+  when:
+    - destroy_container is not defined
 
 - setup: {}
+  when:
+    - destroy_container is not defined
+
+- name: executa tasks de destruição do container
+  include_tasks:
+    destroy.yml
+  when:
+    - destroy_container is defined
+    - destroy_container == systemd_container_name
+
+- block:
+
+  - name: finaliza playbook - container destruido
+    debug: msg="container destruído - finalizando playbook"
+
+  - name: esta task irá falhar para finalizar a execução do ansible
+    failed_when: True
+    debug:
+      msg: "finalizando"
+    delegate_to: "{{ systemd_container_host }}"
+
+  when:
+    - destroy_container is defined
+    - destroy_container == systemd_container_name
