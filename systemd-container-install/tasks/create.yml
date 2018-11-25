@@ -84,6 +84,7 @@
       "/var/lib/machines/{{ systemd_container_name }}" \
       "{{ systemd_container_debian_mirror }}"
   when: 'cache_find.matched == 0'
+  register: debootstrap_changed
   delegate_to: "{{ systemd_container_host }}"
 
 - name: cria template em cache
@@ -92,7 +93,9 @@
     chdir=/var/lib/machines/{{ systemd_container_name }}
     tar cf - . | \
       zstd -c -o "{{ systemd_container_template_cache_file }}"
-  when: 'cache_find.matched == 0'
+  when:
+    - cache_find.matched == 0
+    - debootstrap_changed is changed
   delegate_to: "{{ systemd_container_host }}"
 
 - name: configura o ssh no container
