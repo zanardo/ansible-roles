@@ -8,6 +8,7 @@
     name:
       - debootstrap
       - systemd-container
+      - zstd
     install_recommends: no
   delegate_to: "{{ systemd_container_host }}"
 
@@ -50,6 +51,31 @@
     state: mounted
   delegate_to: "{{ systemd_container_host }}"
 
+- name: cria diretório de cache
+  file:
+    path: "{{ systemd_container_template_cache_dir }}"
+    state: directory
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: verifica se cache do template existe
+  find:
+    age: "-{{ systemd_container_cache_max_age }}"
+    paths: "{{ systemd_container_template_cache_dir }}"
+    patterns: "template-debian-{{ systemd_container_debian }}.tar.zstd"
+  register: cache_find
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria container via template em cache
+  shell: |
+    warn=no
+    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
+    chdir=/var/lib/machines/{{ systemd_container_name }}
+    zstd -d < "{{ systemd_container_template_cache_file }}" | \
+      tar xf -
+  when: 'cache_find.matched == 1'
+  register: container_created_cache
+  delegate_to: "{{ systemd_container_host }}"
+
 - name: cria container via debootstrap
   environment:
     http_proxy: "{{ systemd_container_http_proxy }}"
@@ -61,11 +87,21 @@
       "/var/lib/machines/{{ systemd_container_name }}" \
       "{{ systemd_container_debian_mirror }}"
   delegate_to: "{{ systemd_container_host }}"
-  register: container_created
+  register: container_created_debootstrap
+  delegate_to: "{{ systemd_container_host }}"
+
+- name: cria template em cache
+  shell: |
+    warn=no
+    chdir=/var/lib/machines/{{ systemd_container_name }}
+    tar cf - . | \
+      zstd -c -o "{{ systemd_container_template_cache_file }}"
+  when: 'cache_find.matched == 0'
+  delegate_to: "{{ systemd_container_host }}"
 
 - name: bootstrap inicial do container
   include_tasks:
     create.yml
-  when: container_created is changed
+  when: container_created_cache is changed or container_created_debootstrap is changed
 
 - setup: {}
