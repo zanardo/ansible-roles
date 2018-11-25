@@ -87,7 +87,6 @@
       "{{ systemd_container_debian }}" \
       "/var/lib/machines/{{ systemd_container_name }}" \
       "{{ systemd_container_debian_mirror }}"
-  delegate_to: "{{ systemd_container_host }}"
   register: container_created_debootstrap
   delegate_to: "{{ systemd_container_host }}"
 
