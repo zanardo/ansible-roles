@@ -2,22 +2,28 @@
 - setup:
   delegate_to: "{{ systemd_container_host }}"
 
+- name: verifica se container existe
+  stat:
+    path: "/var/lib/machines/{{ systemd_container_name }}/lib"
+  register: checa_container_ja_existe
+  delegate_to: "{{ systemd_container_host }}"
+
 - block:
 
   - name: executa tasks de criação do container
-    include_tasks:
-      create.yml
+    include_tasks: create.yml
 
   - setup: {}
 
   when:
     - destroy_container is not defined
+    - checa_container_ja_existe.stat is defined
+    - not checa_container_ja_existe.stat.exists
 
 - block:
 
   - name: executa tasks de destruição do container
-    include_tasks:
-      destroy.yml
+    include_tasks: destroy.yml
     when:
       - destroy_container is defined
       - destroy_container == systemd_container_name
