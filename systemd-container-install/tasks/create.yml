@@ -83,6 +83,7 @@
       "{{ systemd_container_debian }}" \
       "/var/lib/machines/{{ systemd_container_name }}" \
       "{{ systemd_container_debian_mirror }}"
+  when: 'cache_find.matched == 0'
   delegate_to: "{{ systemd_container_host }}"
 
 - name: cria template em cache
