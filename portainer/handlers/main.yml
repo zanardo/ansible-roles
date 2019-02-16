@@ -1,6 +1,0 @@
----
-- name: reinicia portainer
-  systemd:
-    name: portainer
-    state: restarted
-    daemon_reload: yes

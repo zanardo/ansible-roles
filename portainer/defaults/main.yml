@@ -1,3 +1,0 @@
----
-portainer_arch: "amd64"
-portainer_args: "--template-file=/opt/portainer/templates.json --data /srv/portainer --bind :3333 --no-analytics"
