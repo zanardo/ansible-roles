@@ -1,2 +1,2 @@
 ---
-chrony_conf: "chronyd.conf"
+chrony_conf: "chrony.conf"
