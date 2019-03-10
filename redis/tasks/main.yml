@@ -1,14 +1,16 @@
 ---
-- name: instala pacotes necessários
-  apt:
-    name:
-      - redis-server
-    state: present
-  tags: ["redis"]
+- block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - redis-server
+        state: present
 
-- name: copia arquivo de configuração
-  template:
-    src: "{{ redis_conf }}"
-    dest: /etc/redis/redis.conf
-  when: redis_conf|d
-  tags: ["redis", "redis:conf"]
+    - name: copia arquivo de configuração
+      template:
+        src: "{{ redis_conf }}"
+        dest: /etc/redis/redis.conf
+      when: redis_conf|d
+      tags: redis:conf
+
+  tags: redis
