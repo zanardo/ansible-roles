@@ -1,6 +1,0 @@
----
-- name: instala pacotes necessários
-  pacman:
-    state: present
-    name: chrony
-  tags: chrony

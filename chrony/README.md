@@ -21,5 +21,5 @@ O **Chrony** é um servidor de NTP para sincronização de relógio.
 
 # Compatibilidade
 
+- Debian Jessie
 - Debian Stretch
-- Arch Linux
