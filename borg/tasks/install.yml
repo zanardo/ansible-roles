@@ -9,12 +9,14 @@
 
   - name: download do executável para cache local
     connection: local
+    run_once: yes
     get_url:
       url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64"
       dest: "~/.cache/ansible/borg-{{ borg_version }}"
 
   - name: download da assinatura para cache local
     connection: local
+    run_once: yes
     get_url:
       url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64.asc"
       dest: "~/.cache/ansible/borg-{{ borg_version }}.asc"

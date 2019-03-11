@@ -9,6 +9,7 @@
 
   - name: download do tarball para cache local
     connection: local
+    run_once: yes
     get_url:
       url: "https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
       dest: "~/.cache/ansible/go-{{ go_version }}.tar.gz"

@@ -6,7 +6,7 @@
 
   - name: download do tarball para cache local
     connection: local
-    run_once: true
+    run_once: yes
     get_url:
       url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/{{ item }}"
       dest: "~/.cache/ansible/{{ item }}"

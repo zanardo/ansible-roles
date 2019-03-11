@@ -37,6 +37,7 @@
 
 - name: faz download do tarball para cache local
   connection: local
+  run_once: yes
   get_url:
     url: "https://github.com/zanardo/rrd/archive/{{ rrd_version }}.tar.gz"
     dest: "~/.cache/ansible/rrd-{{ rrd_version }}.tar.gz"

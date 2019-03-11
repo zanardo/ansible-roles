@@ -3,6 +3,7 @@
 
   - name: download do winbox para cache local
     connection: local
+    run_once: yes
     get_url:
       url: "http://download2.mikrotik.com/routeros/winbox/{{ winbox_version }}/winbox.exe"
       dest: "~/.cache/ansible/winbox-{{ winbox_version }}.exe"

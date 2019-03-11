@@ -9,6 +9,7 @@
 
   - name: faz download do clog para cache local
     connection: local
+    run_once: yes
     get_url:
       url: "https://raw.githubusercontent.com/zanardo/clog/v{{ clog_version }}/scripts/clog"
       dest: "~/.cache/ansible/clog-{{ clog_version }}"

@@ -16,6 +16,7 @@
 
   - name: download gitea binary in local machine
     connection: local
+    run_once: yes
     get_url:
       url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64"
       dest: "~/.cache/ansible/gitea-{{ gitea_version }}-linux-amd64"

@@ -43,6 +43,7 @@
 
     - name: faz download do clogd para cache local
       connection: local
+      run_once: yes
       get_url:
         url: "https://github.com/zanardo/clog/archive/v{{ clogd_version }}.tar.gz"
         dest: "~/.cache/ansible/clogd-{{ clogd_version }}.tar.gz"

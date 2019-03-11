@@ -9,6 +9,7 @@
 
   - name: download do tarball para cache local
     connection: local
+    run_once: yes
     get_url:
       url: "https://s3-us-west-2.amazonaws.com/grafana-releases/release/{{ item }}"
       dest: "~/.cache/ansible/{{ item }}"
