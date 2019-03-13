@@ -1,15 +1,27 @@
 ---
-- name: instala pacotes necessários
-  apt:
-    name:
-      - supervisor
-    state: present
-    install_recommends: no
-  tags: ["supervisor"]
+- block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - supervisor
+        state: present
+        install_recommends: no
 
-- name: carrega supervisor
-  service:
-    name: supervisor
-    state: started
-    enabled: yes
-  tags: ["supervisor"]
+    - name: copia arquivo de configuração
+      template:
+        src: "{{ supervisord_conf }}"
+        dest: "/etc/supervisor/supervisord.conf"
+        owner: root
+        group: root
+        mode: 600
+      when: supervisord_conf is defined
+      notify: reinicia supervisor
+      tags: supervisor:conf
+
+    - name: carrega supervisor
+      service:
+        name: supervisor
+        state: started
+        enabled: yes
+
+  tags: supervisor
