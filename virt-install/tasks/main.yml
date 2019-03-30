@@ -26,32 +26,32 @@
       delegate_to: "{{ virt_install_vmhost }}"
       when: virt_install_preseed is defined and virt_install_preseed != ""
 
-  - name: instala máquina virtual {{ virt_install_name }}
-    connection: local
-    shell: http_proxy="{{ virt_install_http_proxy|d('') }}" virt-install
-      --connect qemu:///system
-      --name {{ virt_install_name }}
-      {{ virt_install_args|join(' ') }}
-    delegate_to: "{{ virt_install_vmhost }}"
+    - name: instala máquina virtual {{ virt_install_name }}
+      connection: local
+      shell: http_proxy="{{ virt_install_http_proxy|d('') }}" virt-install
+        --connect qemu:///system
+        --name {{ virt_install_name }}
+        {{ virt_install_args|join(' ') }}
+      delegate_to: "{{ virt_install_vmhost }}"
 
-  - name: aguarda porta tcp {{ virt_waitfor_port }} em {{ virt_install_ip }}
-    connection: local
-    wait_for:
-      host: '{{ virt_install_ip }}'
-      port: '{{ virt_waitfor_port }}'
-      state: present
-      timeout: '{{ virt_waitfor_timeout }}'
-    when: 'virt_waitfor_port|d'
+    - name: aguarda porta tcp {{ virt_waitfor_port }} em {{ virt_install_ip }}
+      connection: local
+      wait_for:
+        host: "{{ virt_install_ip }}"
+        port: "{{ virt_waitfor_port }}"
+        state: present
+        timeout: "{{ virt_waitfor_timeout }}"
+      when: "virt_waitfor_port|d"
 
-  - name: remove chaves de ssh em know_hosts local
-    connection: local
-    run_once: yes
-    known_hosts:
-      name: "{{ item }}"
-      state: absent
-    with_items:
-      - "{{ virt_install_ip }}"
-      - "{{ virt_install_name }}"
+    - name: remove chaves de ssh em know_hosts local
+      connection: local
+      run_once: yes
+      known_hosts:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ virt_install_ip }}"
+        - "{{ virt_install_name }}"
 
   when: virt_install_name not in virt_vms.list_vms
 
