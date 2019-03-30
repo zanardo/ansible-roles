@@ -19,6 +19,12 @@
   delegate_to: "{{ virt_install_vmhost }}"
 
 - block:
+    - name: copia arquivo do preseed
+      template:
+        src: "{{ virt_install_preseed }}"
+        dest: "/tmp/{{ inventory_hostname }}.cfg"
+      delegate_to: "{{ virt_install_vmhost }}"
+      when: virt_install_preseed is defined and virt_install_preseed != ""
 
   - name: instala máquina virtual {{ virt_install_name }}
     connection: local
