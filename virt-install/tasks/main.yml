@@ -19,10 +19,17 @@
   delegate_to: "{{ virt_install_vmhost }}"
 
 - block:
+    - name: cria diretório do preseed
+      file:
+        state: directory
+        path: "/tmp/preseed-{{ inventory_hostname }}"
+      delegate_to: "{{ virt_install_vmhost }}"
+      when: virt_install_preseed is defined and virt_install_preseed != ""
+
     - name: copia arquivo do preseed
       template:
         src: "{{ virt_install_preseed }}"
-        dest: "/tmp/{{ inventory_hostname }}.cfg"
+        dest: "/tmp/preseed-{{ inventory_hostname }}/preseed.cfg"
       delegate_to: "{{ virt_install_vmhost }}"
       when: virt_install_preseed is defined and virt_install_preseed != ""
 
