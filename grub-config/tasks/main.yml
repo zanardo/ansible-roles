@@ -17,4 +17,12 @@
     when: grub_config_cmdline|d
     notify: reconfigura grub
 
+  - name: configura command line - default
+    lineinfile:
+      path: "/etc/default/grub"
+      regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
+      line: "GRUB_CMDLINE_LINUX_DEFAULT=\"{{ grub_config_cmdline_default }}\""
+    when: grub_config_cmdline_default|d
+    notify: reconfigura grub
+
   tags: ["grub:conf"]

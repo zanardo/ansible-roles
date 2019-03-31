@@ -7,6 +7,9 @@ Ansible Role para configurações básicas do Grub via `/etc/default/grub`.
 - `grub_config_cmdline`: linha de comando passada ao kernel pelo Grub a ser
   configurada em `GRUB_CMDLINE_LINUX`.
 
+- `grub_config_cmdline_default`: linha de comando passada ao kernel pelo Grub a ser
+  configurada em `GRUB_CMDLINE_LINUX_DEFAULT`.
+
 # Ações
 
 As seguintes mudanças são feitas no sistema:
