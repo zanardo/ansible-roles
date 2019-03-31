@@ -31,6 +31,10 @@
       postgresql_version: 9.6
     when: ansible_distribution_release in ('stretch')
 
+  - set_fact:
+      postgresql_version: 10
+    when: ansible_distribution_release in ('cosmic')
+
   - name: instala postgresql
     apt:
       name:

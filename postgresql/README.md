@@ -19,3 +19,4 @@ Ansible Role para instalar e configurar o servidor
 
 - Debian Jessie
 - Debian Stretch
+- Ubuntu Cosmic
