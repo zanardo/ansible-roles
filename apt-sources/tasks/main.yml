@@ -6,14 +6,14 @@
         dest: /etc/apt/apt.conf.d/99old-repos
       when: ansible_distribution_release in ("wheezy", "jessie")
 
-    - name: copia sources.list do debian
+    - name: copia sources.list
       template:
         src: "{{ sources_list_path|d(ansible_distribution_release + '.list') }}"
         dest: /etc/apt/sources.list
-      when: ansible_distribution == "Debian"
+      when: ansible_distribution in ("Debian", "Ubuntu")
       register: sources_list_register
 
-    - name: recarrega repositórios debian
+    - name: recarrega repositórios
       apt:
         update_cache: yes
       when: sources_list_register is changed
