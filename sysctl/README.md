@@ -24,3 +24,4 @@ sysctl_set:
 
 - Debian Jessie
 - Debian Stretch
+- Ubuntu Cosmic
