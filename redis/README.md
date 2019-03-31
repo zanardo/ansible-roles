@@ -15,3 +15,4 @@ Ansible role para instalar e configurar o [Redis](http://redis.io/).
 - Debian Wheezy
 - Debian Jessie
 - Debian Stretch
+- Ubuntu Cosmic
