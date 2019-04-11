@@ -1,109 +1,99 @@
 ---
-- name: instala pacotes necessários
-  apt:
-    name:
-      - ca-certificates
-    state: present
+- block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - ca-certificates
+        state: present
 
-- name: download do tarball para cache local
-  connection: local
-  run_once: yes
-  get_url:
-    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/{{ item }}"
-    dest: "~/.cache/ansible/{{ item }}"
-  with_items:
-    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
-  tags: prometheus
+    - name: download do tarball para cache local
+      connection: local
+      run_once: yes
+      get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/{{ item }}"
+        dest: "~/.cache/ansible/{{ item }}"
+      with_items:
+        - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
 
-- name: obtém versão instalada do prometheus
-  shell:
-    /opt/prometheus/prometheus --version 2>&1 | \
-      sed -ne 's/^prometheus, version \([^ ]*\) .*$/\1/p'
-  changed_when: False
-  failed_when: false
-  check_mode: no
-  register: version
-  tags: prometheus
+    - name: obtém versão instalada do prometheus
+      shell: /opt/prometheus/prometheus --version 2>&1 | \
+        sed -ne 's/^prometheus, version \([^ ]*\) .*$/\1/p'
+      changed_when: False
+      failed_when: false
+      check_mode: no
+      register: version
 
-- name: remove versão anterior instalada
-  file:
-    path: /opt/prometheus
-    state: absent
-  when: version.stdout != prometheus_version
-  tags: prometheus
+    - name: remove versão anterior instalada
+      file:
+        path: /opt/prometheus
+        state: absent
+      when: version.stdout != prometheus_version
 
-- name: upload do tarball para o destino
-  copy:
-    src: "~/.cache/ansible/{{ item }}"
-    dest: "/tmp/{{ item }}"
-  with_items:
-    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
-  when: version.stdout != prometheus_version
-  tags: prometheus
+    - name: upload do tarball para o destino
+      copy:
+        src: "~/.cache/ansible/{{ item }}"
+        dest: "/tmp/{{ item }}"
+      with_items:
+        - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
+      when: version.stdout != prometheus_version
 
-- name: cria usuário para execução
-  user:
-    name: prometheus
-    state: present
-    shell: /bin/bash
-    system: yes
-    createhome: no
-  tags: prometheus
+    - name: cria usuário para execução
+      user:
+        name: prometheus
+        state: present
+        shell: /bin/bash
+        system: yes
+        createhome: no
 
-- name: cria diretório de instalação
-  file:
-    path: /opt/prometheus
-    state: directory
-  tags: prometheus
+    - name: cria diretório de instalação
+      file:
+        path: /opt/prometheus
+        state: directory
+      tags: prometheus
 
-- name: cria diretório de dados
-  file:
-    path: "{{ prometheus_data_path }}"
-    state: directory
-    mode: 0700
-    owner: prometheus
-    group: prometheus
-  tags: prometheus
+    - name: cria diretório de dados
+      file:
+        path: "{{ prometheus_data_path }}"
+        state: directory
+        mode: 0700
+        owner: prometheus
+        group: prometheus
 
-- name: descompacta tarball
-  shell:
-    warn=no
-    chdir=/opt/prometheus
-    tar --strip-components=1 -xf "/tmp/{{ item }}" && \
-    chown -R root:root /opt/prometheus/
-  with_items:
-    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
-  when: version.stdout != prometheus_version
-  notify: reinicia prometheus
-  tags: prometheus
+    - name: descompacta tarball
+      shell: warn=no
+        chdir=/opt/prometheus
+        tar --strip-components=1 -xf "/tmp/{{ item }}" && \
+        chown -R root:root /opt/prometheus/
+      with_items:
+        - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
+      when: version.stdout != prometheus_version
+      notify: reinicia prometheus
 
-- name: copia unit do systemd
-  template:
-    src: prometheus.service
-    dest: /etc/systemd/system/prometheus.service
-  notify: reinicia prometheus
-  tags: prometheus
+    - name: copia unit do systemd
+      template:
+        src: prometheus.service
+        dest: /etc/systemd/system/prometheus.service
+      notify: reinicia prometheus
 
-- name: copia arquivo de configuração
-  template:
-    src: "{{ prometheus_conf }}"
-    dest: /opt/prometheus/prometheus.yml
-  notify: reinicia prometheus
-  tags:
-    - prometheus
-    - prometheus:conf
+    - name: copia arquivo de configuração
+      template:
+        src: "{{ prometheus_conf }}"
+        dest: /opt/prometheus/prometheus.yml
+      notify: reinicia prometheus
+      tags:
+        - prometheus:conf
 
-- name: ativa serviço no systemd
-  systemd:
-    name: prometheus
-    enabled: yes
-  notify: reinicia prometheus
-  tags: prometheus
+    - name: ativa serviço no systemd
+      systemd:
+        name: prometheus
+        enabled: yes
+      notify: reinicia prometheus
 
-- name: remove arquivos temporários
-  file:
-    path: "/tmp/{{ item }}"
-    state: absent
-  with_items:
-    - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
+    - name: remove arquivos temporários
+      file:
+        path: "/tmp/{{ item }}"
+        state: absent
+      with_items:
+        - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
+
   tags: prometheus
