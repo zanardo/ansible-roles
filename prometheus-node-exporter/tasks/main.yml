@@ -1,8 +1,11 @@
 ---
 - block:
-
   - name: instala pacotes necessários
-    include_tasks: "install-{{ ansible_distribution|lower }}.yml"
+    apt:
+      name:
+        - ca-certificates
+      state: present
+    tags: prometheus-node-exporter
 
   - name: download do tarball para cache local
     connection: local

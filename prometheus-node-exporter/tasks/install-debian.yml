@@ -1,7 +1,0 @@
----
-- name: instala pacotes necessários
-  apt:
-    name:
-      - ca-certificates
-    state: present
-  tags: prometheus-node-exporter
