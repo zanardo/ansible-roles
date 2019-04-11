@@ -74,6 +74,7 @@
   with_items:
     - "prometheus-{{ prometheus_version }}.linux-{{ prometheus_arch }}.tar.gz"
   when: version.stdout != prometheus_version
+  notify: reinicia prometheus
   tags: prometheus
 
 - name: copia unit do systemd
