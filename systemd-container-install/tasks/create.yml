@@ -21,34 +21,6 @@
     dest: "/etc/systemd/nspawn/{{ systemd_container_name }}.nspawn"
   delegate_to: "{{ systemd_container_host }}"
 
-- name: cria volume lógico no lvm do container
-  lvol:
-    size: "{{ systemd_container_lvm_size }}"
-    vg: "{{ systemd_container_lvm_vg }}"
-    lv: "{{ systemd_container_name }}"
-    opts: -W y
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria filesystem no volume lógico
-  filesystem:
-    dev: "/dev/{{ systemd_container_lvm_vg }}/{{ systemd_container_name }}"
-    fstype: "{{ systemd_container_lvm_fs }}"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: cria diretório de montagem para o container
-  file:
-    state: directory
-    path: "/var/lib/machines/{{ systemd_container_name }}"
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: monta o filesystem do container
-  mount:
-    fstype: "{{ systemd_container_lvm_fs }}"
-    path: "/var/lib/machines/{{ systemd_container_name }}"
-    src: "/dev/{{ systemd_container_lvm_vg }}/{{ systemd_container_name }}"
-    state: mounted
-  delegate_to: "{{ systemd_container_host }}"
-
 - name: cria diretório de cache
   file:
     path: "{{ systemd_container_template_cache_dir }}"
