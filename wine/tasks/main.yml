@@ -21,12 +21,13 @@
       name: "wine:i386"
     when: ansible_distribution_release == "jessie"
 
-  - name: instala pacotes necessários - debian stretch
+  - name: instala pacotes necessários - debian stretch e buster
     apt:
       state: present
       name:
         - wine
         - wine32
-    when: ansible_distribution_release == "stretch"
+    when: ansible_distribution_release in ("stretch", "buster")
+
 
   tags: wine
