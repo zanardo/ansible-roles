@@ -53,7 +53,7 @@
     file:
       state: absent
       path: /etc/tmpfiles.d/ksm.conf
-    when: libvirt_ksm_enable == False
+    when: libvirt_ksm_enable|bool == False
 
   - name: configura ksm
     copy:
@@ -61,6 +61,6 @@
         w /sys/kernel/mm/ksm/run - - - - 1
         w /sys/kernel/mm/ksm/sleep_millisecs - - - - {{ libvirt_ksm_sleep_millisecs }}
       dest: /etc/tmpfiles.d/ksm.conf
-    when: libvirt_ksm_enable
+    when: libvirt_ksm_enable|bool
 
   tags: ["libvirt"]
