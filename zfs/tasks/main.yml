@@ -5,10 +5,12 @@
     state: present
   tags: zfs
 
-- name: instala pacotes do zfs (dkms)
+# O pacote zfsutils-linux falha ao instalar no Buster sem carregar
+# o módulo zfs.
+
+- name: instala módulo do zfs
   apt:
     name:
-      - zfsutils-linux
       - zfs-dkms
     state: present
     install_recommends: no
@@ -18,4 +20,12 @@
   modprobe:
     name: zfs
     state: present
+  tags: zfs
+
+- name: instala ferramentas do zfs
+  apt:
+    name:
+      - zfsutils-linux
+    state: present
+    install_recommends: no
   tags: zfs
