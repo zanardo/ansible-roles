@@ -1,0 +1,84 @@
+---
+- block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - libconfig-inifiles-perl
+          - libcapture-tiny-perl
+          - lzop
+          - mbuffer
+          - pv
+        state: present
+
+    - name: faz download do pacote do sanoid
+      get_url:
+        url: "https://github.com/jimsalterjrs/sanoid/archive/v{{ sanoid_version }}.tar.gz"
+        dest: "/usr/src/sanoid-{{ sanoid_version }}.tar.gz"
+
+    - name: descompacta pacote do sanoid
+      shell: warn=no
+        creates=/usr/src/sanoid-{{ sanoid_version }}
+        tar -C /usr/src/ -xf /usr/src/sanoid-{{ sanoid_version }}.tar.gz
+
+    - name: instala scripts em /usr/local/sbin
+      copy:
+        remote_src: yes
+        src: "/usr/src/sanoid-{{ sanoid_version }}/{{ item }}"
+        dest: "/usr/local/sbin/{{ item }}"
+        mode: 0755
+        owner: root
+        group: root
+      loop:
+        - sanoid
+        - syncoid
+        - findoid
+        - sleepymutex
+
+    - name: cria diretório de configurações
+      file:
+        state: directory
+        path: "/etc/sanoid"
+
+    - name: copia arquivo de configuração default
+      template:
+        src: "/usr/src/sanoid-{{ sanoid_version }}/sanoid.defaults.conf"
+        dest: "/etc/sanoid/sanoid.defaults.conf"
+
+    - name: copia arquivo de configuração
+      template:
+        src: "{{ sanoid_conf }}"
+        dest: "/etc/sanoid/sanoid.conf"
+
+    - name: copia units de serviços do systemd
+      template:
+        src: "{{ item }}.service"
+        dest: "/etc/systemd/system/{{ item }}.service"
+      loop:
+        - sanoid
+        - sanoid-prune
+
+    - name: copia units de timers do systemd
+      template:
+        src: "{{ item }}.timer"
+        dest: "/etc/systemd/system/{{ item }}.timer"
+      loop:
+        - sanoid
+
+    - name: ativa os units do systemd
+      systemd:
+        daemon_reload: yes
+        name: "{{ item }}"
+        enabled: yes
+      loop:
+        - sanoid-prune.service
+        - sanoid.timer
+
+    - name: inicia os units do systemd
+      systemd:
+        daemon_reload: yes
+        name: "{{ item }}"
+        state: started
+      loop:
+        - sanoid.timer
+
+  tags: sanoid

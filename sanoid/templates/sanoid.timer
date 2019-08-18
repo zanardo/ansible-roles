@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Sanoid Every {{ sanoid_interval_minutes|d("15") }} Minutes
+Requires=sanoid.service
+
+[Timer]
+OnCalendar=*:0/{{ sanoid_interval_minutes|d("15") }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target
