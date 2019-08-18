@@ -1,6 +1,7 @@
 ---
 - hosts:
-    - debian9
+  - debian-stretch
+  - debian-buster
 
   roles:
     - zanardo/zfs

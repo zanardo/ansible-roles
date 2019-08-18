@@ -9,3 +9,4 @@ Eles role não gerencia *pools* e *filesystems* do ZFS.
 # Compatibilidade
 
 - Debian Stretch
+- Debian Buster
