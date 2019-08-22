@@ -40,9 +40,10 @@
         path: "/etc/sanoid"
 
     - name: copia arquivo de configuração default
-      template:
+      copy:
         src: "/usr/src/sanoid-{{ sanoid_version }}/sanoid.defaults.conf"
         dest: "/etc/sanoid/sanoid.defaults.conf"
+        remote_src: yes
 
     - name: copia arquivo de configuração
       template:
