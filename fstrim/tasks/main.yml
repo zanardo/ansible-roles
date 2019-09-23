@@ -9,6 +9,7 @@
       loop:
         - service
         - timer
+      when: ansible_distribution_release == "stretch"
 
     - name: habilita timer para fstrim
       systemd:
