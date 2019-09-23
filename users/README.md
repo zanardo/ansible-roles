@@ -28,6 +28,11 @@ Para gerar a senha criptografada, instale o pacote `whois` no Debian e use:
 mkpasswd --method=sha-512
 ```
 
+# Distribuições suportadas
+
+- Debian Stretch
+- Debian Buster
+
 # Tags
 
 - `users`: Executa todo o role.
