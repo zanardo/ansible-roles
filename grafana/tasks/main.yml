@@ -11,7 +11,7 @@
     connection: local
     run_once: yes
     get_url:
-      url: "https://s3-us-west-2.amazonaws.com/grafana-releases/release/{{ item }}"
+      url: "https://dl.grafana.com/oss/release/{{ item }}"
       dest: "~/.cache/ansible/{{ item }}"
     with_items:
       - "grafana-{{ grafana_version }}.linux-{{ grafana_arch }}.tar.gz"
