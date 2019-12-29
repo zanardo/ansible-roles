@@ -29,6 +29,5 @@ permite manter as configurações em arquivos-textos organizados.
 
 # Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
-- Ubuntu Cosmic
+- Debian Buster
