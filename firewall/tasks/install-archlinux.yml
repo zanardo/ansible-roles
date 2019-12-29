@@ -1,6 +1,0 @@
----
-- name: instala pacotes necessários
-  pacman:
-    name: iptables
-    state: present
-  tags: firewall

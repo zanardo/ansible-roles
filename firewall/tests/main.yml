@@ -1,7 +1,0 @@
----
-- hosts:
-    - debian8
-    - debian9
-
-  roles:
-    - zanardo/firewall

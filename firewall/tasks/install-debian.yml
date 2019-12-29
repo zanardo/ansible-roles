@@ -1,6 +1,0 @@
----
-- name: instala pacotes necessários
-  apt:
-    name: iptables
-    state: present
-  tags: firewall
