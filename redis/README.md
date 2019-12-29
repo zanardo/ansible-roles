@@ -2,7 +2,8 @@ Ansible role para instalar e configurar o [Redis](http://redis.io/).
 
 # Variables
 
-- `redis_conf`: Opcional. Define o caminho local para o template que irá substituir o arquivo de configurações do Redis.
+- `redis_conf`: Opcional. Define o caminho local para o template que irá
+  substituir o arquivo de configurações do Redis.
 
 # Tags
 
@@ -12,7 +13,5 @@ Ansible role para instalar e configurar o [Redis](http://redis.io/).
 
 # Compatibilidade
 
-- Debian Wheezy
-- Debian Jessie
 - Debian Stretch
-- Ubuntu Cosmic
+- Debian Buster
