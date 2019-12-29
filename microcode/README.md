@@ -6,5 +6,5 @@ Ansible Role para instalar as atualizações de microcode dos processadores Inte
 
 # Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
+- Debian Buster

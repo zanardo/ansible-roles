@@ -1,7 +1,7 @@
 ---
 - hosts:
-    - debian8
-    - debian9
+    - debian-stretch
+    - debian-buster
 
   roles:
 
