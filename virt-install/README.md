@@ -40,7 +40,7 @@ As seguintes mudanças são feitas no sistema:
 
   roles:
 
-  - role: zanardo.virt-install
+  - role: zanardo/virt-install
     virt_install_name: squid
     virt_install_ip: 192.168.1.100
     virt_install_args:
@@ -48,15 +48,15 @@ As seguintes mudanças são feitas no sistema:
       - "--memory 512"
       - "--clock offset=utc"
       - "--network bridge=br0,model=virtio"
-      - "--os-variant debianwheezy"
+      - "--os-variant debian7"
       - "--disk /srv/kvm/squid.qcow2,size=50,bus=virtio,format=qcow2,cache=writeback"
-      - "--location http://ftp.br.debian.org/debian/dists/jessie/main/installer-amd64/"
+      - "--location http://ftp.br.debian.org/debian/dists/buster/main/installer-amd64/"
       - "--extra-args \"
            quiet
            priority=critical
            auto
            hostname=squid
-           url=tftp://preseed.1/jessie.cfg
+           url=tftp://preseed.intranet.local/jessie.cfg
            debian-installer/locale=en_US.UTF-8
            debian-installer/language=en
            debian-installer/country=BR
