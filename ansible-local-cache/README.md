@@ -13,5 +13,5 @@ As seguintes mudanças são feitas no sistema:
 
 # Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
+- Debian Buster
