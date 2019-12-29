@@ -1,5 +1,0 @@
----
-- name: reinicia uwsgi
-  systemd:
-    name: uwsgi
-    state: restarted
