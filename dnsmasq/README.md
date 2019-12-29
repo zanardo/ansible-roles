@@ -1,4 +1,4 @@
-Ansible Role para instalar e configurar o **dnsmasq** no Debian.
+Ansible Role para instalar e configurar o **dnsmasq**.
 
 O **dnsmasq** fornece um resolvedor recursivo de DNS, além de um servidor DHCP.
 
@@ -14,5 +14,5 @@ O **dnsmasq** fornece um resolvedor recursivo de DNS, além de um servidor DHCP.
 
 # Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
+- Debian Buster
