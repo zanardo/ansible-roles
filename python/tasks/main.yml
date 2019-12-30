@@ -1,19 +1,19 @@
 ---
-- name: instala pacotes necessários
-  apt:
-    name:
-      - python
-      - python3
-      - python-dev
-      - python3-dev
-      - python-pip
-      - python3-pip
-    state: present
-  tags: ["python"]
+- block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - python
+          - python3
+          - python-dev
+          - python3-dev
+          - python-pip
+          - python3-pip
+        state: present
 
-- name: instala virtualenv atualizado /usr/local
-  shell:
-    warn=no
-    creates=/usr/local/bin/virtualenv
-    pip3 install --upgrade virtualenv
-  tags: ["python"]
+    - name: instala virtualenv atualizado /usr/local
+      shell: warn=no
+        creates=/usr/local/bin/virtualenv
+        pip3 install --upgrade virtualenv
+
+  tags: "python"

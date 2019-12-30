@@ -10,5 +10,5 @@ com as versões mais atuais do `pip`.
 
 # Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
+- Debian Buster
