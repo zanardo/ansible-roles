@@ -1,5 +1,8 @@
 ---
 - block:
+    - name: instala pacotes necessários
+      apt:
+        name: util-linux
 
     - name: prepara serviço e timer para fstrim
       file:
