@@ -5,29 +5,18 @@
     apt:
       name:
         - ca-certificates
+        - gnupg
       state: present
 
-  - name: download do executável para cache local
-    connection: local
-    run_once: yes
+  - name: download do executável
     get_url:
       url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64"
-      dest: "~/.cache/ansible/borg-{{ borg_version }}"
+      dest: "/tmp/borg-{{ borg_version }}"
 
-  - name: download da assinatura para cache local
-    connection: local
-    run_once: yes
+  - name: download da assinatura
     get_url:
       url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64.asc"
-      dest: "~/.cache/ansible/borg-{{ borg_version }}.asc"
-
-  - name: upload dos arquivos para o destino
-    copy:
-      src: "~/.cache/ansible/{{ item }}"
-      dest: "/tmp/{{ item }}"
-    with_items:
-      - "borg-{{ borg_version }}"
-      - "borg-{{ borg_version }}.asc"
+      dest: "/tmp/borg-{{ borg_version }}.asc"
 
   - name: upload da chave pública para verificação
     copy:
