@@ -10,12 +10,12 @@
 
   - name: download do executável
     get_url:
-      url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64"
+      url: "{{ borg_download_url }}"
       dest: "/tmp/borg-{{ borg_version }}"
 
   - name: download da assinatura
     get_url:
-      url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64.asc"
+      url: "{{ borg_download_sign_url }}"
       dest: "/tmp/borg-{{ borg_version }}.asc"
 
   - name: upload da chave pública para verificação

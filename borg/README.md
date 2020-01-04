@@ -4,6 +4,10 @@ Ansible Role para instalar o
 # Variáveis
 
 - `borg_version`: Versão do Borg a ser instalada.
+- `borg_download_url`: URL para download do executável do Borg. Default
+   na área de *releases* do Github.  
+- `borg_download_sign_url`: URL para download da assinatura via GnuPG do
+  executável do Borg. Default na área de *releases* do Github.
 
 # Ações
 
