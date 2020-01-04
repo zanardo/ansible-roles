@@ -10,3 +10,8 @@ Ansible Role para instalar o
 As seguintes mudanças são feitas no sistema:
 
 - O binário do Borg é instalado em `/usr/local/bin/borg`.
+
+# Compatibilidade
+
+- Debian Stretch
+- Debian Buster
