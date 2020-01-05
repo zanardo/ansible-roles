@@ -1,0 +1,8 @@
+---
+- name: instala pacotes necessários
+  pacman:
+    name:
+      - python
+      - python-pip
+      - python-virtualenv
+    state: present
