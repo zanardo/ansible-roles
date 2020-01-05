@@ -1,4 +1,4 @@
-Ansible Role para instalar o [Supervisor](http://supervisord.org/) no Debian.
+Ansible Role para instalar o [Supervisor](http://supervisord.org/).
 
 O **Supervisor** fornece o gerenciamento de carregamento e reinicialização de
 processos, e é usado nos outros roles.
@@ -14,6 +14,5 @@ processos, e é usado nos outros roles.
 
 # Compatibilidade
 
-- Debian Wheezy
-- Debian Jessie
 - Debian Stretch
+- Debian Buster
