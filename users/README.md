@@ -32,6 +32,7 @@ mkpasswd --method=sha-512
 
 - Debian Stretch
 - Debian Buster
+- Arch Linux
 
 # Tags
 
