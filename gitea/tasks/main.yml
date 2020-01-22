@@ -15,19 +15,18 @@
       home: /srv/git
 
   - name: download do binário do gitea
-    connection: local
-    run_once: yes
     get_url:
       url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64"
-      dest: "~/.cache/ansible/gitea-{{ gitea_version }}-linux-amd64"
-
-  - name: upload do binário do gitea
-    copy:
-      src: "~/.cache/ansible/gitea-{{ gitea_version }}-linux-amd64"
-      dest: /srv/git/gitea
+      dest: "/srv/git/gitea_{{ gitea_version }}"
       mode: 0755
       owner: root
       group: root
+
+  - name: cria link para versão
+    file:
+      state: link
+      dest: "/srv/git/gitea"
+      src: "/srv/git/gitea_{{ gitea_version }}"
     notify: reinicia gitea
 
   - name: copia unit do supervisor
