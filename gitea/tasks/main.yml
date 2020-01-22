@@ -1,42 +1,42 @@
 ---
 - block:
 
-  - name: install needed packages
+  - name: instala pacotes necessários
     apt:
       state: present
       name:
         - git
 
-  - name: create user for gitea
+  - name: cria usuário para gitea
     user:
       name: git
       state: present
       shell: /bin/bash
       home: /srv/git
 
-  - name: download gitea binary in local machine
+  - name: download do binário do gitea
     connection: local
     run_once: yes
     get_url:
       url: "https://github.com/go-gitea/gitea/releases/download/v{{ gitea_version }}/gitea-{{ gitea_version }}-linux-amd64"
       dest: "~/.cache/ansible/gitea-{{ gitea_version }}-linux-amd64"
 
-  - name: upload gitea binary
+  - name: upload do binário do gitea
     copy:
       src: "~/.cache/ansible/gitea-{{ gitea_version }}-linux-amd64"
       dest: /srv/git/gitea
       mode: 0755
       owner: root
       group: root
-    notify: restart gitea
+    notify: reinicia gitea
 
-  - name: copy supervisor unit
+  - name: copia unit do supervisor
     template:
       src: gitea.supervisor
       dest: /etc/supervisor/conf.d/gitea.conf
-    notify: restart gitea
+    notify: reinicia gitea
 
-  - name: create custom configuration directory
+  - name: cria diretório de configuração
     become: yes
     become_user: git
     file:
@@ -45,13 +45,13 @@
       path: /srv/git/custom/conf
     when: gitea_conf is defined
 
-  - name: copy custom configuration
+  - name: copia arquivo de configuração
     become: yes
     become_user: git
     template:
       src: "{{ gitea_conf }}"
       dest: /srv/git/custom/conf/app.ini
     when: gitea_conf is defined
-    notify: restart gitea
+    notify: reinicia gitea
 
   tags: gitea

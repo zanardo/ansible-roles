@@ -1,5 +1,5 @@
 ---
-- name: restart gitea
+- name: reinicia gitea
   supervisorctl:
     name: gitea
     state: restarted
