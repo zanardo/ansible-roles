@@ -26,9 +26,9 @@
       template:
         src: "{{ item.1.src }}"
         dest: "/var/lib/docker/volumes/{{ item.0.name }}_conf/_data/{{ item.1.src|basename }}"
-        mode: "{{ item.1.mode }}"
-        owner: "{{ item.1.user }}"
-        group: "{{ item.1.group }}"
+        mode: "{{ item.1.mode|default('0644') }}"
+        owner: "{{ item.1.user|default('root') }}"
+        group: "{{ item.1.group|default('root') }}"
       with_subelements:
         - "{{ docker_containers }}"
         - x_conf_files
