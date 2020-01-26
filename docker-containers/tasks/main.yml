@@ -12,10 +12,15 @@
         name: "{{ item.image }}"
       loop: "{{ docker_containers }}"
 
+    - name: cria o volume do docker para as configurações
+      docker_volume:
+        volume_name : "{{ item.name }}_conf"
+      loop: "{{ docker_containers }}"
+
     - name: copia os arquivos de configurações
       template:
         src: "{{ item.1.src }}"
-        dest: "{{ item.1.dest }}"
+        dest: "/var/lib/docker/volumes/{{ item.0.name }}_conf/{{ item.1.src|basename }}"
         mode: "{{ item.1.mode }}"
         owner: "{{ item.1.user }}"
         group: "{{ item.1.group }}"
