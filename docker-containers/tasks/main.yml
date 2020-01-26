@@ -16,6 +16,7 @@
       docker_volume:
         volume_name : "{{ item.name }}_conf"
       loop: "{{ docker_containers }}"
+      when: item.x_conf_files is defined
 
     - name: copia os arquivos de configurações
       template:
