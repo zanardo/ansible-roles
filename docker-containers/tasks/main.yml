@@ -12,15 +12,6 @@
         name: "{{ item.image }}"
       loop: "{{ docker_containers }}"
 
-    - name: cria os diretórios raiz com os volumes
-      file:
-        state: directory
-        path: "{{ docker_containers_dkvol_path }}/{{ item.name }}"
-        owner: "{{ item.x_vol_user|default('root') }}"
-        group: "{{ item.x_vol_group|default('root') }}"
-        mode: "{{ item.x_vol_mode|default('0700') }}"
-      loop: "{{ docker_containers }}"
-
     - name: copia os arquivos de configurações
       template:
         src: "{{ item.1.src }}"
