@@ -121,5 +121,19 @@
         working_dir: "{{ item.working_dir|default(omit) }}"
       loop: "{{ docker_containers }}"
 
+    - name: copia script para agendar gc nas imagens sem tags
+      copy:
+        src: "docker-gc-images.sh"
+        dest: "/usr/local/bin/docker-gc-images.sh"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+
+    - name: agenda script de gc nas imagens sem tags
+      cron:
+        name: "remove imagens do docker sem tags"
+        special_time: "daily"
+        job: "/usr/local/bin/docker-gc-images.sh 2>&1 | /usr/bin/logger"
+
   tags:
     - "containers"
