@@ -21,7 +21,7 @@
     - name: copia os arquivos de configurações
       template:
         src: "{{ item.1.src }}"
-        dest: "/var/lib/docker/volumes/{{ item.0.name }}_conf/{{ item.1.src|basename }}"
+        dest: "/var/lib/docker/volumes/{{ item.0.name }}_conf/_data/{{ item.1.src|basename }}"
         mode: "{{ item.1.mode }}"
         owner: "{{ item.1.user }}"
         group: "{{ item.1.group }}"
