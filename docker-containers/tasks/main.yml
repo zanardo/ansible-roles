@@ -11,11 +11,15 @@
         source: pull
         name: "{{ item.image }}"
       loop: "{{ docker_containers }}"
+      loop_control:
+        label: "{{ item.image }}"
 
     - name: cria o volume do docker para as configurações
       docker_volume:
         volume_name : "{{ item.name }}_conf"
       loop: "{{ docker_containers }}"
+      loop_control:
+        label: "{{ item.name }}_conf"
       when: item.x_conf_files is defined
 
     - name: copia os arquivos de configurações
@@ -30,6 +34,8 @@
         - x_conf_files
         - flags:
           skip_missing: True
+      loop_control:
+        label: "{{ item.0.name }} | {{ item.1.src|basename }}"
 
     - name: executa os containers
       docker_container:
@@ -130,6 +136,8 @@
         volumes_from: "{{ item.volumes_from|default(omit) }}"
         working_dir: "{{ item.working_dir|default(omit) }}"
       loop: "{{ docker_containers }}"
+      loop_control:
+        label: "{{ item.name }}"
 
     - name: copia script para agendar gc nas imagens sem tags
       copy:
