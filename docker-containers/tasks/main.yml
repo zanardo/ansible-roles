@@ -50,7 +50,7 @@
         cpuset_cpus: "{{ item.cpuset_cpus|default(omit) }}"
         cpuset_mems: "{{ item.cpuset_mems|default(omit) }}"
         debug: "{{ item.debug|default(omit) }}"
-        detach: "{{ item.detach|default(omit) }}"
+        detach: "{{ item.detach|default(True) }}"
         device_read_bps: "{{ item.device_read_bps|default(omit) }}"
         device_read_iops: "{{ item.device_read_iops|default(omit) }}"
         device_write_bps: "{{ item.device_write_bps|default(omit) }}"
