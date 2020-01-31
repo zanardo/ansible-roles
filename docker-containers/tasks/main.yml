@@ -8,9 +8,15 @@
       loop_control:
         label: "{{ item.image }}"
 
-    - name: cria o volume do docker para as configurações
-      docker_volume:
-        volume_name : "{{ item.name }}_conf"
+    - name: cria o diretório raíz para as configurações dos containers
+      file:
+        state: directory
+        path: /etc/dockers
+
+    - name: cria o diretório para as configurações dos containers
+      file:
+        state: directory
+        path: "/etc/dockers/{{ item.name }}"
       loop: "{{ docker_containers }}"
       loop_control:
         label: "{{ item.name }}_conf"
@@ -19,7 +25,7 @@
     - name: copia os arquivos de configurações
       template:
         src: "{{ item.1.src }}"
-        dest: "/var/lib/docker/volumes/{{ item.0.name }}_conf/_data/{{ item.1.src|basename }}"
+        dest: "/etc/dockers/{{ item.0.name }}/{{ item.1.src|basename }}"
         mode: "{{ item.1.mode|default('0644') }}"
         owner: "{{ item.1.user|default('root') }}"
         group: "{{ item.1.group|default('root') }}"
