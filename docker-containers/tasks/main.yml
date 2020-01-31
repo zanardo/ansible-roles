@@ -1,11 +1,5 @@
 ---
 - block:
-    - name: instala pacotes necessários
-      apt:
-        name:
-          - python-docker
-        state: present
-
     - name: docker pull nas imagens que serão utilizadas
       docker_image:
         source: pull

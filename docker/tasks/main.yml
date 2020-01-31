@@ -9,6 +9,7 @@
         - curl
         - gnupg2
         - software-properties-common
+        - python-docker
       state: present
 
   - name: adiciona chave gpg no apt para docker
