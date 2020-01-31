@@ -80,4 +80,20 @@
       special_time: "daily"
       job: "/usr/local/bin/docker-gc-images.sh 2>&1 | /usr/bin/logger"
 
+  - name: cria diretório para logs dos containers
+    file:
+      state: directory
+      path: "/var/log/dockers"
+
+  - name: copia configurações para rotacionamento dos logs
+    copy:
+      src: dockers.logrotate
+      dest: "/etc/logrotate.d/dockers"
+
+  - name: copia configurações para salvamento dos logs via syslog
+    copy:
+      src: dockers.rsyslog
+      dest: "/etc/rsyslog.d/30-dockers.conf"
+    notify: reinicia rsyslog
+
   tags: docker
