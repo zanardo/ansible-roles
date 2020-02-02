@@ -1,13 +1,13 @@
 ---
 - block:
 
-  - name: copy interfaces file to /etc/network/interfaces
+  - name: copia arquivo de configurações para /etc/network/interfaces
     template:
       src: "{{ interfaces_path }}"
       dest: /etc/network/interfaces
     when: interfaces_path|d
 
-  - name: update interfaces files in /etc/network/interfaces
+  - name: atualiza configurações em /etc/network/interfaces
     template:
       src: interfaces.j2
       dest: /etc/network/interfaces
