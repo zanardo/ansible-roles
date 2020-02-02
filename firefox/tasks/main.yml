@@ -1,0 +1,43 @@
+---
+- block:
+    - name: verifica versão instalada
+      shell:
+        warn=no
+        /opt/firefox/firefox --version | cut -d' ' -f3
+      register: firefox_register_version
+      changed_when: False
+      failed_when: False
+      check_mode: no
+
+    # Os pacotes abaixo foram identificados como necessários ao executar firefox
+    # --version rodando a instalação em um container mínimo sem o Xorg.
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - ca-certificates
+          - libgtk-3-0
+          - libx11-xcb1
+          - libdbus-glib-1-2
+          - libxt6
+
+    - name: instala firefox
+      include_tasks: install.yml
+      when: firefox_register_version.stdout != firefox_version or firefox_force_install is defined
+
+    - name: cria diretório para entrada de desktop
+      file:
+        state: directory
+        path: "/usr/local/share/applications"
+
+    - name: copia entrada para desktop
+      copy:
+        src: firefox.desktop
+        dest: "/usr/local/share/applications/firefox.desktop"
+
+    - name: cria link para firefox
+      file:
+        state: link
+        dest: "/usr/local/bin/firefox"
+        src: "/opt/firefox/firefox"
+
+  tags: ["firefox"]

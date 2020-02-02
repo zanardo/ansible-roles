@@ -1,0 +1,4 @@
+---
+# Idioma do firefox, para compor o URL em:
+# https://ftp.mozilla.org/pub/firefox/releases/<versão>/linux-x86_64/
+firefox_lang: "en-US"

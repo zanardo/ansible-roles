@@ -1,0 +1,30 @@
+---
+- name: faz download da distribuição do firefox
+  get_url:
+    url: "https://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/linux-x86_64/{{ firefox_lang }}/firefox-{{ firefox_version }}.tar.bz2"
+    dest: "/tmp//firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+
+- name: remove instalação atual do firefox
+  file:
+    state: absent
+    path: "/opt/firefox"
+
+- name: cria diretório de instalação
+  file:
+    state: directory
+    path: "/opt/firefox"
+    mode: "0755"
+
+- name: descompacta pacote do firefox
+  unarchive:
+    remote_src: yes
+    src: "/tmp//firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+    dest: "/opt/firefox"
+    owner: root
+    group: root
+    extra_opts: ["--strip-components", "1"] 
+
+- name: remove pacote de download
+  file:
+    state: absent
+    path: "/tmp//firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
