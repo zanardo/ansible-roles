@@ -16,4 +16,4 @@
         creates=/usr/local/bin/virtualenv
         pip3 install --upgrade virtualenv
 
-  tasks: ["python"]
+  tags: ["python"]
