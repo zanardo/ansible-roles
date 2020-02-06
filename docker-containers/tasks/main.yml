@@ -4,6 +4,7 @@
       docker_image:
         source: pull
         name: "{{ item.image }}"
+        force_source: yes
       loop: "{{ docker_containers }}"
       loop_control:
         label: "{{ item.image }}"
