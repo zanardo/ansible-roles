@@ -98,4 +98,11 @@
       dest: "/etc/rsyslog.d/30-dockers.conf"
     notify: reinicia rsyslog
 
+  - name: adiciona usuários para grupo docker
+    user:
+      name: "{{ item }}"
+      groups: "docker"
+      append: yes
+    loop: "{{ docker_users }}"
+
   tags: docker
