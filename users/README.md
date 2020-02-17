@@ -18,8 +18,8 @@ users_users:
 
 ```yaml
 users_password:
-	- name: root
-	  password: "$6$Gl5HSt6TkJY..."
+  - name: root
+    password: "$6$Gl5HSt6TkJY..."
 ```
 
 Para gerar a senha criptografada, instale o pacote `whois` no Debian e use:
