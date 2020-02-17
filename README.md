@@ -12,7 +12,7 @@ Os roles precisam ser adicionados usando o namespace `zanardo/`, pois alguns rol
 git submodule add https://github.com/zanardo/ansible-roles roles/zanardo
 ```
 
-Após isso, você pode usar os roles dentro dos *playbooks*. Examplo:
+Após isso, você pode usar os roles dentro dos *playbooks*. Exemplo:
 
 ```yaml
 - { role: zanardo/dnsmasq }
