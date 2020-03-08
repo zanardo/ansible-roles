@@ -2,4 +2,6 @@
 # Idioma do firefox, para compor o URL em:
 # https://ftp.mozilla.org/pub/firefox/releases/<versão>/linux-x86_64/
 firefox_lang: "en-US"
+firefox_version: "latest"
+firefox_chown: "root"
 firefox_path: "/opt/firefox"
