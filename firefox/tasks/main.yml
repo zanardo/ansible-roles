@@ -3,7 +3,7 @@
     - name: verifica versão instalada
       shell:
         warn=no
-        /opt/firefox/firefox --version | cut -d' ' -f3
+        {{ firefox_path }}/firefox --version | cut -d' ' -f3
       register: firefox_register_version
       changed_when: False
       failed_when: False
@@ -38,6 +38,6 @@
       file:
         state: link
         dest: "/usr/local/bin/firefox"
-        src: "/opt/firefox/firefox"
+        src: "{{ firefox_path }}/firefox"
 
   tags: ["firefox"]
