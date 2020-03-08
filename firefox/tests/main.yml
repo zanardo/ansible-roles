@@ -4,7 +4,7 @@
   - debian-buster
 
   vars:
-    firefox_version: "72.0.2"
+    firefox_version: "latest"
 
   roles:
     - zanardo/firefox

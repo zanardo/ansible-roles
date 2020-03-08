@@ -21,21 +21,13 @@
           - libdbus-glib-1-2
           - libxt6
 
-    - name: instala firefox
+    - name: instala firefox com versão específica
       include_tasks: install.yml
-      when: firefox_register_version.stdout != firefox_version or firefox_force_install is defined
+      when: firefox_version != "latest" and firefox_register_version.stdout != firefox_version
 
-    - name: verifica dono do diretório de instalação
-      stat:
-        path: "{{ firefox_path }}"
-      register: st
-
-    - name: ajusta dono da instalação
-      file:
-        path: "{{ firefox_path }}"
-        owner: "{{ firefox_chown }}"
-        group: "{{ firefox_chown }}"
-      when: st.stat.pw_name != firefox_chown
+    - name: instala firefox com última versão
+      include_tasks: install.yml
+      when: firefox_version == "latest" and firefox_register_version.stdout == ""
 
     - name: cria diretório para entrada de desktop
       file:
