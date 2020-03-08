@@ -31,6 +31,15 @@
     group: "{{ firefox_chown }}"
     extra_opts: ["--strip-components", "1"]
 
+# Aparentemente o owner e group acima não fixam as permissões em todos os
+# diretórios.
+- name: corrige permissões
+  file:
+    path: "{{ firefox_path }}"
+    recurse: yes
+    owner: "{{ firefox_chown }}"
+    group: "{{ firefox_chown }}"
+
 - name: remove pacote de download
   file:
     state: absent
