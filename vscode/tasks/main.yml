@@ -1,0 +1,23 @@
+---
+- block:
+    - name: instala pacotes necessários para instalação inicial
+      apt:
+        name:
+          - ca-certificates
+          - apt-transport-https
+
+    - name: baixa chave gpg de assinatura do repositório
+      apt_key:
+        url: "https://packages.microsoft.com/keys/microsoft.asc"
+
+    - name: adiciona repositório
+      apt_repository:
+        filename: "vscode"
+        repo: "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+
+    - name: instala visual studio code
+      apt:
+        name:
+          - code
+
+  tags: ["vscode"]
