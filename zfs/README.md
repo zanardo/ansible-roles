@@ -1,12 +1,12 @@
-Ansible Role para instalar o ZFS On Linux.
+# zfs
 
-Eles role não gerencia *pools* e *filesystems* do ZFS.
+Ansible Role para instalar o ZFS via pacotes do repositório oficial do Debian.
 
-# Tags
+## Tags
 
 - `zfs`: Executa todo o role.
 
-# Compatibilidade
+## Compatibilidade
 
 - Debian Stretch
 - Debian Buster
