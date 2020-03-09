@@ -1,13 +1,15 @@
+# chrony
+
 Ansible Role para instalar o [chrony](https://chrony.tuxfamily.org/) no Debian.
 
 O **Chrony** é um servidor de NTP para sincronização de relógio.
 
-# Variáveis
+## Variáveis
 
 - `chrony_conf`: path local para o arquivo de configurações a ser usado.
   Opcional.
 
-# Ações
+## Ações
 
 - O pacote `chrony` é instalado no Debian, e o arquivo de configurações
   utilizado é o default, com exceção do uso dos servidores `ntp.br`.
@@ -15,12 +17,11 @@ O **Chrony** é um servidor de NTP para sincronização de relógio.
 - Caso a variável `chrony_conf` seja usada, pode-se instalar um arquivo de
   configurações customizado.
 
-# Tags
+## Tags
 
 - `chrony`: Executa todo o role.
 
 # Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
-- Ubuntu Cosmic
+- Debian Buster
