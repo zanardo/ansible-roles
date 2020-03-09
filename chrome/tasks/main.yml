@@ -1,0 +1,22 @@
+---
+- block:
+    - name: instala pacotes necessários para instalação inicial
+      apt:
+        name:
+          - ca-certificates
+
+    - name: adiciona chave gpg para repositório
+      apt_key:
+        url: "https://dl.google.com/linux/linux_signing_key.pub"
+
+    - name: adiciona repositório
+      apt_repository:
+        filename: "google-chrome"
+        repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+
+    - name: instala chrome
+      apt:
+        name:
+          - google-chrome-stable
+
+  tags: ["chrome"]
