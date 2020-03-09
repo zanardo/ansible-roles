@@ -1,6 +1,8 @@
+# packages
+
 Ansible Role para instalar pacotes via apt.
 
-# Variáveis
+## Variáveis
 
 - `packages_install`: lista com nomes de pacotes a serem instalados.
 
@@ -10,6 +12,11 @@ packages_install:
   - tmux
 ```
 
-# Tags
+## Tags
 
 - `packages`: Executa todo o role.
+
+## Compatibilidade
+
+- Debian Stretch
+- Debian Buster

@@ -1,13 +1,12 @@
 ---
 - hosts:
-    - debian8
-    - debian9
+    - debian-stretch
+    - debian-buster
 
   vars:
     packages_install:
       - build-essential
       - git
-  
-  roles:
 
+  roles:
     - { role: zanardo/packages }
