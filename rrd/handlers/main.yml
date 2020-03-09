@@ -1,8 +1,0 @@
----
-- name: reinicia rrd
-  supervisorctl:
-    name: "{{ item }}"
-    state: restarted
-  with_items:
-    - rrd
-    - rrdweb

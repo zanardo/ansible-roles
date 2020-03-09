@@ -1,5 +1,0 @@
-[program:rrdweb]
-command=/opt/rrd/rrdweb -p {{ rrdweb_port }}
-directory=/var/lib/rrd
-user=daemon
-redirect_stderr=True 

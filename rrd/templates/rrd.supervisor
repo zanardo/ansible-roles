@@ -1,5 +1,0 @@
-[program:rrd]
-command=/opt/rrd/rrd -p {{ rrd_port }}
-directory=/var/lib/rrd
-user=daemon
-redirect_stderr=True 
