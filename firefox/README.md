@@ -1,7 +1,9 @@
+# firefox
+
 Ansible Role para instalar o **Mozilla Firefox**, com binário baixado
 diretamente do site oficial.
 
-# Variáveis
+## Variáveis
 
 - `firefox_path`: Destino da instalação. Default: `/opt/firefox`.
 - `firefox_version`: Versão do Firefox a ser instalada. Caso seja `latest`, a
@@ -13,7 +15,11 @@ diretamente do site oficial.
 - `firefox_chown`: Usuário dono do diretório de instalação. Default `root`. Mude
   para seu usuário para ter poder de atualização via atualizador do Firefox.
 
-# Compatibilidade
+## Tag
+
+- `firefox`: aplica todo o role.
+
+## Compatibilidade
 
 - Debian Stretch
 - Debian Buster
