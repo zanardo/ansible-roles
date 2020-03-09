@@ -1,6 +1,8 @@
+# users
+
 Ansible Role para definir usuários (através de chamadas ao módulo `user`).
 
-# Variáveis
+## Variáveis
 
 - `users_users`: dicionário com os usuários a serem criados. Ex:
 
@@ -28,12 +30,11 @@ Para gerar a senha criptografada, instale o pacote `whois` no Debian e use:
 mkpasswd --method=sha-512
 ```
 
-# Distribuições suportadas
+## Tags
+
+- `users`: Executa todo o role.
+
+## Compatibilidade
 
 - Debian Stretch
 - Debian Buster
-- Arch Linux
-
-# Tags
-
-- `users`: Executa todo o role.
