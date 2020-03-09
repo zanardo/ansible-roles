@@ -1,14 +1,11 @@
-Ansible Role for setting kernel parameters via sysctl.
+# sysctl
 
-Parameters will be saved in `/etc/sysctl.d/local.conf` and set immediately.
+Ansible Role para definir configurações do _kernel_ via parâmetros do `sysctl`.
 
-# How to use
+Os parâmetros são salvos em `/etc/sysctl.d/local.conf` e definidos
+imediatamente.
 
-```yaml
-- { role: zanardo/sysctl }
-```
-
-Sysctl parameters are set from `sysctl_set` dictionary. Example:
+## Variáveis
 
 ```yaml
 sysctl_set:
@@ -16,12 +13,11 @@ sysctl_set:
   vm.dirty_background_ratio: 5
 ```
 
-# Tags
+## Tags
 
-- `sysctl`: Run entire role.
+- `sysctl`: Aplica todo o role.
 
-# Compatibility
+# Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
-- Ubuntu Cosmic
+- Debian Buster

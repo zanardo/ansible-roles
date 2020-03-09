@@ -1,5 +1,5 @@
 ---
-- name: set sysctl configurations
+- name: define configurações do sysctl
   sysctl:
     sysctl_file: /etc/sysctl.d/local.conf
     state: present
