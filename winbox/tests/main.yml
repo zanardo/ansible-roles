@@ -1,10 +1,10 @@
 ---
 - hosts:
-    - debian8
-    - debian9
+    - debian-stretch
+    - debian-buster
 
   vars:
-    winbox_version: "3.11"
+    winbox_version: "3.22"
 
   roles:
     - zanardo/winbox

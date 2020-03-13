@@ -1,27 +1,24 @@
 ---
 - block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - ca-certificates
 
-  - name: download do winbox para cache local
-    connection: local
-    run_once: yes
-    get_url:
-      url: "http://download2.mikrotik.com/routeros/winbox/{{ winbox_version }}/winbox.exe"
-      dest: "~/.cache/ansible/winbox-{{ winbox_version }}.exe"
+    - name: cria diretório de destino
+      file:
+        state: directory
+        path: "/opt/winbox"
 
-  - name: cria diretório de destino
-    file:
-      state: directory
-      path: "/opt/winbox"
+    - name: download do winbox
+      get_url:
+        url: "https://download.mikrotik.com/winbox/{{ winbox_version }}/winbox.exe"
+        dest: "/opt/winbox/winbox-{{ winbox_version }}.exe"
 
-  - name: cópia do winbox para destino
-    copy:
-      src: "~/.cache/ansible/winbox-{{ winbox_version }}.exe"
-      dest: "/opt/winbox/winbox-{{ winbox_version }}.exe"
+    - name: cria link
+      file:
+        state: link
+        src: "/opt/winbox/winbox-{{ winbox_version }}.exe"
+        dest: "/opt/winbox/winbox.exe"
 
-  - name: cria link
-    file:
-      state: link
-      src: "/opt/winbox/winbox-{{ winbox_version }}.exe"
-      dest: "/opt/winbox/winbox.exe"
-
-  tags: winbox
+  tags: ["winbox"]

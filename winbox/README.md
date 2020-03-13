@@ -1,12 +1,14 @@
-Ansible Role para instalar o [Winbox](http://www.mikrotik.com/), gerenciador
-gráfico para roteadores Mikrotik. O Winbox é um arquivo executável para
-Windows, e roda emulado no Wine.
+# winbox
 
-# Variáveis
+Ansible Role para instalar o [Winbox](http://www.mikrotik.com/), gerenciador
+gráfico para roteadores Mikrotik. O Winbox é um arquivo executável para Windows,
+e roda emulado no Wine.
+
+## Variáveis
 
 - `winbox_version`: Versão do Winbox a ser instalada.
 
-# Como rodar o Winbox
+## Como rodar o Winbox
 
 Em uma sessão do X:
 
@@ -14,7 +16,11 @@ Em uma sessão do X:
 wine /opt/winbox/winbox.exe
 ```
 
-# Compatibilidade
+## Tags
 
-- Debian Jessie
+- `winbox`: executa todo o role.
+
+## Compatibilidade
+
 - Debian Stretch
+- Debian Buster
