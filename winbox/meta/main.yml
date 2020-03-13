@@ -1,4 +1,3 @@
 ---
 dependencies:
-  - zanardo/ansible-local-cache
   - zanardo/wine
