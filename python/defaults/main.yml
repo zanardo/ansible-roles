@@ -1,0 +1,4 @@
+---
+python_install_python2: yes
+python_install_python3: yes
+python_install_virtualenv: yes
