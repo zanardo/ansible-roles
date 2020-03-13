@@ -4,7 +4,7 @@
     - debian-buster
 
   vars:
-    go_version: "1.13.5"
+    go_version: "1.14"
 
   roles:
 
