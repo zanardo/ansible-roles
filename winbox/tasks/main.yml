@@ -21,4 +21,10 @@
         src: "/opt/winbox/winbox-{{ winbox_version }}.exe"
         dest: "/opt/winbox/winbox.exe"
 
+    - name: copia script para facilitar carregamento
+      copy:
+        src: "winbox"
+        dest: "/usr/local/bin/winbox"
+        mode: 0755
+
   tags: ["winbox"]
