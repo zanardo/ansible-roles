@@ -7,6 +7,10 @@ e AMD.
 
 - Instala os pacotes necessários.
 
+## Tags
+
+- `microcode`: Executa todo o role.
+
 ## Compatibilidade
 
 - Debian Stretch
