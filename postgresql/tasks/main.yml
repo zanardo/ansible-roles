@@ -24,16 +24,12 @@
     when: locale_gen is changed
 
   - set_fact:
-      postgresql_version: 9.4
-    when: ansible_distribution_release in ('jessie')
-
-  - set_fact:
       postgresql_version: 9.6
     when: ansible_distribution_release in ('stretch')
 
   - set_fact:
-      postgresql_version: 10
-    when: ansible_distribution_release in ('cosmic')
+      postgresql_version: 11
+    when: ansible_distribution_release in ('buster')
 
   - name: instala postgresql
     apt:

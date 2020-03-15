@@ -1,22 +1,21 @@
-Ansible Role para instalar e configurar o servidor
+# postgresql
+
+Ansible Role para instalar e configurar o
 [PostgreSQL](http://www.postgresql.org) no Debian.
 
-# Variáveis
+## Variáveis
 
 - `postgresql_conf`: caminho local onde os arquivos de configuração do
   PostgreSQL estão salvos.
+- `postgresql_conf_files`: lista com nomes dos arquivos de configuração do
+  PostgreSQL que serão copiados.
 
-- `postgresql_conf_files`: lista com nomes dos arquivos de configuração
-  do PostgreSQL que serão copiados.
-
-# Tags
+## Tags
 
 - `postgresql`: executa todo o role.
-
 - `postgresql:conf`: atualiza a configuração.
 
-# Compatibilidade
+## Compatibilidade
 
-- Debian Jessie
 - Debian Stretch
-- Ubuntu Cosmic
+- Debian Buster
