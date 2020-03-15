@@ -1,23 +1,17 @@
 ---
-- name: instala pacotes necessários
-  apt:
-    name:
-      - squid3
-    state: present
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - squid3
+
+  - name: copia arquivo de configurações customizado
+    template:
+      src: "{{ squid_conf }}"
+      dest: /etc/squid/squid.conf
+    when: squid_conf|d()
+    notify: reconfigura squid
+    tags: ["squid:conf"]
+
   tags: ["squid"]
-
-- name: copia arquivo de configurações customizado (jessie)
-  template:
-    src: "{{ squid_conf }}"
-    dest: /etc/squid3/squid.conf
-  when: squid_conf|d() and ansible_distribution_release == "jessie"
-  notify: reconfigura squid
-  tags: ["squid", "squid:conf"]
-
-- name: copia arquivo de configurações customizado (stretch)
-  template:
-    src: "{{ squid_conf }}"
-    dest: /etc/squid/squid.conf
-  when: squid_conf|d() and ansible_distribution_release == "stretch"
-  notify: reconfigura squid
-  tags: ["squid", "squid:conf"]
