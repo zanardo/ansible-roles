@@ -1,10 +1,13 @@
-Ansible Role para instalar as atualizações de microcode dos processadores Intel e AMD.
+# microcode
 
-# Ações
+Ansible Role para instalar as atualizações de microcode dos processadores Intel
+e AMD.
+
+## Ações
 
 - Instala os pacotes necessários.
 
-# Compatibilidade
+## Compatibilidade
 
 - Debian Stretch
 - Debian Buster
