@@ -1,8 +1,10 @@
+# virt-install
+
 Ansible Role para provisionar uma máquina virtual usando o `virt-install`.
 Deve-se usar `preseed` (Debian e derivados) ou tecnologias semelhantes para uma
 instalação automatizada do sistema operacional.
 
-# Variáveis
+## Variáveis
 
 - `virt_install_vmhost`: nome do host de virtualização (deverá estar no
    inventário).
@@ -19,7 +21,7 @@ instalação automatizada do sistema operacional.
   `virt_install_ip`. Pode ser usado quando é passado o argumento
   `--noautoconsole` para o `virt-install`.
 
-# Ações
+## Ações
 
 As seguintes mudanças são feitas no sistema:
 
@@ -32,11 +34,11 @@ As seguintes mudanças são feitas no sistema:
 - A entrada com o IP `virt_install_ip` é removida de `~/.ssh/know_hosts` da
   máquina executando o Ansible.
 
-# Exemplo
+## Exemplo
 
 ```yaml
 - hosts: vm
-  father_facts: no    # importante!
+  gather_facts: no    # importante!
 
   roles:
 
@@ -71,7 +73,7 @@ As seguintes mudanças são feitas no sistema:
         \""
 ```
 
-# Compatibilidade
+## Compatibilidade
 
 - Debian Stretch
 - Debian Buster
