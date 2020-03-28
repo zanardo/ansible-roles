@@ -1,6 +1,6 @@
 ---
 systemd_container_debian: "buster"
-systemd_container_debian_mirror: "http://cdn-fastly.deb.debian.org/debian"
+systemd_container_debian_mirror: "http://deb.debian.org/debian"
 systemd_container_autostart: yes
 systemd_container_interface: "host0"
 systemd_container_http_proxy: ""
