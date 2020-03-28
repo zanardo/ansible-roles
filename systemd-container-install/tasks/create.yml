@@ -39,9 +39,9 @@
   shell: |
     warn=no
     creates="/var/lib/machines/{{ systemd_container_name }}/lib"
-    chdir=/var/lib/machines/{{ systemd_container_name }}
+    mkdir -p "/var/lib/machines/{{ systemd_container_name }}" && \
     zstd -d < "{{ systemd_container_template_cache_file }}" | \
-      tar xf -
+      tar -C "/var/lib/machines/{{ systemd_container_name }}" -xf -
   when: 'cache_find.matched == 1'
   register: templated_created
   delegate_to: "{{ systemd_container_host }}"
