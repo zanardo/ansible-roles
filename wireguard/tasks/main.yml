@@ -51,6 +51,7 @@
     - name: certifica-se que systemd-networkd está carregado
       systemd:
         name: "systemd-networkd"
+        enabled: yes
         state: "started"
 
   tags: ["wireguard"]
