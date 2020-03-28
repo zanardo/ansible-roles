@@ -1,0 +1,56 @@
+---
+- block:
+    - name: verifica compatibilidade
+      assert:
+        that:
+          - ansible_distribution == "Debian"
+          - ansible_distribution_release in ["buster"]
+
+    - name: instala pacotes necessários
+      apt:
+        name: wireguard
+
+    - name: exclui configurações
+      file:
+        path: "/etc/systemd/network/99-{{ item.0 }}.{{ item.1 }}"
+        state: absent
+      loop: "{{ wireguard_delete|product(wireguard_system_extensions)|list }}"
+      loop_control:
+        label: "{{ item.0 }}.{{ item.1 }}"
+      notify: recarrega systemd
+
+    - name: configura netdev
+      template:
+        src: "netdev.j2"
+        dest: "/etc/systemd/network/99-{{ item.name }}.netdev"
+        owner: "root"
+        group: "systemd-network"
+        mode: "0640"
+      loop: "{{ wireguard_devs }}"
+      loop_control:
+        label: "{{ item.name }}"
+      notify: recarrega systemd
+
+    - name: configura network
+      template:
+        src: "network.j2"
+        dest: "/etc/systemd/network/99-{{ item.name }}.network"
+        owner: "root"
+        group: "systemd-network"
+        mode: "0640"
+      loop: "{{ wireguard_devs }}"
+      loop_control:
+        label: "{{ item.name }}"
+      notify: recarrega systemd
+
+    - name: certifica-se que wireguard está carregado
+      modprobe:
+        name: "wireguard"
+        state: "present"
+
+    - name: certifica-se que systemd-networkd está carregado
+      systemd:
+        name: "systemd-networkd"
+        state: "started"
+
+  tags: ["wireguard"]

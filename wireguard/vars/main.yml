@@ -1,0 +1,4 @@
+---
+wireguard_system_extensions:
+  - netdev
+  - network

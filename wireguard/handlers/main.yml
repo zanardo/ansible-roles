@@ -1,0 +1,4 @@
+---
+- name: recarrega systemd
+  systemd:
+    daemon_reload: yes

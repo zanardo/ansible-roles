@@ -1,0 +1,27 @@
+[NetDev]
+Name = {{ item.name }}
+Kind = wireguard
+Description = WireGuard - {{ item.description }}
+
+[WireGuard]
+ListenPort = {{ item.listen_port }}
+PrivateKey = {{ item.private_key }}
+AllowedIPs = {{ item.allowed_ips|join(",") }}
+{% if item.fwmark is defined %}
+FwMark = {{ item.fwmark }}
+{% endif %}
+
+{% for peer in item.peers %}
+[WireGuardPeer]
+PublicKey = {{ peer.public_key }}
+AllowedIPs = {{ peer.allowed_ips|join(",") }}
+{% if peer.preshared_key is defined %}
+PresharedKey= = {{ peer.preshared_key }}
+{% endif %}
+{% if peer.endpoint is defined %}
+Endpoint = {{ peer.endpoint }}
+{% endif %}
+{% if peer.persistent_keepalive is defined %}
+PersistentKeepalive = {{ peer.persistent_keepalive }}
+{% endif %}
+{% endfor %}
