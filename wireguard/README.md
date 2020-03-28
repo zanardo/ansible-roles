@@ -24,8 +24,6 @@ wireguard_devs:
     public_key: "FGHIJ..........."
     listen_port: "58423"
     address: "10.212.135.1/32"
-    allowed_ips:
-      - "10.212.135.0/24"
     routes:
       - gateway: "10.212.135.1/32"
         destination: "10.212.135.0/24"

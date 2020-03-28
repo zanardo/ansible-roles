@@ -6,7 +6,6 @@ Description = WireGuard - {{ item.description }}
 [WireGuard]
 ListenPort = {{ item.listen_port }}
 PrivateKey = {{ item.private_key }}
-AllowedIPs = {{ item.allowed_ips|join(",") }}
 {% if item.fwmark is defined %}
 FwMark = {{ item.fwmark }}
 {% endif %}
