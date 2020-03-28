@@ -24,6 +24,7 @@ wireguard_devs:
     public_key: "FGHIJ..........."
     listen_port: "58423"
     address: "10.212.135.1/32"
+    # Opcional, gerada automaticamente com wireguard_auto_route == yes.
     routes:
       - gateway: "10.212.135.1/32"
         destination: "10.212.135.0/24"
@@ -34,6 +35,12 @@ wireguard_devs:
         allowed_ips:
           - "10.212.135.2/32"
 ```
+
+- `wireguard_auto_route`: Para criar automaticamente as entradas em `routes` na
+  variável `wireguard_devs` usando o gateway `wireguard_devs.address` e o
+  destino `wireguard_devs.peers.allowed_ips`. Default `yes`. Caso queira ter
+  mais controle sobre as rotas, configure esta variável como `no` e defina as
+  rotas em `wireguard_devs.routes`.
 
 ## Tags
 

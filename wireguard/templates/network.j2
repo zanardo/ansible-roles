@@ -4,8 +4,20 @@ Name = {{ item.name }}
 [Network]
 Address = {{ item.address }}
 
-{% for route in item.routes %}
+{% if wireguard_auto_route|bool %}
+{% for peer in item.peers|d([]) %}
+{% for dest in peer.allowed_ips|d([]) %}
+[Route]
+Gateway = {{ item.address }}
+Destination = {{ dest }}
+
+{% endfor %}
+{% endfor %}
+{% else %}
+{% for route in item.routes|d([]) %}
 [Route]
 Gateway = {{ route.gateway }}
 Destination = {{ route.destination }}
+
 {% endfor %}
+{% endif %}
