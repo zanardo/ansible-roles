@@ -38,7 +38,7 @@
 - name: cria container via template em cache
   shell: |
     warn=no
-    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
+    creates="/var/lib/machines/{{ systemd_container_name }}/.stage1.ok"
     mkdir -p "/var/lib/machines/{{ systemd_container_name }}" && \
     zstd -d < "{{ systemd_container_template_cache_file }}" | \
       tar -C "/var/lib/machines/{{ systemd_container_name }}" -xf -
@@ -49,13 +49,15 @@
 - name: cria container via debootstrap
   environment:
     http_proxy: "{{ systemd_container_http_proxy }}"
-  command:
-    creates="/var/lib/machines/{{ systemd_container_name }}/lib"
+  shell:
+    warn=no
+    creates="/var/lib/machines/{{ systemd_container_name }}/.stage1.ok"
     debootstrap \
       --include=systemd,dbus,locales,python3,sudo,openssh-server \
       "{{ systemd_container_debian }}" \
       "/var/lib/machines/{{ systemd_container_name }}" \
-      "{{ systemd_container_debian_mirror }}"
+      "{{ systemd_container_debian_mirror }}" && \
+    touch "/var/lib/machines/{{ systemd_container_name }}/.stage1.ok"
   when: 'cache_find.matched == 0'
   register: debootstrap_created
   delegate_to: "{{ systemd_container_host }}"
