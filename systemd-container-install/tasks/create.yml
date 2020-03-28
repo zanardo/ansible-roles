@@ -52,7 +52,7 @@
   command:
     creates="/var/lib/machines/{{ systemd_container_name }}/lib"
     debootstrap \
-      --include=systemd,dbus,locales,python,sudo,openssh-server \
+      --include=systemd,dbus,locales,python3,sudo,openssh-server \
       "{{ systemd_container_debian }}" \
       "/var/lib/machines/{{ systemd_container_name }}" \
       "{{ systemd_container_debian_mirror }}"
