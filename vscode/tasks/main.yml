@@ -13,7 +13,7 @@
     - name: adiciona repositório
       apt_repository:
         filename: "vscode"
-        repo: "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+        repo: "deb [arch=amd64] {{ vscode_apt_repo }} stable main"
 
     - name: instala visual studio code
       apt:
