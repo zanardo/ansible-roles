@@ -38,10 +38,10 @@
 - name: cria container via template em cache
   shell: |
     warn=no
-    creates="/var/lib/machines/{{ systemd_container_name }}/.stage1.ok"
-    mkdir -p "/var/lib/machines/{{ systemd_container_name }}" && \
+    creates="{{ systemd_container_dir }}/.stage1.ok"
+    mkdir -p "{{ systemd_container_dir }}" && \
     zstd -d < "{{ systemd_container_template_cache_file }}" | \
-      tar -C "/var/lib/machines/{{ systemd_container_name }}" -xf -
+      tar -C "{{ systemd_container_dir }}" -xf -
   when: 'cache_find.matched == 1'
   register: templated_created
   delegate_to: "{{ systemd_container_host }}"
@@ -51,13 +51,13 @@
     http_proxy: "{{ systemd_container_http_proxy }}"
   shell:
     warn=no
-    creates="/var/lib/machines/{{ systemd_container_name }}/.stage1.ok"
+    creates="{{ systemd_container_dir }}/.stage1.ok"
     debootstrap \
       --include=systemd,dbus,locales,python3,sudo,openssh-server \
       "{{ systemd_container_debian }}" \
-      "/var/lib/machines/{{ systemd_container_name }}" \
+      "{{ systemd_container_dir }}" \
       "{{ systemd_container_debian_mirror }}" && \
-    touch "/var/lib/machines/{{ systemd_container_name }}/.stage1.ok"
+    touch "{{ systemd_container_dir }}/.stage1.ok"
   when: 'cache_find.matched == 0'
   register: debootstrap_created
   delegate_to: "{{ systemd_container_host }}"
@@ -65,7 +65,7 @@
 - name: cria template em cache
   shell: |
     warn=no
-    chdir=/var/lib/machines/{{ systemd_container_name }}
+    chdir={{ systemd_container_dir }}
     tar cf - . | \
       zstd -c -o "{{ systemd_container_template_cache_file }}"
   when:
