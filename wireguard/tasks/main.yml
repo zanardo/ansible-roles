@@ -17,7 +17,7 @@
       loop: "{{ wireguard_delete|product(wireguard_system_extensions)|list }}"
       loop_control:
         label: "{{ item.0 }}.{{ item.1 }}"
-      notify: recarrega systemd
+      notify: reinicia systemd-networkd
 
     - name: configura netdev
       template:
@@ -29,7 +29,7 @@
       loop: "{{ wireguard_devs }}"
       loop_control:
         label: "{{ item.name }}"
-      notify: recarrega systemd
+      notify: reinicia systemd-networkd
 
     - name: configura network
       template:
@@ -41,7 +41,7 @@
       loop: "{{ wireguard_devs }}"
       loop_control:
         label: "{{ item.name }}"
-      notify: recarrega systemd
+      notify: reinicia systemd-networkd
 
     - name: certifica-se que wireguard está carregado
       modprobe:

@@ -1,4 +1,6 @@
 ---
-- name: recarrega systemd
+- name: reinicia systemd-networkd
   systemd:
     daemon_reload: yes
+    name: "systemd-networkd"
+    state: restartd
