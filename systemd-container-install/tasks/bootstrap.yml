@@ -118,4 +118,9 @@
   command: "/usr/sbin/locale-gen"
   when: locales_changed is changed
 
+- name: cria arquivo de finalização do bootstrap
+  file:
+    path: "/.stage2.ok"
+    state: touch
+
 - setup: {}

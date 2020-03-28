@@ -4,7 +4,7 @@
 
 - name: verifica se container existe
   stat:
-    path: "/var/lib/machines/{{ systemd_container_name }}/.stage2.ok"
+    path: "{{ systemd_container_dir }}/.stage2.ok"
   register: checa_container_ja_existe
   delegate_to: "{{ systemd_container_host }}"
 

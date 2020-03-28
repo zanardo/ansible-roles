@@ -73,7 +73,11 @@
     - debootstrap_created is changed
   delegate_to: "{{ systemd_container_host }}"
 
+- name: verifica se é necessário executar bootstrap
+  stat:
+    path: "/.stage2.ok"
+  register: st
+
 - name: executa tasks de bootstrap
   include_tasks: bootstrap.yml
-  when:
-    - debootstrap_created is changed or templated_created is changed
+  when: not st.stat.exists
