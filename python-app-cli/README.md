@@ -39,9 +39,9 @@ Exemplos: `flake8`, `black`, `isort`, `ipython`, `mypy`, etc.
 
   Subchaves - todas são opcionais:
 
-  - `version`: Contém a versão do pacote a ser instalada. Caso não passada,
-     será instalada sempre a última versão (e a cada execução, uma nova versão
-     será procurada).
+  - `version`: Contém a versão do pacote a ser instalada. Caso não passada, será
+     instalada sempre a última versão (porém não será feita uma atualização nas
+     execuções posteriores).
 
   - `links`: contém uma lista com os nomes dos scripts a terem o _symlink_
     criado em `python_app_cli_link`. Caso não seja passada, o pacote será
