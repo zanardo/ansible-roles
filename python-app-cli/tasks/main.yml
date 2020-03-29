@@ -9,7 +9,7 @@
       label: "{{ item.key }} - {{ item.value.debian_packages|d([]) }}"
     when: "item.value.debian_packages|d([])"
 
-  - name: instala pacote do python
+  - name: instala pacotes do python
     pip:
       name: "{{ item.key }}"
       version: "{{ item.value.version|d(omit) }}"
