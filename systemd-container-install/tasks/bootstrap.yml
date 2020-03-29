@@ -63,6 +63,7 @@
 
 - name: remove chaves de ssh em know_hosts local
   connection: local
+  run_once: yes
   known_hosts:
     name: "{{ item }}"
     state: absent
