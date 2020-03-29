@@ -44,20 +44,6 @@
       line: "127.0.0.1 {{ systemd_container_name }}"
       state: present
 
-  - name: configura inicialização de container - ativo
-    command:
-      warn=no
-      machinectl enable {{ systemd_container_name }}
-    changed_when: False
-    when: systemd_container_autostart
-
-  - name: configura inicialização de container - desativado
-    command:
-      warn=no
-      machinectl disable {{ systemd_container_name }}
-    changed_when: False
-    when: not systemd_container_autostart
-
   - name: inicia container
     command:
       warn=no
