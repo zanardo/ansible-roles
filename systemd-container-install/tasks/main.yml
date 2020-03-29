@@ -1,42 +1,81 @@
 ---
-- setup:
-  delegate_to: "{{ systemd_container_host }}"
-
-- name: verifica se container existe
-  stat:
-    path: "{{ systemd_container_dir }}/.stage2.ok"
-  register: checa_container_ja_existe
-  delegate_to: "{{ systemd_container_host }}"
-
 - block:
 
-  - name: executa tasks de criação do container
-    include_tasks: create.yml
+  - setup:
 
-  - setup: {}
+  - name: instala pacotes necessários - debian
+    apt:
+      state: present
+      install_recommends: no
+      name:
+        - debootstrap
+        - systemd-container
+        - zstd
 
-  when:
-    - destroy_container is not defined
-    - checa_container_ja_existe.stat is defined
-    - not checa_container_ja_existe.stat.exists
+  - name: cria diretório de configurações dos containers
+    file:
+      state: directory
+      path: /etc/systemd/nspawn
 
-- block:
+  - name: cria configurações do container
+    copy:
+      content: "{{ systemd_container_nspawn_config }}"
+      dest: "/etc/systemd/nspawn/{{ systemd_container_name }}.nspawn"
 
-  - name: executa tasks de destruição do container
-    include_tasks: destroy.yml
+  - name: cria diretório de cache
+    file:
+      path: "{{ systemd_container_template_cache_dir }}"
+      state: directory
+
+  - name: verifica se cache do template existe
+    find:
+      age: "-{{ systemd_container_cache_max_age }}"
+      paths: "{{ systemd_container_template_cache_dir }}"
+      patterns: "template-debian-{{ systemd_container_debian }}.tar.zstd"
+    register: cache_find
+
+  - name: cria container via template em cache
+    shell: |
+      warn=no
+      creates="{{ systemd_container_dir }}/.stage1.ok"
+      mkdir -p "{{ systemd_container_dir }}" && \
+      zstd -d < "{{ systemd_container_template_cache_file }}" | \
+        tar -C "{{ systemd_container_dir }}" -xf -
+    when: 'cache_find.matched == 1'
+    register: templated_created
+
+  - name: cria container via debootstrap
+    environment:
+      http_proxy: "{{ systemd_container_http_proxy }}"
+    shell:
+      warn=no
+      creates="{{ systemd_container_dir }}/.stage1.ok"
+      debootstrap \
+        --include=systemd,dbus,locales,python3,sudo,openssh-server \
+        "{{ systemd_container_debian }}" \
+        "{{ systemd_container_dir }}" \
+        "{{ systemd_container_debian_mirror }}" && \
+      touch "{{ systemd_container_dir }}/.stage1.ok"
+    when: 'cache_find.matched == 0'
+    register: debootstrap_created
+
+  - name: cria template em cache
+    shell: |
+      warn=no
+      chdir={{ systemd_container_dir }}
+      tar cf - . | \
+        zstd -c -o "{{ systemd_container_template_cache_file }}"
     when:
-      - destroy_container is defined
-      - destroy_container == systemd_container_name
+      - cache_find.matched == 0
+      - debootstrap_created is changed
 
-  - name: finaliza playbook - container destruido
-    debug: msg="container destruído - finalizando playbook"
+  - name: verifica se é necessário executar bootstrap
+    stat:
+      path: "{{ systemd_container_dir }}/.stage2.ok"
+    register: st
 
-  - name: esta task irá falhar para finalizar a execução do ansible
-    failed_when: True
-    debug:
-      msg: "finalizando"
-    delegate_to: "{{ systemd_container_host }}"
+  delegate_to: "{{ systemd_container_host }}"
 
-  when:
-    - destroy_container is defined
-    - destroy_container == systemd_container_name
+- name: executa tasks de bootstrap
+  include_tasks: bootstrap.yml
+  when: not st.stat.exists
