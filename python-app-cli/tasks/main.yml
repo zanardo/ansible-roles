@@ -27,6 +27,6 @@
       dest: "{{ item[0].value.link_dest|d(python_app_cli_link_dest) }}/{{ item[1] }}"
     loop: "{{ python_app_cli|dict2items|subelements('value.links') }}"
     loop_control:
-      label: ""
+      label: "{{ item[1] }} => {{ item[0].value.link_dest|d(python_app_cli_link_dest) }}"
 
   tags: ["python_app_cli"]
