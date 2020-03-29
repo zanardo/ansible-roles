@@ -1,0 +1,16 @@
+---
+- hosts:
+    - debian-stretch
+    - debian-buster
+
+  vars:
+    python_app_cli:
+      isort:
+        version: "4.3.21"
+        links: ["isort"]
+        debian_packages: ["make", "patch" ]
+      mypy:
+        links: ["mypy"]
+
+  roles:
+    - zanardo/python-app-cli

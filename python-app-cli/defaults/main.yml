@@ -1,0 +1,7 @@
+---
+python_app_cli_python_executable: "python3"
+python_app_cli_root: "/opt"
+python_app_cli_link_dest: "/usr/local/bin"
+python_app_cli_index_url: "https://pypi.python.org/simple"
+python_app_cli_extra_index_url: "https://pypi.python.org/simple"
+python_app_cli: {}

@@ -1,0 +1,32 @@
+---
+- block:
+
+  - name: instala pacotes necessários do debian para pacote do python
+    apt:
+      name: "{{ item.value.debian_packages }}"
+    loop: "{{ python_app_cli|dict2items }}"
+    loop_control:
+      label: "{{ item.key }} - {{ item.value.debian_packages|d([]) }}"
+    when: "item.value.debian_packages|d([])"
+
+  - name: instala pacote do python
+    pip:
+      name: "{{ item.key }}"
+      version: "{{ item.value.version|d(omit) }}"
+      virtualenv_python: "{{ item.value.python_executable|d(python_app_cli_python_executable) }}"
+      virtualenv: "{{ item.value.path|d(python_app_cli_root + '/' + item.key) }}"
+      extra_args: "--index-url='{{ python_app_cli_index_url }}' --extra-index-url='python_app_cli_extra_index_url'"
+    loop: "{{ python_app_cli|dict2items }}"
+    loop_control:
+      label: "{{ item.key }} => {{ item.value.path|d(python_app_cli_root + '/' + item.key) }}"
+
+  - name: cria symlinks para os scripts
+    file:
+      state: link
+      src: "{{ item[0].value.path|d(python_app_cli_root + '/' + item[0].key) }}/bin/{{ item[1] }}"
+      dest: "{{ item[0].value.link_dest|d(python_app_cli_link_dest) }}/{{ item[1] }}"
+    loop: "{{ python_app_cli|dict2items|subelements('value.links') }}"
+    loop_control:
+      label: ""
+
+  tags: ["python_app_cli"]
