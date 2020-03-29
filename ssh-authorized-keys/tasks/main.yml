@@ -1,0 +1,23 @@
+---
+- block:
+    - name: libera chaves de ssh para usuários
+      authorized_key:
+        manage_dir: yes
+        key: "{{ item[1] }}"
+        user: "{{ item[0].key }}"
+        state: present
+      loop: "{{ ssh_authorized_keys|d({})|dict2items|subelements('value') }}"
+      loop_control:
+        label: "{{ item[0].key }} - {{ item[1].split()[-1] }}"
+
+    - name: remove chaves de ssh para usuários
+      authorized_key:
+        manage_dir: yes
+        key: "{{ item[1] }}"
+        user: "{{ item[0].key }}"
+        state: absent
+      loop: "{{ ssh_authorized_keys_remove|d({})|dict2items|subelements('value') }}"
+      loop_control:
+        label: "{{ item[0].key }} - {{ item[1].split()[-1] }}"
+
+  tags: ["ssh_authorized_keys"]

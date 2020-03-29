@@ -1,0 +1,17 @@
+---
+- hosts:
+    - debian-stretch
+    - debian-buster
+
+  vars:
+    ssh_authorized_keys:
+      root:
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDTdYSL4G6To/ISOD7rNBLbWeFSaqNDDjWCwTrvwDbbCo65dmb5qABD0gu6gr+ScaTZQ8XMQSh9D/s01ZKxh61hMvIfk2gSIFwbQC0VAXAKP5qxkEZ4P9Nv5in/rQ3cZC3bNNCS9pIUyaKivxMYLuKV8MEg/PisrPEFPPaoYBdmkiryovJ1jNp0ES/pwUkK+5QFPgKMTU+5Kc2CLqbgZl8tgP/5PSFh36vN67w53yNE7H5u+zNN8jmkuckXV64WUT2XZWPOeRkqj3tEqiBYPDRtaA0l2UxcQj22xyCUxKsfjcUH/0evb0rpha6Yh0hfs1ykXpcuqyDpM5kOLalUamXd foo@bah"
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVGAzcKC06AXafR4UjdZ1Uz9FHhC+BrInF1WY/nIzw+khqceCUtQcohMV7U5uo84hDAh+rjxpa7Y2zzkNcm6/arc+OXUzEkYOxHSgFqGNjFN2jYA2+GHxDc81lEUU4N7RIJa6FikYftfdWp6nNpN/tmPLcnxND8SwHFE9MB4VNq0E/14aB5NgEuzwN++zaTX5C5Wpu0SzX3X3/qeBBgK6wkQcmxBN9y81S30zaLBd4MDaZ++Ba4Q6iZJzrOfdlJ7L7LM5oq5sCYWthJVo7OD5R80/zvkzMQEjFaI00d2J0JTKKGWkz8JUfQTiIHuhXdolrhK9J3kLCkbXWQuCCNFrV foo@baz"
+    ssh_authorized_keys_remove:
+      root:
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDTdYSL4G6To/ISOD7rNBLbWeFSaqNDDjWCwTrvwDbbCo65dmb5qABD0gu6gr+ScaTZQ8XMQSh9D/s01ZKxh61hMvIfk2gSIFwbQC0VAXAKP5qxkEZ4P9Nv5in/rQ3cZC3bNNCS9pIUyaKivxMYLuKV8MEg/PisrPEFPPaoYBdmkiryovJ1jNp0ES/pwUkK+5QFPgKMTU+5Kc2CLqbgZl8tgP/5PSFh36vN67w53yNE7H5u+zNN8jmkuckXV64WUT2XZWPOeRkqj3tEqiBYPDRtaA0l2UxcQj22xyCUxKsfjcUH/0evb0rpha6Yh0hfs1ykXpcuqyDpM5kOLalUamXd foo@bah"
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVGAzcKC06AXafR4UjdZ1Uz9FHhC+BrInF1WY/nIzw+khqceCUtQcohMV7U5uo84hDAh+rjxpa7Y2zzkNcm6/arc+OXUzEkYOxHSgFqGNjFN2jYA2+GHxDc81lEUU4N7RIJa6FikYftfdWp6nNpN/tmPLcnxND8SwHFE9MB4VNq0E/14aB5NgEuzwN++zaTX5C5Wpu0SzX3X3/qeBBgK6wkQcmxBN9y81S30zaLBd4MDaZ++Ba4Q6iZJzrOfdlJ7L7LM5oq5sCYWthJVo7OD5R80/zvkzMQEjFaI00d2J0JTKKGWkz8JUfQTiIHuhXdolrhK9J3kLCkbXWQuCCNFrV foo@baz"
+
+  roles:
+    - zanardo/ssh-authorized-keys
