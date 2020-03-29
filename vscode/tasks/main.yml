@@ -1,10 +1,16 @@
 ---
 - block:
-    - name: instala pacotes necessários para instalação inicial
+    - name: instala pacotes necessários
       apt:
         name:
           - ca-certificates
           - apt-transport-https
+          - libx11-xcb1
+          - libasound2
+          - ttf-dejavu
+          - fonts-liberation
+          - libgl1-mesa-dri
+          - libgl1-mesa-glx
 
     - name: baixa chave gpg de assinatura do repositório
       apt_key:
