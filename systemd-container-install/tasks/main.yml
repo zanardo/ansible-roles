@@ -21,6 +21,12 @@
     copy:
       content: "{{ systemd_container_nspawn_config }}"
       dest: "/etc/systemd/nspawn/{{ systemd_container_name }}.nspawn"
+    register: conf
+
+  - name: recarrega systemd
+    command:
+      systemctl daemon-reload
+    when: conf is changed
 
   - name: cria diretório de cache
     file:
