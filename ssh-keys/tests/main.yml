@@ -1,0 +1,40 @@
+---
+- hosts:
+    - debian-stretch
+    - debian-buster
+
+  vars:
+    ssh_keys:
+      root:
+        public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCawdJY5yHt9rx1byEbRSrrJN3mySpRZLzD8JknTGHN5IFn6jkGHNe2e2oyCqWqYTCinH8XnaMGG1ICfeB/11RmNfXcZo9Ibkv96k3KJCFSKaZfbLaN8PA+RkEw3xcKnlcOZNZhPbM+643gsWAvhjSsZna4DLHBpvdXZJ4n73x9N1EcKAIc9dlzKKicpgztGrEYo+Y6VYLPceeGgjBmdB+HzcE71gN3tz/RRPS5/Wyjz38ntJe53JsgW/WUKzDTH+BJ/mTh1BBp6fB32FAOBPjkIdhl2H+Y4X+7B8fdtv0q23iC5enjSK91zOgY/L/4OgL10jn2Dk+/LJN9iP9fNq+x user@host"
+        private_key: |
+          -----BEGIN OPENSSH PRIVATE KEY-----
+          b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+          NhAAAAAwEAAQAAAQEAmsHSWOch7fa8dW8hG0Uq6yTd5skqUWS8w/CZJ0xhzeSBZ+o5BhzX
+          tntqMgqlqmEwopx/F52jBhtSAn3gf9dUZjX13GaPSG5L/epNyiQhUimmX2y2jfDwPkZBMN
+          8XCp5XDmTWYT2zPuuN4LFgL4Y0rGZ2uAyxwab3V2SeJ+98fTdRHCgCHPXZcyionKYM7Rqx
+          GKPmOlWCz3HnhoIwZnQfh83BO9YDd7c/0UT0uf1so89/J7SXudybIFv1lCsw0x/gSf5k4d
+          QQaenwd9hQDgT45CHYZdh/mOF/uwfH3bb9Ktt4guXp40ivdczoGPy/+DoC9dI59g5PvyyT
+          fYj/XzavsQAAA8BVd76TVXe+kwAAAAdzc2gtcnNhAAABAQCawdJY5yHt9rx1byEbRSrrJN
+          3mySpRZLzD8JknTGHN5IFn6jkGHNe2e2oyCqWqYTCinH8XnaMGG1ICfeB/11RmNfXcZo9I
+          bkv96k3KJCFSKaZfbLaN8PA+RkEw3xcKnlcOZNZhPbM+643gsWAvhjSsZna4DLHBpvdXZJ
+          4n73x9N1EcKAIc9dlzKKicpgztGrEYo+Y6VYLPceeGgjBmdB+HzcE71gN3tz/RRPS5/Wyj
+          z38ntJe53JsgW/WUKzDTH+BJ/mTh1BBp6fB32FAOBPjkIdhl2H+Y4X+7B8fdtv0q23iC5e
+          njSK91zOgY/L/4OgL10jn2Dk+/LJN9iP9fNq+xAAAAAwEAAQAAAQEAlSfsEc2rcQxXNaRH
+          N15h8EMXMIGArPQ3z24MXskKlwP/CWXBUjfoXLP0dYi3hVCpLIFDKULAxnj8gPRLtUuXx+
+          +IKMYcoUXVLkRudz59cxA7j0tbY9Dt7EeQO4c5UP2tkGz2BsEOCr3Df+XVe9iQ2fzjvZ5W
+          kPvY9r0+heUXiiKPv7pZ2VSKirnIB3LNV7+cP5UeBAcHTT7dFXeGrmf6yFi1tQlvbQ2Yy+
+          +cGAImsmarPFU5CMCDlvgA8AOs4EluH3v+kLnAJyiiEQ1vjBOIyuhg0EAU6K5OvDgLZOUi
+          AonIQhgwoVQnyIKOU+QpcDi1594kQTx6rFjTzhjtefvQ1QAAAIEAkowVnHY5tm3mrvLkNj
+          DH1ecsrHjMHMFEEKlKSVcPojcGOERyT8GHIt/+Sp6skgiTnkWsyo53Ctbm0sS4EiyHY3Ie
+          tTU+gLsez54J7cczjd5buDzY3vWHjQMEe9anS/kdpdNGzHJYlqHhp5iNzDqc1sZyEyY43l
+          NtH57Yjpad7MMAAACBAM3QHwMUq6XkiDd0Zt0kuDu7/GrtYTaUTXprNdkbsEnzTxq2fiF7
+          cao00wsD1u8boAfVQvjFfUVAWIllUeZkNv8C6AuIHkTly4hmocoA80bQTxfSCxGLZIk0O1
+          if3U52MUbS70S0m57blHnvdvC06x1DnFsReyIhB+Eo87rEOmw/AAAAgQDAfomi4iaTvjTJ
+          U54KgZbRTPjfhxWjtAK1f28ppyKu2n540ESsnoVDitA1AebVQA4MLAyPmSweK5v6Mhzozs
+          RgzDpXqVkPxFRSLtduvrPNmlAwn+zPiJCmcpqePjmgaJOyiGrvgYWSusFsGwcSHROo7dLy
+          knXsxbzo72RUyv+oDwAAAAl1c2VyQGhvc3Q=
+          -----END OPENSSH PRIVATE KEY-----
+
+  roles:
+    - zanardo/ssh-keys

@@ -1,0 +1,35 @@
+---
+- block:
+    - name: cria diretório ~/.ssh para usuários
+      become: yes
+      become_user: "{{ item.key }}"
+      file:
+        state: directory
+        path: "~/.ssh"
+      loop: "{{ ssh_keys|d({})|dict2items }}"
+      loop_control:
+        label: "{{ item.key }}"
+
+    - name: copia chave pública de ssh
+      become: yes
+      become_user: "{{ item.key }}"
+      copy:
+        dest: "~/.ssh/id_rsa.pub"
+        content: "{{ item.value.public_key }}"
+        mode: "0644"
+      loop: "{{ ssh_keys|d({})|dict2items }}"
+      loop_control:
+        label: "{{ item.key }}"
+
+    - name: copia chave privada de ssh
+      become: yes
+      become_user: "{{ item.key }}"
+      copy:
+        dest: "~/.ssh/id_rsa"
+        content: "{{ item.value.private_key }}"
+        mode: "0600"
+      loop: "{{ ssh_keys|d({})|dict2items }}"
+      loop_control:
+        label: "{{ item.key }}"
+
+  tags: ["ssh_keys"]
