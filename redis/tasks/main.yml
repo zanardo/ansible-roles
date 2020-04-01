@@ -11,6 +11,7 @@
         src: "{{ redis_conf }}"
         dest: /etc/redis/redis.conf
       when: redis_conf is defined
+      notify: reinicia redis
       tags: ["redis:conf"]
 
   tags: ["redis"]
