@@ -10,7 +10,7 @@
       template:
         src: "{{ redis_conf }}"
         dest: /etc/redis/redis.conf
-      when: redis_conf|d
-      tags: redis:conf
+      when: redis_conf is defined
+      tags: ["redis:conf"]
 
-  tags: redis
+  tags: ["redis"]
