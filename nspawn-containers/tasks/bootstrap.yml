@@ -22,7 +22,7 @@
     copy:
       content: |
         auto {{ nspawn_container_interface }}
-        iface host0 inet static
+        iface {{ nspawn_container_interface }} inet static
           address {{ nspawn_container_ip }}/24
           gateway {{ nspawn_container_gateway }}
       dest: "/var/lib/machines/{{ nspawn_container_name }}/etc/network/interfaces"
