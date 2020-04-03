@@ -14,6 +14,18 @@ Vault!
 
 ## Como gerar as chaves?
 
+### Via script de atalho
+
+* Para gerar as chaves:
+
+```bash
+roles/zanardo/ssh-keys/scripts/gera-chave.py usuario@host
+```
+
+* Copie e cole o conteúdo dentro da variável `ssh_keys`.
+
+### Manualmente
+
 * Para gerar as chaves:
 
 ```bash
