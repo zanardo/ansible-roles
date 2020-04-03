@@ -1,3 +1,0 @@
----
-systemd_container_template_cache_file: "{{ systemd_container_template_cache_dir }}/template-debian-{{ systemd_container_debian }}.tar.zstd"
-systemd_container_dir: "/var/lib/machines/{{ systemd_container_name }}"

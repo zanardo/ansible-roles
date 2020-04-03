@@ -3,7 +3,7 @@
 
   - name: configura o ssh no container
     lineinfile:
-      path: "/var/lib/machines/{{ systemd_container_name }}/etc/ssh/sshd_config"
+      path: "/var/lib/machines/{{ nspawn_container_name }}/etc/ssh/sshd_config"
       regexp: "^#?PermitRootLogin.*$"
       line: "PermitRootLogin yes"
       state: present
@@ -11,52 +11,52 @@
   - name: cria o diretório de configurações do ssh
     file:
       state: directory
-      path: "/var/lib/machines/{{ systemd_container_name }}/root/.ssh"
+      path: "/var/lib/machines/{{ nspawn_container_name }}/root/.ssh"
 
   - name: libera a chave de ssh
     copy:
       content: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-      dest: "/var/lib/machines/{{ systemd_container_name }}/root/.ssh/authorized_keys"
+      dest: "/var/lib/machines/{{ nspawn_container_name }}/root/.ssh/authorized_keys"
 
   - name: configura a interface de rede
     copy:
       content: |
-        auto {{ systemd_container_interface }}
+        auto {{ nspawn_container_interface }}
         iface host0 inet static
-          address {{ systemd_container_ip }}/24
-          gateway {{ systemd_container_gateway }}
-      dest: "/var/lib/machines/{{ systemd_container_name }}/etc/network/interfaces"
+          address {{ nspawn_container_ip }}/24
+          gateway {{ nspawn_container_gateway }}
+      dest: "/var/lib/machines/{{ nspawn_container_name }}/etc/network/interfaces"
 
   - name: configura o dns do container
     copy:
-      content: "{{ systemd_container_resolv }}"
-      dest: "/var/lib/machines/{{ systemd_container_name }}/etc/resolv.conf"
+      content: "{{ nspawn_container_resolv }}"
+      dest: "/var/lib/machines/{{ nspawn_container_name }}/etc/resolv.conf"
 
   - name: configura o nome do container
     copy:
-      content: "{{ systemd_container_name }}"
-      dest: "/var/lib/machines/{{ systemd_container_name }}/etc/hostname"
+      content: "{{ nspawn_container_name }}"
+      dest: "/var/lib/machines/{{ nspawn_container_name }}/etc/hostname"
 
   - name: configura hosts do container
     lineinfile:
-      path: "/var/lib/machines/{{ systemd_container_name }}/etc/hosts"
-      regexp: "^127.0.0.1 {{ systemd_container_name }}$"
-      line: "127.0.0.1 {{ systemd_container_name }}"
+      path: "/var/lib/machines/{{ nspawn_container_name }}/etc/hosts"
+      regexp: "^127.0.0.1 {{ nspawn_container_name }}$"
+      line: "127.0.0.1 {{ nspawn_container_name }}"
       state: present
 
   - name: inicia container
     command:
       warn=no
-      machinectl start {{ systemd_container_name }}
+      machinectl start {{ nspawn_container_name }}
     changed_when: False
 
-  delegate_to: "{{ systemd_container_host }}"
+  delegate_to: "{{ nspawn_container_host }}"
 
 
 - name: aguarda ssh em {{ virt_install_ip }}
   connection: local
   wait_for:
-    host: '{{ systemd_container_ip }}'
+    host: '{{ nspawn_container_ip }}'
     port: 22
     state: present
     timeout: 60
@@ -68,8 +68,8 @@
     name: "{{ item }}"
     state: absent
   with_items:
-    - "{{ systemd_container_ip }}"
-    - "{{ systemd_container_name }}"
+    - "{{ nspawn_container_ip }}"
+    - "{{ nspawn_container_name }}"
 
 - name: configura timezone do container
   copy:

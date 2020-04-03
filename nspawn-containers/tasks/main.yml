@@ -19,8 +19,8 @@
 
   - name: cria configurações do container
     copy:
-      content: "{{ systemd_container_nspawn_config }}"
-      dest: "/etc/systemd/nspawn/{{ systemd_container_name }}.nspawn"
+      content: "{{ nspawn_container_nspawn_config }}"
+      dest: "/etc/systemd/nspawn/{{ nspawn_container_name }}.nspawn"
     register: conf
 
   - name: recarrega systemd
@@ -30,57 +30,57 @@
 
   - name: cria diretório de cache
     file:
-      path: "{{ systemd_container_template_cache_dir }}"
+      path: "{{ nspawn_container_template_cache_dir }}"
       state: directory
 
   - name: verifica se cache do template existe
     find:
-      age: "-{{ systemd_container_cache_max_age }}"
-      paths: "{{ systemd_container_template_cache_dir }}"
-      patterns: "template-debian-{{ systemd_container_debian }}.tar.zstd"
+      age: "-{{ nspawn_container_cache_max_age }}"
+      paths: "{{ nspawn_container_template_cache_dir }}"
+      patterns: "template-debian-{{ nspawn_container_debian }}.tar.zstd"
     register: cache_find
 
   - name: cria container via template em cache
     shell: |
       warn=no
-      creates="{{ systemd_container_dir }}/.stage1.ok"
-      mkdir -p "{{ systemd_container_dir }}" && \
-      zstd -d < "{{ systemd_container_template_cache_file }}" | \
-        tar -C "{{ systemd_container_dir }}" -xf -
+      creates="{{ nspawn_container_dir }}/.stage1.ok"
+      mkdir -p "{{ nspawn_container_dir }}" && \
+      zstd -d < "{{ nspawn_container_template_cache_file }}" | \
+        tar -C "{{ nspawn_container_dir }}" -xf -
     when: 'cache_find.matched == 1'
     register: templated_created
 
   - name: cria container via debootstrap
     environment:
-      http_proxy: "{{ systemd_container_http_proxy }}"
+      http_proxy: "{{ nspawn_container_http_proxy }}"
     shell:
       warn=no
-      creates="{{ systemd_container_dir }}/.stage1.ok"
+      creates="{{ nspawn_container_dir }}/.stage1.ok"
       debootstrap \
         --include=systemd,dbus,locales,python3,sudo,openssh-server \
-        "{{ systemd_container_debian }}" \
-        "{{ systemd_container_dir }}" \
-        "{{ systemd_container_debian_mirror }}" && \
-      touch "{{ systemd_container_dir }}/.stage1.ok"
+        "{{ nspawn_container_debian }}" \
+        "{{ nspawn_container_dir }}" \
+        "{{ nspawn_container_debian_mirror }}" && \
+      touch "{{ nspawn_container_dir }}/.stage1.ok"
     when: 'cache_find.matched == 0'
     register: debootstrap_created
 
   - name: cria template em cache
     shell: |
       warn=no
-      chdir={{ systemd_container_dir }}
+      chdir={{ nspawn_container_dir }}
       tar cf - . | \
-        zstd -c -o "{{ systemd_container_template_cache_file }}"
+        zstd -c -o "{{ nspawn_container_template_cache_file }}"
     when:
       - cache_find.matched == 0
       - debootstrap_created is changed
 
   - name: verifica se é necessário executar bootstrap
     stat:
-      path: "{{ systemd_container_dir }}/.stage2.ok"
+      path: "{{ nspawn_container_dir }}/.stage2.ok"
     register: st
 
-  delegate_to: "{{ systemd_container_host }}"
+  delegate_to: "{{ nspawn_container_host }}"
 
 - name: executa tasks de bootstrap
   include_tasks: bootstrap.yml
@@ -89,15 +89,15 @@
 - name: configura inicialização de container - ativo
   command:
     warn=no
-    machinectl enable {{ systemd_container_name }}
-  delegate_to: "{{ systemd_container_host }}"
+    machinectl enable {{ nspawn_container_name }}
+  delegate_to: "{{ nspawn_container_host }}"
   changed_when: False
-  when: systemd_container_autostart
+  when: nspawn_container_autostart
 
 - name: configura inicialização de container - desativado
   command:
     warn=no
-    machinectl disable {{ systemd_container_name }}
+    machinectl disable {{ nspawn_container_name }}
   changed_when: False
-  delegate_to: "{{ systemd_container_host }}"
-  when: not systemd_container_autostart
+  delegate_to: "{{ nspawn_container_host }}"
+  when: not nspawn_container_autostart

@@ -1,0 +1,3 @@
+---
+nspawn_container_template_cache_file: "{{ nspawn_container_template_cache_dir }}/template-debian-{{ nspawn_container_debian }}.tar.zstd"
+nspawn_container_dir: "/var/lib/machines/{{ nspawn_container_name }}"
