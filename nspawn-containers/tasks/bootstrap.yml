@@ -53,7 +53,7 @@
   delegate_to: "{{ nspawn_container_host }}"
 
 
-- name: aguarda ssh em {{ virt_install_ip }}
+- name: aguarda ssh em {{ nspawn_container_ip }}
   connection: local
   wait_for:
     host: '{{ nspawn_container_ip }}'
