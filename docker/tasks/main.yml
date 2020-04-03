@@ -10,6 +10,7 @@
         - gnupg2
         - software-properties-common
         - python-docker
+        - python3-docker
       state: present
 
   - name: adiciona chave gpg no apt para docker
