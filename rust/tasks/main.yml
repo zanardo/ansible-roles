@@ -1,0 +1,52 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - ca-certificates
+        - curl
+
+  - name: instala rust - toolchain stable
+    become: yes
+    become_user: "{{ rust_user }}"
+    shell:
+      warn=no
+      creates=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc
+      curl https://sh.rustup.rs -sSf | sh -s -- -y
+
+  - name: obtém toolchains instalados
+    changed_when: False
+    become: yes
+    become_user: "{{ rust_user }}"
+    shell: |
+      ~/.cargo/bin/rustup toolchain list | \
+        sed 's/-x86_64-unknown-linux-gnu.*$//'
+    register: toolchains
+
+  - name: instala rust - toolchain nightly
+    become: yes
+    become_user: "{{ rust_user }}"
+    shell:
+      warn=no
+      creates=~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc
+      ~/.cargo/bin/rustup install nightly
+    when: rust_install_nightly and "nightly" not in toolchains.stdout_lines
+
+  - name: obtém componentes instalados
+    changed_when: False
+    become: yes
+    become_user: "{{ rust_user }}"
+    shell: |
+      ~/.cargo/bin/rustup component list --installed | \
+        sed 's/-x86_64-unknown-linux-gnu$//'
+    register: components
+
+  - name: instala componentes do rust
+    become: yes
+    become_user: "{{ rust_user }}"
+    command: ~/.cargo/bin/rustup component add {{ item }}
+    loop: "{{ rust_components }}"
+    when: item not in components.stdout_lines
+
+  tags: ["rust"]

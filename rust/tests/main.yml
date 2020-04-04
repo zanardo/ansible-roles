@@ -1,0 +1,12 @@
+---
+- hosts:
+    - debian-stretch
+    - debian-buster
+
+  vars:
+    rust_user: "root"
+    rust_components: ["rustfmt", "rust-src"]
+    rust_install_nightly: yes
+
+  roles:
+    - role: zanardo/rust
