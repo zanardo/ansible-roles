@@ -9,7 +9,19 @@
       label: "{{ item.key }} - {{ item.value.debian_packages|d([]) }}"
     when: "item.value.debian_packages|d([])"
 
+  - name: cria diretórios para os pacotes
+    file:
+      state: directory
+      path: "{{ item.value.path|d(python_app_cli_root + '/' + item.key) }}"
+      owner: "nobody"
+      group: "nogroup"
+    loop: "{{ python_app_cli|dict2items }}"
+    loop_control:
+      label: "{{ item.key }} => {{ item.value.path|d(python_app_cli_root + '/' + item.key) }}"
+
   - name: instala pacotes do python
+    become: yes
+    become_user: "nobody"
     pip:
       name: "{{ item.key }}"
       version: "{{ item.value.version|d(omit) }}"
