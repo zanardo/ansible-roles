@@ -2,3 +2,4 @@
 docker_daemon_config: {}
 docker_containers_daily_gc: no
 docker_users: []  # Usuários para adicionar no grupo "docker"
+docker_apt_repo: "https://download.docker.com"
