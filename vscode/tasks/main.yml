@@ -3,6 +3,7 @@
     - name: instala pacotes necessários
       apt:
         name:
+          - gnupg2
           - ca-certificates
           - apt-transport-https
           - libx11-xcb1
