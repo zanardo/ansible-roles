@@ -3,16 +3,31 @@
     - name: instala pacotes necessários para instalação inicial
       apt:
         name:
+          - gnupg
           - ca-certificates
 
     - name: adiciona chave gpg para repositório
       apt_key:
         url: "https://dl.google.com/linux/linux_signing_key.pub"
 
+    - name: reativa alteração do repositório
+      file:
+        dest: "/etc/apt/sources.list.d/google-chrome.list"
+        attributes: "-i"
+      changed_when: False
+      failed_when: False
+
     - name: adiciona repositório
-      apt_repository:
-        filename: "google-chrome"
-        repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+      copy:
+        dest: "/etc/apt/sources.list.d/google-chrome.list"
+        content: "deb [arch=amd64] {{ chrome_apt_repo }} stable main"
+
+    - name: desativa alteração do repositório
+      file:
+        dest: "/etc/apt/sources.list.d/google-chrome.list"
+        attributes: "+i"
+      register: repofile
+      changed_when: False
 
     - name: instala chrome
       apt:
