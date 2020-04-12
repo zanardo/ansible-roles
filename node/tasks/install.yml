@@ -1,0 +1,44 @@
+---
+- block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - curl
+          - ca-certificates
+          - xz-utils
+        state: present
+
+    - name: download do tarball
+      get_url:
+        url: "https://nodejs.org/dist/v{{ node_version }}/node-v{{ node_version }}-linux-x64.tar.xz"
+        dest: "/tmp/node-{{ node_version }}.tar.xz"
+
+    - name: remove instalação anterior
+      file:
+        state: absent
+        path: /usr/local/node
+
+    - name: extrai o tarball
+      shell: >
+        warn=no
+        chdir="/tmp"
+        mkdir /usr/local/node &&
+        tar -C /usr/local/node --strip-components=1 \
+          -xJf "/tmp/node-{{ node_version }}.tar.xz"
+
+    - name: corrige permissões para root
+      file:
+        state: directory
+        owner: root
+        group: root
+        path: /usr/local/node
+        recurse: yes
+
+    - name: remove arquivos temporários
+      file:
+        state: absent
+        path: "{{ item }}"
+      with_items:
+        - "/tmp/node-{{ node_version }}.tar.xz"
+
+  tags: ["node"]
