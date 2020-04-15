@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - lighttpd
+
+  - name: copia arquivo de configuração
+    template:
+      src: "{{ lighttpd_conf }}"
+      dest: /etc/lighttpd/lighttpd.conf
+    when: lighttpd_conf is defined
+    notify: reinicia lighttpd
+    tags: ["lighttpd:conf"]
+
+  tags: ["lighttpd"]
