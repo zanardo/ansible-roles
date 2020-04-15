@@ -1,0 +1,43 @@
+---
+- block:
+    - name: instala pacotes necessários
+      apt:
+        name:
+          - curl
+          - ca-certificates
+        state: present
+
+    - name: download do tarball
+      get_url:
+        url: "https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/nvim-linux64.tar.gz"
+        dest: "/tmp/neovim-{{ neovim_version }}.tar.gz"
+
+    - name: remove instalação anterior
+      file:
+        state: absent
+        path: /usr/local/neovim
+
+    - name: extrai o tarball
+      shell: >
+        warn=no
+        chdir="/tmp"
+        mkdir /usr/local/neovim &&
+        tar -C /usr/local/neovim --strip-components=1 \
+          -xzf "/tmp/neovim-{{ neovim_version }}.tar.gz"
+
+    - name: corrige permissões para root
+      file:
+        state: directory
+        owner: root
+        group: root
+        path: /usr/local/neovim
+        recurse: yes
+
+    - name: remove arquivos temporários
+      file:
+        state: absent
+        path: "{{ item }}"
+      with_items:
+        - "/tmp/neovim-{{ neovim_version }}.tar.gz"
+
+  tags: ["neovim"]

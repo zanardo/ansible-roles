@@ -1,0 +1,15 @@
+---
+- name: checa versão instalada
+  shell:
+    warn=no
+    /usr/local/neovim/bin/nvim --version | head -1 | sed -e 's/^NVIM v//'
+  register: neovim_register_version
+  changed_when: False
+  check_mode: no
+  failed_when: False
+  tags: ["neovim"]
+
+- name: instala neovim
+  include_tasks: install.yml
+  when: neovim_register_version.stdout != neovim_version or neovim_force_install is defined
+  tags: ["neovim"]
