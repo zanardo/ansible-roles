@@ -1,0 +1,20 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      install_recommends: no
+      name:
+        - git
+        - cgit
+        - python3-markdown
+        - python3-pygments
+
+  - name: copia arquivo de configuração
+    template:
+      src: "{{ cgit_conf }}"
+      dest: /etc/cgitrc
+    when: cgit_conf is defined
+    tags: ["cgit:conf"]
+
+  tags: ["cgit"]
