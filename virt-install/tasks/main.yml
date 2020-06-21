@@ -34,7 +34,6 @@
       when: virt_install_preseed is defined and virt_install_preseed != ""
 
     - name: instala máquina virtual {{ virt_install_name }}
-      connection: local
       shell: http_proxy="{{ virt_install_http_proxy|d('') }}" virt-install
         --connect qemu:///system
         --name {{ virt_install_name }}
