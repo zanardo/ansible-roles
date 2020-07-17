@@ -1,0 +1,23 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - ca-certificates
+
+  - name: verifica versão instalada
+    shell: |
+      warn=no
+      dpkg -s dbeaver-ce | grep Version | cut -f2 -d: | sed -e 's/ *//'
+    changed_when: False
+    failed_when: False
+    check_mode: no
+    register: version
+
+  - name: instala dbeaver
+    apt:
+      deb: "{{ artifacts }}/dbeaver/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
+    when: version.stdout != dbeaver_version
+
+  tags: ["dbeaver"]

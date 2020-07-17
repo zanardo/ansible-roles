@@ -1,0 +1,10 @@
+---
+- hosts:
+  - debian-buster
+
+  vars:
+    dbeaver_version: "7.1.2"
+    artifacts: "http://artifacts.lan"
+
+  roles:
+    - zanardo/dbeaver
