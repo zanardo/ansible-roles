@@ -1,23 +1,6 @@
 ---
 - block:
 
-  - name: configura o ssh no container
-    lineinfile:
-      path: "{{ nspawn_container_dir }}/etc/ssh/sshd_config"
-      regexp: "^#?PermitRootLogin.*$"
-      line: "PermitRootLogin yes"
-      state: present
-
-  - name: cria o diretório de configurações do ssh
-    file:
-      state: directory
-      path: "{{ nspawn_container_dir }}/root/.ssh"
-
-  - name: libera a chave de ssh
-    copy:
-      content: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-      dest: "{{ nspawn_container_dir }}/root/.ssh/authorized_keys"
-
   - name: configura a interface de rede
     copy:
       content: |
