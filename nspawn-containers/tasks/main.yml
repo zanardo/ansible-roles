@@ -28,56 +28,26 @@
       systemctl daemon-reload
     when: conf is changed
 
-  - name: cria diretório de cache
+  - name: cria diretório do container
     file:
-      path: "{{ nspawn_container_template_cache_dir }}"
+      path: "{{ nspawn_container_dir }}"
       state: directory
 
-  - name: verifica se cache do template existe
-    find:
-      age: "-{{ nspawn_container_cache_max_age }}"
-      paths: "{{ nspawn_container_template_cache_dir }}"
-      patterns: "template-debian-{{ nspawn_container_debian }}.tar.zstd"
-    register: cache_find
+  - name: cria container a partir de imagem pré-definida
+    unarchive:
+      src: "{{ nspawn_container_image }}"
+      creates: "{{ nspawn_container_dir }}/etc/.stage1-ok"
+      dest: "{{ nspawn_container_dir }}"
+      remote_src: yes
 
-  - name: cria container via template em cache
-    shell: |
-      warn=no
-      creates="{{ nspawn_container_dir }}/.stage1.ok"
-      mkdir -p "{{ nspawn_container_dir }}" && \
-      zstd -d < "{{ nspawn_container_template_cache_file }}" | \
-        tar -C "{{ nspawn_container_dir }}" -xf -
-    when: 'cache_find.matched == 1'
-    register: templated_created
+  - name: cria lock da imagem descompactada
+    file:
+      path: "{{ nspawn_container_dir }}/etc/.stage1.ok"
+      state: touch
 
-  - name: cria container via debootstrap
-    environment:
-      http_proxy: "{{ nspawn_container_http_proxy }}"
-    shell:
-      warn=no
-      creates="{{ nspawn_container_dir }}/.stage1.ok"
-      debootstrap \
-        --include=systemd,dbus,locales,python3,sudo,openssh-server \
-        "{{ nspawn_container_debian }}" \
-        "{{ nspawn_container_dir }}" \
-        "{{ nspawn_container_debian_mirror }}" && \
-      touch "{{ nspawn_container_dir }}/.stage1.ok"
-    when: 'cache_find.matched == 0'
-    register: debootstrap_created
-
-  - name: cria template em cache
-    shell: |
-      warn=no
-      chdir={{ nspawn_container_dir }}
-      tar cf - . | \
-        zstd -c -o "{{ nspawn_container_template_cache_file }}"
-    when:
-      - cache_find.matched == 0
-      - debootstrap_created is changed
-
-  - name: verifica se é necessário executar bootstrap
+  - name: verifica se é necessário bootstrap
     stat:
-      path: "{{ nspawn_container_dir }}/.stage2.ok"
+      path: "{{ nspawn_container_dir }}/etc/.stage2.ok"
     register: st
 
   delegate_to: "{{ nspawn_container_host }}"

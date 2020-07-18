@@ -71,38 +71,9 @@
     - "{{ nspawn_container_ip }}"
     - "{{ nspawn_container_name }}"
 
-- name: configura timezone do container
-  copy:
-    content: "America/Sao_Paulo"
-    dest: "/etc/timezone"
-  register: timezone_changed
-
-- name: configura timezone do container
-  command: /usr/sbin/dpkg-reconfigure -f noninteractive tzdata
-  when: timezone_changed is changed
-
-- name: configura locales do container
-  copy:
-    content: |
-      pt_BR.UTF-8 UTF-8
-      en_US.UTF-8 UTF-8
-    dest: "/etc/locale.gen"
-  register: locales_changed
-
-- name: configura locale default do container
-  copy:
-    content: |
-      LANG="en_US.UTF-8"
-      LANGUAGE="en_US:en"
-    dest: "/etc/default/locale"
-
-- name: gera locales do container
-  command: "/usr/sbin/locale-gen"
-  when: locales_changed is changed
-
 - name: cria arquivo de finalização do bootstrap
   file:
-    path: "/.stage2.ok"
+    path: "/etc/.stage2.ok"
     state: touch
 
 - setup: {}

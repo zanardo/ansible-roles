@@ -4,5 +4,3 @@ nspawn_container_debian_mirror: "http://deb.debian.org/debian"
 nspawn_container_autostart: yes
 nspawn_container_interface: "host0"
 nspawn_container_http_proxy: ""
-nspawn_container_template_cache_dir: "/root/.cache/"
-nspawn_container_cache_max_age: "60d"
