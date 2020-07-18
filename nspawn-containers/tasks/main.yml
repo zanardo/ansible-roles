@@ -47,6 +47,7 @@
       src: "/dev/{{ nspawn_container_lvm_vg }}/{{ nspawn_container_name }}"
       path: "{{ nspawn_container_dir }}"
       state: mounted
+      opts: "nofail"
 
   - name: cria container a partir de imagem pré-definida
     unarchive:
