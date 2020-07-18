@@ -28,10 +28,24 @@
       systemctl daemon-reload
     when: conf is changed
 
-  - name: cria diretório do container
-    file:
+  - name: cria volume lvm do container
+    lvol:
+      lv: "{{ nspawn_container_name }}"
+      size: "{{ nspawn_container_lvm_lv_size }}"
+      state: present
+      vg: "{{ nspawn_container_lvm_vg }}"
+
+  - name: "formata o volume lvm do container"
+    filesystem:
+      dev: "/dev/{{ nspawn_container_lvm_vg }}/{{ nspawn_container_name }}"
+      fstype: "ext4"
+
+  - name: "configura montagem do volume em fstab"
+    mount:
+      fstype: "ext4"
+      src: "/dev/{{ nspawn_container_lvm_vg }}/{{ nspawn_container_name }}"
       path: "{{ nspawn_container_dir }}"
-      state: directory
+      state: mounted
 
   - name: cria container a partir de imagem pré-definida
     unarchive:
