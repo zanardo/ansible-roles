@@ -1,13 +1,9 @@
 ---
 - block:
 
-  - name: configura a interface de rede
+  - name: configura a interfaces de rede
     copy:
-      content: |
-        auto {{ nspawn_container_interface }}
-        iface {{ nspawn_container_interface }} inet static
-          address {{ nspawn_container_ip }}/24
-          gateway {{ nspawn_container_gateway }}
+      content: "{{ nspawn_container_interfaces }}"
       dest: "{{ nspawn_container_dir }}/etc/network/interfaces"
 
   - name: configura o dns do container
