@@ -50,14 +50,14 @@
   - name: cria container a partir de imagem pré-definida
     unarchive:
       src: "{{ nspawn_container_image }}"
-      creates: "{{ nspawn_container_dir }}/etc/.stage1-ok"
+      creates: "{{ nspawn_container_dir }}/etc/.stage1.ok"
       dest: "{{ nspawn_container_dir }}"
       remote_src: yes
 
   - name: cria lock da imagem descompactada
-    file:
-      path: "{{ nspawn_container_dir }}/etc/.stage1.ok"
-      state: touch
+    copy:
+      dest: "{{ nspawn_container_dir }}/etc/.stage1.ok"
+      content: ""
 
   - name: verifica se é necessário bootstrap
     stat:
