@@ -1,6 +1,3 @@
 ---
-nspawn_container_debian: "buster"
-nspawn_container_debian_mirror: "http://deb.debian.org/debian"
 nspawn_container_autostart: yes
 nspawn_container_interface: "host0"
-nspawn_container_http_proxy: ""
