@@ -34,6 +34,7 @@
       size: "{{ nspawn_container_lvm_lv_size }}"
       state: present
       vg: "{{ nspawn_container_lvm_vg }}"
+      resizefs: yes
 
   - name: "formata o volume lvm do container"
     filesystem:
