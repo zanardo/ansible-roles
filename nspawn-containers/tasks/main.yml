@@ -3,7 +3,7 @@
 
   - setup:
 
-  - name: instala pacotes necessários - debian
+  - name: instala pacotes necessários para rodar containers
     apt:
       state: present
       install_recommends: no
@@ -23,7 +23,7 @@
       dest: "/etc/systemd/nspawn/{{ nspawn_container_name }}.nspawn"
     register: conf
 
-  - name: recarrega systemd
+  - name: recarrega configurações systemd
     command:
       systemctl daemon-reload
     when: conf is changed
