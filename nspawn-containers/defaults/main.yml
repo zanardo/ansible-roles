@@ -1,3 +1,2 @@
 ---
 nspawn_container_autostart: yes
-nspawn_container_interface: "host0"
