@@ -3,7 +3,7 @@
 
   - name: configura o ssh no container
     lineinfile:
-      path: "/var/lib/machines/{{ nspawn_container_name }}/etc/ssh/sshd_config"
+      path: "{{ nspawn_container_dir }}/etc/ssh/sshd_config"
       regexp: "^#?PermitRootLogin.*$"
       line: "PermitRootLogin yes"
       state: present
@@ -11,12 +11,12 @@
   - name: cria o diretório de configurações do ssh
     file:
       state: directory
-      path: "/var/lib/machines/{{ nspawn_container_name }}/root/.ssh"
+      path: "{{ nspawn_container_dir }}/root/.ssh"
 
   - name: libera a chave de ssh
     copy:
       content: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-      dest: "/var/lib/machines/{{ nspawn_container_name }}/root/.ssh/authorized_keys"
+      dest: "{{ nspawn_container_dir }}/root/.ssh/authorized_keys"
 
   - name: configura a interface de rede
     copy:
@@ -25,21 +25,21 @@
         iface {{ nspawn_container_interface }} inet static
           address {{ nspawn_container_ip }}/24
           gateway {{ nspawn_container_gateway }}
-      dest: "/var/lib/machines/{{ nspawn_container_name }}/etc/network/interfaces"
+      dest: "{{ nspawn_container_dir }}/etc/network/interfaces"
 
   - name: configura o dns do container
     copy:
       content: "{{ nspawn_container_resolv }}"
-      dest: "/var/lib/machines/{{ nspawn_container_name }}/etc/resolv.conf"
+      dest: "{{ nspawn_container_dir }}/etc/resolv.conf"
 
   - name: configura o nome do container
     copy:
       content: "{{ nspawn_container_name }}"
-      dest: "/var/lib/machines/{{ nspawn_container_name }}/etc/hostname"
+      dest: "{{ nspawn_container_dir }}/etc/hostname"
 
   - name: configura hosts do container
     lineinfile:
-      path: "/var/lib/machines/{{ nspawn_container_name }}/etc/hosts"
+      path: "{{ nspawn_container_dir }}/etc/hosts"
       regexp: "^127.0.0.1 {{ nspawn_container_name }}$"
       line: "127.0.0.1 {{ nspawn_container_name }}"
       state: present
