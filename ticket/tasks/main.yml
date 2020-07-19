@@ -60,5 +60,6 @@
       name: "ticket"
       state: started
       daemon_reload: yes
+      enabled: yes
 
   tags: ["ticket"]

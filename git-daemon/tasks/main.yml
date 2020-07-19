@@ -17,5 +17,6 @@
       daemon_reload: yes
       name: "git-daemon"
       state: started
+      enabled: yes
 
   tags: ["git-daemon"]
