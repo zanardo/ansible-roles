@@ -1,0 +1,21 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - git
+
+  - name: copia serviço do systemd
+    template:
+      src: "git-daemon.service"
+      dest: "/etc/systemd/system/git-daemon.service"
+    notify: reinicia git-daemon
+
+  - name: ativa serviço systemd
+    systemd:
+      daemon_reload: yes
+      name: "git-daemon"
+      state: started
+
+  tags: ["git-daemon"]

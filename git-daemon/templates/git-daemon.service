@@ -1,0 +1,15 @@
+[Unit]
+Description=git-daemon
+
+[Service]
+Restart=always
+User=git
+ExecStart=/usr/bin/git daemon --reuseaddr --verbose {{ git_daemon_args }} --base-path=/srv/git/ /srv/git/
+
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=5s
+SendSIGKILL=no
+WorkingDirectory=/srv/git
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+---
+- name: reinicia git-daemon
+  systemd:
+    daemon_reload: yes
+    name: "git-daemon"
+    state: restarted
