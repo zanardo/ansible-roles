@@ -1,0 +1,6 @@
+---
+- name: reinicia ticket
+  systemd:
+    name: "ticket"
+    state: restarted
+    daemon_reload: yes

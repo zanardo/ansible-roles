@@ -1,0 +1,64 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - git
+        - ca-certificates
+
+  - name: cria usuário ticket
+    user:
+      name: "ticket"
+      shell: "/bin/bash"
+      system: yes
+      createhome: yes
+      home: "/srv/ticket"
+
+  - name: cria diretório de instalação
+    file:
+      state: directory
+      path: "/opt/ticket-{{ ticket_version }}"
+
+  - name: instala ticket
+    unarchive:
+      creates: "/opt/ticket-{{ ticket_version }}/README.md"
+      dest: "/opt/ticket-{{ ticket_version }}"
+      remote_src: yes
+      src: "{{ artifacts }}/ticket/ticket-{{ ticket_version }}.tar.xz"
+
+  - name: cria virtualenv
+    shell:
+      creates=/opt/ticket-{{ ticket_version }}/.venv/ok
+      warn=no
+      chdir=/opt/ticket-{{ ticket_version }}
+      virtualenv -p python2 .venv && \
+      .venv/bin/pip install -r requirements.txt && \
+      touch .venv/ok
+
+  - name: copia arquivo de configuração
+    copy:
+      src: "{{ ticket_conf|d('config.py') }}"
+      dest: "/srv/ticket/config.py"
+      owner: "ticket"
+      group: "ticket"
+
+  - name: cria link para configuração
+    file:
+      state: link
+      src: "/srv/ticket/config.py"
+      dest: "/opt/ticket-{{ ticket_version }}/config.py"
+
+  - name: copia unit do systemd
+    template:
+      src: "ticket.service.j2"
+      dest: "/etc/systemd/system/ticket.service"
+    notify: "reinicia ticket"
+
+  - name: ativa serviço
+    systemd:
+      name: "ticket"
+      state: started
+      daemon_reload: yes
+
+  tags: ["ticket"]

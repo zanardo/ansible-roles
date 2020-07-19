@@ -1,0 +1,14 @@
+[Unit]
+Description=ticket
+
+[Service]
+Restart=always
+User=ticket
+ExecStart=/opt/ticket-{{ ticket_version }}/.venv/bin/python2 server.py
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=5s
+SendSIGKILL=no
+WorkingDirectory=/opt/ticket-{{ ticket_version }}
+
+[Install]
+WantedBy=multi-user.target
