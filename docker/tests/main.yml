@@ -1,6 +1,6 @@
 ---
 - hosts:
-    - debian9
+    - debian-buster
 
   vars:
     docker_daemon_config:
@@ -8,9 +8,6 @@
       "ip-forward": no
       "ip-masq": no
       "iptables": no
-      "hosts":
-        - "unix://"
-        - "tcp://0.0.0.0:2375"
 
   roles:
     - zanardo/docker

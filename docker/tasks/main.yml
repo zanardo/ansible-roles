@@ -29,32 +29,6 @@
       state: directory
       path: /etc/docker
 
-  # Ver https://github.com/moby/moby/issues/22339.
-
-  - name: configura endpoints da API - cria diretório de override
-    file:
-      path: /etc/systemd/system/docker.service.d/
-      state: directory
-    when: 'docker_daemon_config["hosts"]|d()'
-    notify: reinicia docker
-
-  - name: configura endpoints da API - cria override
-    copy:
-      dest: /etc/systemd/system/docker.service.d/override_hosts.conf
-      content: |
-        [Service]
-        ExecStart=
-        ExecStart=/usr/bin/dockerd
-    when: 'docker_daemon_config["hosts"]|d()'
-    notify: reinicia docker
-
-  - name: remove override de endpoints da API
-    file:
-      state: absent
-      path: /etc/systemd/system/docker.service.d/override_hosts.conf
-    when: 'not docker_daemon_config["hosts"]|d()'
-    notify: reinicia docker
-
   - name: configura docker
     copy:
       content: "{{ docker_daemon_config | to_json }}"
@@ -67,38 +41,6 @@
       name: docker-ce
       install_recommends: no
 
-  - name: copia script para agendar gc nas imagens sem tags
-    copy:
-      src: "docker-gc-images.sh"
-      dest: "/usr/local/bin/docker-gc-images.sh"
-      owner: "root"
-      group: "root"
-      mode: "0755"
-    when: docker_containers_daily_gc
-
-  - name: agenda script de gc nas imagens sem tags
-    cron:
-      name: "remove imagens do docker sem tags"
-      special_time: "daily"
-      job: "/usr/local/bin/docker-gc-images.sh 2>&1 | /usr/bin/logger"
-    when: docker_containers_daily_gc
-
-  - name: cria diretório para logs dos containers
-    file:
-      state: directory
-      path: "/var/log/dockers"
-
-  - name: copia configurações para rotacionamento dos logs
-    copy:
-      src: dockers.logrotate
-      dest: "/etc/logrotate.d/dockers"
-
-  - name: copia configurações para salvamento dos logs via syslog
-    copy:
-      src: dockers.rsyslog
-      dest: "/etc/rsyslog.d/30-dockers.conf"
-    notify: reinicia rsyslog
-
   - name: adiciona usuários para grupo docker
     user:
       name: "{{ item }}"
@@ -106,4 +48,4 @@
       append: yes
     loop: "{{ docker_users }}"
 
-  tags: docker
+  tags: ["docker"]

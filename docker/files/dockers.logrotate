@@ -1,8 +1,0 @@
-/var/log/dockers/*/docker.log {
-  rotate 7
-  daily
-  compress
-  missingok
-  delaycompress
-  copytruncate
-}
