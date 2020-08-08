@@ -1,3 +1,4 @@
 ---
 docker_containers: []
 docker_containers_always_pull: no
+docker_containers_volumes: "/srv/docker"
