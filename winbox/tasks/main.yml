@@ -12,8 +12,9 @@
 
     - name: download do winbox
       get_url:
-        url: "https://download.mikrotik.com/winbox/{{ winbox_version }}/winbox.exe"
+        url: "{{ artifacts }}/winbox/winbox_{{ winbox_version }}.exe"
         dest: "/opt/winbox/winbox-{{ winbox_version }}.exe"
+        mode: "0755"
 
     - name: cria link
       file:
