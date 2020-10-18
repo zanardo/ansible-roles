@@ -1,0 +1,3 @@
+---
+download_local_cache_dir: "~/.cache/ansible"
+download_dest_dir: "/tmp/"

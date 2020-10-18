@@ -1,0 +1,20 @@
+---
+- name: cria diretório de cache na máquina local
+  delegate_to: localhost
+  run_once: yes
+  file:
+    path: "{{ download_local_cache_dir }}"
+    state: directory
+    recurse: yes
+
+- name: faz download do pacote na máquina local
+  delegate_to: localhost
+  run_once: yes
+  get_url:
+    url: "{{ url }}"
+    dest: "{{ download_local_cache_dir }}/{{ file }}"
+
+- name: faz upload do pacote para o destino
+  copy:
+    src: "{{ download_local_cache_dir }}/{{ file }}"
+    dest: "{{ dir|d(download_dest_dir) }}/{{ file }}"
