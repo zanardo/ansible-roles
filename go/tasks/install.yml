@@ -1,15 +1,12 @@
 ---
 - block:
-    - name: instala pacotes necessários
-      apt:
-        name:
-          - ca-certificates
-        state: present
-
-    - name: download do tarball
-      get_url:
+    - name: faz download do go
+      include_role:
+        name: zanardo/download
+      vars:
         url: "https://storage.googleapis.com/golang/go{{ go_version }}.linux-amd64.tar.gz"
-        dest: "/tmp/go-{{ go_version }}.tar.gz"
+        file: "go{{ go_version }}.linux-amd64.tar.gz"
+        dir: "/tmp"
 
     - name: remove instalação anterior
       file:
