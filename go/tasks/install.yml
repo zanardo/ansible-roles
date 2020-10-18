@@ -22,21 +22,7 @@
         chdir="/tmp"
         mkdir /usr/local/go &&
         tar -C /usr/local/go --strip-components=1 \
-          -xzf "/tmp/go-{{ go_version }}.tar.gz"
-
-    - name: corrige permissões para root
-      file:
-        state: directory
-        owner: root
-        group: root
-        path: /usr/local/go
-        recurse: yes
-
-    - name: remove arquivos temporários
-      file:
-        state: absent
-        path: "{{ item }}"
-      with_items:
-        - "/tmp/go-{{ go_version }}.tar.gz"
+          --owner root --group root \
+          -xzf "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
 
   tags: ["go"]
