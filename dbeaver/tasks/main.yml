@@ -1,11 +1,5 @@
 ---
 - block:
-
-  - name: instala pacotes necessários
-    apt:
-      name:
-        - ca-certificates
-
   - name: verifica versão instalada
     shell: |
       warn=no
@@ -15,9 +9,17 @@
     check_mode: no
     register: version
 
+  - name: faz download do dbeaver
+    include_role:
+      name: zanardo/download
+    vars:
+      url: "https://github.com/dbeaver/dbeaver/releases/download/{{ dbeaver_version }}/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
+      file: "dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
+      dir: "/tmp"
+
   - name: instala dbeaver
     apt:
-      deb: "{{ artifacts }}/dbeaver/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
+      deb: "/tmp/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
     when: version.stdout != dbeaver_version
 
   tags: ["dbeaver"]
