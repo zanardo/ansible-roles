@@ -1,54 +1,46 @@
 ---
-- block:
+- name: instala pacotes necessários
+  apt:
+    name:
+      - gnupg
+    state: present
 
-  - name: instala pacotes necessários
-    apt:
-      name:
-        - ca-certificates
-        - gnupg
-      state: present
+- name: faz download do executável
+  include_role:
+    name: zanardo/download
+  vars:
+    url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64"
+    file: "borg-{{ borg_version }}"
+    dir: "/tmp"
 
-  - name: download do executável
-    get_url:
-      url: "{{ borg_download_url }}"
-      dest: "/tmp/borg-{{ borg_version }}"
+- name: faz download da assinatura
+  include_role:
+    name: zanardo/download
+  vars:
+    url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64.asc"
+    file: "borg-{{ borg_version }}.asc"
+    dir: "/tmp"
 
-  - name: download da assinatura
-    get_url:
-      url: "{{ borg_download_sign_url }}"
-      dest: "/tmp/borg-{{ borg_version }}.asc"
+- name: upload da chave pública para verificação
+  copy:
+    src: "thomas.pub"
+    dest: "/tmp/thomas.pub"
 
-  - name: upload da chave pública para verificação
-    copy:
-      src: "thomas.pub"
-      dest: "/tmp/thomas.pub"
+- name: importa chave do gpg no keyring
+  shell: >
+    chdir=/tmp
+    gpg --batch --no-default-keyring --homedir=. --import thomas.pub
 
-  - name: importa chave do gpg no keyring
-    shell: >
-      chdir=/tmp
-      gpg --batch --no-default-keyring --homedir=. --import thomas.pub
+- name: verifica assinatura gpg
+  shell: >
+    chdir=/tmp
+    gpg --batch --homedir=. --verify "borg-{{ borg_version}}.asc" "borg-{{ borg_version }}"
 
-  - name: verifica assinatura gpg
-    shell: >
-      chdir=/tmp
-      gpg --batch --homedir=. --verify "borg-{{ borg_version}}.asc" "borg-{{ borg_version }}"
-
-  - name: instala executável para /usr/local/bin
-    copy:
-      remote_src: yes
-      src: "/tmp/borg-{{ borg_version }}"
-      dest: "/usr/local/bin/borg"
-      mode: 0755
-      owner: root
-      group: root
-
-  - name: remove arquivos temporários
-    file:
-      state: absent
-      path: "/tmp/{{ item }}"
-    with_items:
-      - "borg-{{ borg_version }}"
-      - "borg-{{ borg_version }}.asc"
-      - "thomas.pub"
-
-  tags: borg
+- name: instala executável para /usr/local/bin
+  copy:
+    remote_src: yes
+    src: "/tmp/borg-{{ borg_version }}"
+    dest: "/usr/local/bin/borg"
+    mode: 0755
+    owner: root
+    group: root

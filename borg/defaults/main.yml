@@ -1,3 +1,0 @@
----
-borg_download_url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64"
-borg_download_sign_url: "https://github.com/borgbackup/borg/releases/download/{{ borg_version }}/borg-linux64.asc"
