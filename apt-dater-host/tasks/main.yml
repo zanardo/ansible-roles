@@ -4,3 +4,6 @@
     name:
       - apt-dater-host
     state: present
+  tags:
+    - apt-dater
+    - apt-dater-host
