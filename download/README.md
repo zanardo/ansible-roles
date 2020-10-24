@@ -21,6 +21,13 @@ Este role deve ser usado nos demais roles que fazem download de artefatos extern
 - `file`: Nome do arquivo (usado para o cache local e envio para o destino).
 - `dir`: Diretório para envio no destino (default `download_dest_dir`). O caminho completo será `{{ dir }}/{{ file }}`.
 
+## Variáveis opcionais
+
+- `owner`: Usuário dono do arquivo do destino (default: `root`).
+- `group`: Grupo dono do arquivo do destino (default: `root`).
+- `mode`: Modo do arquivo de destino (default: `0644`). Importante: usar o formato `0o<modo>` (ex:
+  `0o755`) para evitar problemas de templating do Ansible.
+
 ## Variáveis default
 
 - `download_local_cache_dir`:  Diretório da máquina local onde os arquivos serão salvos. Default:
