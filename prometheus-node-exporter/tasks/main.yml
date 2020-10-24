@@ -58,4 +58,6 @@
     with_items:
       - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
 
-  tags: prometheus_node_exporter
+  tags:
+    - prometheus
+    - prometheus-node-exporter
