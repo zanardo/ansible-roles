@@ -1,21 +1,12 @@
 ---
 - block:
-    - name: instala pacotes necessários
-      apt:
-        name:
-          - curl
-          - ca-certificates
-        state: present
-
-    - name: download do tarball
-      get_url:
+    - name: faz download do neovim
+      include_role:
+        name: zanardo/download
+      vars:
         url: "https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/nvim-linux64.tar.gz"
-        dest: "/tmp/neovim-{{ neovim_version }}.tar.gz"
-
-    - name: remove instalação anterior
-      file:
-        state: absent
-        path: /usr/local/neovim
+        file: "neovim-{{ neovim_version }}.tar.gz"
+        dir: "/tmp"
 
     - name: extrai o tarball
       shell: >
@@ -32,12 +23,5 @@
         group: root
         path: /usr/local/neovim
         recurse: yes
-
-    - name: remove arquivos temporários
-      file:
-        state: absent
-        path: "{{ item }}"
-      with_items:
-        - "/tmp/neovim-{{ neovim_version }}.tar.gz"
 
   tags: ["neovim"]
