@@ -26,5 +26,4 @@ docker_daemon_config:
 
 ## Compatibilidade
 
-- Debian Stretch
 - Debian Buster
