@@ -1,20 +1,20 @@
 ---
 - block:
-    - name: instala pacotes necessários
-      apt:
-        name:
-          - ca-certificates
-
     - name: cria diretório de destino
       file:
         state: directory
         path: "/opt/winbox"
 
-    - name: download do winbox
-      get_url:
-        url: "{{ artifacts }}/winbox/winbox_{{ winbox_version }}.exe"
-        dest: "/opt/winbox/winbox-{{ winbox_version }}.exe"
-        mode: "0755"
+    - name: faz download do winbox
+      include_role:
+        name: zanardo/download
+      vars:
+        url: "https://download.mikrotik.com/winbox/{{ winbox_version }}/winbox.exe"
+        file: "winbox-{{ winbox_version }}.exe"
+        dir: "/opt/winbox"
+        mode: 0o755
+        owner: "root"
+        group: "root"
 
     - name: cria link
       file:

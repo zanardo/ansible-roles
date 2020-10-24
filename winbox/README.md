@@ -17,5 +17,4 @@ O Winbox é copiado em `/opt/winbox`, e um script é criado em
 
 ## Compatibilidade
 
-- Debian Stretch
 - Debian Buster
