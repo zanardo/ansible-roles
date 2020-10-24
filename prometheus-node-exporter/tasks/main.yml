@@ -1,20 +1,13 @@
 ---
 - block:
-  - name: instala pacotes necessários
-    apt:
-      name:
-        - ca-certificates
-      state: present
-    tags: prometheus-node-exporter
 
-  - name: download do tarball para cache local
-    connection: local
-    run_once: yes
-    get_url:
-      url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/{{ item }}"
-      dest: "~/.cache/ansible/{{ item }}"
-    with_items:
-      - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+  - name: faz download do prometheus-node-exporter
+    include_role:
+      name: zanardo/download
+    vars:
+      url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+      file: "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+      dir: "/tmp"
 
   - name: obtém versão instalada do prometheus node exporter
     shell:
@@ -24,14 +17,6 @@
     failed_when: false
     check_mode: no
     register: version
-
-  - name: upload do tarball para o destino
-    copy:
-      src: "~/.cache/ansible/{{ item }}"
-      dest: "/tmp/{{ item }}"
-    with_items:
-      - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
-    when: version.stdout != prometheus_node_exporter_version
 
   - name: cria usuário para execução
     user:
