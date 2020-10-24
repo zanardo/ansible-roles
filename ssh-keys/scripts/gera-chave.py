@@ -35,7 +35,6 @@ print(
 {user}:
   public_key: "{pub}"
   private_key: |
-  {pri}
-
+{pri}
 """
 )
