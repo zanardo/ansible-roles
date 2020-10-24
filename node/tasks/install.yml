@@ -2,15 +2,16 @@
 - name: instala pacotes necessários
   apt:
     name:
-      - curl
-      - ca-certificates
       - xz-utils
     state: present
 
-- name: download do tarball
-  get_url:
+- name: faz download do node
+  include_role:
+    name: zanardo/download
+  vars:
     url: "https://nodejs.org/dist/v{{ node_version }}/node-v{{ node_version }}-linux-x64.tar.xz"
-    dest: "/tmp/node-{{ node_version }}.tar.xz"
+    file: "node-{{ node_version }}.tar.xz"
+    dir: "/tmp"
 
 - name: remove instalação anterior
   file:
