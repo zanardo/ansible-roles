@@ -1,15 +1,19 @@
 ---
-- name: checa versão instalada
-  shell:
-    warn=no
-    /usr/local/node/bin/node --version | sed -e 's/^v//'
-  register: node_register_version
-  changed_when: False
-  check_mode: no
-  failed_when: False
-  tags: node
+- block:
 
-- name: instala node
-  include_tasks: install.yml
-  when: node_register_version.stdout != node_version or node_force_install is defined
-  tags: node
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/node/bin/node --version | sed -e 's/^v//'
+    register: node_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala node
+    include_tasks: install.yml
+    when: node_register_version.stdout != node_version or node_force_install is defined
+
+  tags:
+    - node
+    - nodejs
