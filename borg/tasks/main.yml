@@ -1,15 +1,17 @@
 ---
-- name: verifica versão instalada
-  shell:
-    warn=no
-    /usr/local/bin/borg --version
-  register: borg_register_version
-  changed_when: False
-  check_mode: no
-  failed_when: False
-  tags: borg
+- block:
 
-- name: instala borg
-  include_tasks: install.yml
-  when: borg_register_version.stdout != "borg " + borg_version
-  tags: borg
+  - name: verifica versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/borg --version
+    register: borg_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala borg
+    include_tasks: install.yml
+    when: borg_register_version.stdout != "borg " + borg_version
+
+  tags: ["borg"]
