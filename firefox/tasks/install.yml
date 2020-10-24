@@ -2,13 +2,13 @@
 - name: faz download da distribuição do firefox - versão específica
   get_url:
     url: "https://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/linux-x86_64/{{ firefox_lang }}/firefox-{{ firefox_version }}.tar.bz2"
-    dest: "/tmp//firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+    dest: "/tmp/firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
   when: firefox_version != "latest"
 
 - name: faz download da distribuição do firefox - última versão
   get_url:
     url: "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang={{ firefox_lang }}"
-    dest: "/tmp//firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+    dest: "/tmp/firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
   when: firefox_version == "latest"
 
 - name: remove instalação atual do firefox
@@ -25,7 +25,7 @@
 - name: descompacta pacote do firefox
   unarchive:
     remote_src: yes
-    src: "/tmp//firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+    src: "/tmp/firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
     dest: "{{ firefox_path }}"
     owner: "{{ firefox_chown }}"
     group: "{{ firefox_chown }}"
@@ -43,4 +43,4 @@
 - name: remove pacote de download
   file:
     state: absent
-    path: "/tmp//firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+    path: "/tmp/firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
