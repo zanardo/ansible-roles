@@ -31,7 +31,7 @@
       warn=no
       creates=~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc
       ~/.cargo/bin/rustup install nightly
-    when: rust_install_nightly and "nightly" not in toolchains.stdout_lines
+    when: rust_install_nightly and "nightly" not in toolchains.stdout_lines|d([])
 
   - name: obtém componentes instalados
     changed_when: False
@@ -47,6 +47,6 @@
     become_user: "{{ rust_user }}"
     command: ~/.cargo/bin/rustup component add {{ item }}
     loop: "{{ rust_components }}"
-    when: item not in components.stdout_lines
+    when: item not in components.stdout_lines|d([])
 
   tags: ["rust"]
