@@ -2,8 +2,5 @@
 - hosts:
     - debian-buster
 
-  vars:
-    winbox_version: "3.22"
-
   roles:
     - zanardo/winbox
