@@ -16,6 +16,7 @@
       url: "https://github.com/dbeaver/dbeaver/releases/download/{{ dbeaver_version }}/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
       file: "dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
       dir: "/tmp"
+    when: version.stdout != dbeaver_version
 
   - name: instala dbeaver
     apt:
