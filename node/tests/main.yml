@@ -3,9 +3,6 @@
     - debian-stretch
     - debian-buster
 
-  vars:
-    node_version: "12.16.2"
-
   roles:
 
     - zanardo/node
