@@ -23,4 +23,11 @@
       deb: "/tmp/dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
     when: version.stdout != dbeaver_version
 
+  - name: remove arquivos temporários
+    file:
+      path: "/tmp/{{ item }}"
+      state: absent
+    with_items:
+      - "dbeaver-ce_{{ dbeaver_version }}_amd64.deb"
+
   tags: ["dbeaver"]
