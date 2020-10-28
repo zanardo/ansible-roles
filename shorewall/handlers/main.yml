@@ -3,6 +3,6 @@
   shell: >
     warn=no
     touch /tmp/ansible-shorewall-restart &&
-    shorewall check && 
-    shorewall restart &&
+    shorewall check &&
+    shorewall reload &&
     rm -f /tmp/ansible-shorewall-restart
