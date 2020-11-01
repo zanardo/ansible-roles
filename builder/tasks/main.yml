@@ -1,0 +1,13 @@
+---
+- block:
+
+  - name: cria usuário restrito para compilações
+    user:
+      name: _builder
+      create_home: yes
+      home: /var/opt/_builder
+      shell: /bin/bash
+      state: present
+      system: yes
+
+  tags: ["builder"]
