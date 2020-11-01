@@ -1,0 +1,54 @@
+---
+- name: faz download do syncthing
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/syncthing/syncthing/archive/v{{ syncthing_version }}.tar.gz
+    file: syncthing-{{ syncthing_version }}.tar.gz
+    dir: /tmp
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    cd ~ && \
+    rm -rf syncthing* && \
+    tar xf /tmp/syncthing-{{ syncthing_version }}.tar.gz && \
+    cd syncthing-{{ syncthing_version }} && \
+    export PATH="/usr/local/go/bin:$PATH" && \
+    go run build.go -version v{{ syncthing_version }} && \
+    cp -f bin/syncthing /tmp && \
+    cd ~ && \
+    rm -rf syncthing*
+
+- name: instala o binário
+  copy:
+    remote_src: yes
+    src: /tmp/syncthing
+    dest: /usr/local/bin/syncthing-{{ syncthing_version }}
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: cria symlink
+  file:
+    state: link
+    src: /usr/local/bin/syncthing-{{ syncthing_version }}
+    dest: /usr/local/bin/syncthing
+
+- name: instala template do systemd para usuário
+  template:
+    src: syncthing.service
+    dest: /lib/systemd/user/syncthing.service
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop:
+    - syncthing-{{ syncthing_version }}.tar.gz
+    - syncthing

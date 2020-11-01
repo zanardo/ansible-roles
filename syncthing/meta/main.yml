@@ -1,0 +1,4 @@
+---
+dependencies:
+  - zanardo/builder
+  - zanardo/go

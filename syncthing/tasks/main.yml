@@ -1,24 +1,17 @@
 ---
 - block:
-    - name: instala pacotes necessários para instalação inicial
-      apt:
-        name:
-          - ca-certificates
-          - apt-transport-https
-          - gnupg2
 
-    - name: adiciona chave gpg para repositório
-      apt_key:
-        url: "https://syncthing.net/release-key.txt"
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/syncthing --version | cut -f2 -d' '
+    register: syncthing_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
 
-    - name: adiciona repositório
-      apt_repository:
-        filename: "syncthing"
-        repo: "deb {{ syncthing_apt_repo }} syncthing stable"
-
-    - name: instala syncthing
-      apt:
-        name:
-          - syncthing
+  - name: instala syncthing
+    include_tasks: install.yml
+    when: syncthing_register_version.stdout != "v"+ syncthing_version or syncthing_force_install is defined
 
   tags: ["syncthing"]
