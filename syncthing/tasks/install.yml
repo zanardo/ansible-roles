@@ -43,7 +43,7 @@
     dest: /lib/systemd/user/syncthing.service
     owner: root
     group: root
-    mode: 0o755
+    mode: 0o644
 
 - name: remove arquivos temporários
   file:
