@@ -1,0 +1,40 @@
+---
+- name: faz download do rclone
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/rclone/rclone/archive/v{{ rclone_version }}.tar.gz
+    file: rclone-{{ rclone_version }}.tar.gz
+    dir: /tmp
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    cd ~ && \
+    rm -rf rclone* && \
+    tar xf /tmp/rclone-{{ rclone_version }}.tar.gz && \
+    cd rclone-{{ rclone_version }} && \
+    export PATH="/usr/local/go/bin:$PATH" && \
+    go build -v --ldflags "-s -X github.com/rclone/rclone/fs.Version=v{{ rclone_version }}" && \
+    cp -f rclone /tmp && \
+    cd ~ && \
+    rm -rf rclone*
+
+- name: instala o binário
+  copy:
+    remote_src: yes
+    src: /tmp/rclone
+    dest: /usr/local/bin/rclone
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop:
+    - rclone-{{ rclone_version }}.tar.gz
+    - rclone

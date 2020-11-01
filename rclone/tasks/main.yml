@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/rclone --version | head -1 | cut -f2 -d' '
+    register: rclone_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala rclone
+    include_tasks: install.yml
+    when: rclone_register_version.stdout != "v"+ rclone_version or rclone_force_install is defined
+
+  tags: ["rclone"]
