@@ -1,15 +1,24 @@
 ---
-- name: checa versão instalada
-  shell: 
-    warn=no
-    /usr/local/go/bin/go version | cut -d' ' -f3 | sed -e 's/^go//'
-  register: go_register_version
-  changed_when: False
-  check_mode: no
-  failed_when: False
-  tags: go
+- block:
 
-- name: instala go
-  include_tasks: install.yml
-  when: go_register_version.stdout != go_version or go_force_install is defined
-  tags: go
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - ca-certificates # go get
+        - git
+        - build-essential
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/go/bin/go version | cut -d' ' -f3 | sed -e 's/^go//'
+    register: go_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala go
+    include_tasks: install.yml
+    when: go_register_version.stdout != go_version or go_force_install is defined
+
+  tags: ["go"]
