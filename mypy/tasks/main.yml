@@ -1,0 +1,32 @@
+---
+- block:
+
+  - name: cria diretórios para os pacotes
+    file:
+      state: directory
+      path: /opt/mypy
+      owner: nobody
+      group: nogroup
+
+  - name: instala os pacotes
+    become: yes
+    become_user: nobody
+    pip:
+      name: mypy
+      version: "{{ mypy_version|d(omit) }}"
+      virtualenv_python: /usr/bin/python3
+      virtualenv: /opt/mypy
+
+  - name: cria symlinks para os scripts
+    file:
+      state: link
+      src: /opt/mypy/bin/{{ item }}
+      dest: /usr/local/bin/{{ item }}
+    loop:
+      - mypy
+      - dmypy
+      - mypyc
+      - stubgen
+      - stubtest
+
+  tags: ["mypy"]
