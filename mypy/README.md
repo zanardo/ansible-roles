@@ -1,4 +1,4 @@
-# mypu
+# mypy
 
 Ansible Role para instalar/atualizar o [mypy](http://mypy-lang.org/), um verificador
 estático para o Python.
