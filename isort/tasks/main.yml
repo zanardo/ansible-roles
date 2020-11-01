@@ -1,0 +1,28 @@
+---
+- block:
+
+  - name: cria diretórios para os pacotes
+    file:
+      state: directory
+      path: /opt/isort
+      owner: nobody
+      group: nogroup
+
+  - name: instala os pacotes
+    become: yes
+    become_user: nobody
+    pip:
+      name: isort
+      version: "{{ isort_version|d(omit) }}"
+      virtualenv_python: /usr/bin/python3
+      virtualenv: /opt/isort
+
+  - name: cria symlinks para os scripts
+    file:
+      state: link
+      src: /opt/isort/bin/{{ item }}
+      dest: /usr/local/bin/{{ item }}
+    loop:
+      - isort
+
+  tags: ["isort"]
