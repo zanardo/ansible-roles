@@ -1,0 +1,30 @@
+---
+- block:
+
+  - name: cria diretórios para os pacotes
+    file:
+      state: directory
+      path: /opt/black
+      owner: nobody
+      group: nogroup
+
+  - name: instala os pacotes
+    become: yes
+    become_user: nobody
+    pip:
+      name: black
+      version: "{{ black_version|d(omit) }}"
+      virtualenv_python: /usr/bin/python3
+      virtualenv: /opt/black
+
+  - name: cria symlinks para os scripts
+    file:
+      state: link
+      src: /opt/black/bin/{{ item }}
+      dest: /usr/local/bin/{{ item }}
+    loop:
+      - black
+      - blackd
+      - black-primer
+
+  tags: ["black"]
