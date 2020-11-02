@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/rust-analyzer --version | cut -f2 -d' '
+    register: rust_analyzer_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala rust-analyzer
+    include_tasks: install.yml
+    when: rust_analyzer_register_version.stdout != rust_analyzer_version or rust_analyzer_force_install is defined
+
+  tags: ["rust-analyzer"]
