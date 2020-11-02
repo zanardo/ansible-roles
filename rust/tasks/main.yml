@@ -82,7 +82,7 @@
     become_user: nobody
     shell: |
       /opt/rust/bin/rustup component add "{{ item }}"
-    loop: "{{ rust_components }}"
+    loop: "{{ rust_components|d([]) }}"
     when:
       - item not in components.stdout_lines|d([])
       - rust_toolchains|d([])
