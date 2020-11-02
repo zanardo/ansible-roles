@@ -4,9 +4,11 @@
     - debian-buster
 
   vars:
-    rust_user: "root"
-    rust_components: ["rustfmt", "rust-src"]
-    rust_install_nightly: yes
+    rust_components:
+      - rustfmt
+      - rust-src
+    rust_toolchains:
+      - stable
 
   roles:
     - role: zanardo/rust

@@ -6,47 +6,96 @@
       name:
         - ca-certificates
         - curl
+        - build-essential
 
-  - name: instala rust - toolchain stable
+  - name: cria diretório de instalação
+    file:
+      state: directory
+      path: /opt/rust
+      owner: nobody
+      group: nogroup
+
+  - name: instala rust
     become: yes
-    become_user: "{{ rust_user }}"
+    become_user: nobody
     shell:
       warn=no
-      creates=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc
-      curl https://sh.rustup.rs -sSf | sh -s -- -y
+      creates=/opt/rust/bin/cargo
+      curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path --default-toolchain none
 
   - name: obtém toolchains instalados
     changed_when: False
     become: yes
-    become_user: "{{ rust_user }}"
+    become_user: nobody
     shell: |
-      ~/.cargo/bin/rustup toolchain list | \
+      /opt/rust/bin/rustup toolchain list | \
+        grep -v "no installed toolchains" | \
         sed 's/-x86_64-unknown-linux-gnu.*$//'
     register: toolchains
 
-  - name: instala rust - toolchain nightly
+  - name: remove toolchains
     become: yes
-    become_user: "{{ rust_user }}"
-    shell:
-      warn=no
-      creates=~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc
-      ~/.cargo/bin/rustup install nightly
-    when: rust_install_nightly and "nightly" not in toolchains.stdout_lines|d([])
+    become_user: nobody
+    shell: |
+      /opt/rust/bin/rustup toolchain uninstall "{{ item }}"
+    loop: "{{ toolchains.stdout_lines|d([]) | difference(rust_toolchains) }}"
+
+  - name: instala toolchains
+    become: yes
+    become_user: nobody
+    shell: |
+      /opt/rust/bin/rustup toolchain install "{{ item }}"
+    loop: "{{ rust_toolchains | difference(toolchains.stdout_lines|d([])) }}"
+
+  - name: obtém o toolchain default
+    become: yes
+    become_user: nobody
+    changed_when: False
+    shell: |
+      /opt/rust/bin/rustup default | \
+        grep default | \
+        sed 's/-x86_64-unknown-linux-gnu.*$//'
+    register: default
+    when: rust_toolchains|d([])
+
+  - name: define o toolchain default
+    become: yes
+    become_user: nobody
+    shell: |
+      /opt/rust/bin/rustup default {{ rust_toolchains[0] }}
+    when:
+      - rust_toolchains|length > 0
+      - default.stdout != rust_toolchains[0]
 
   - name: obtém componentes instalados
     changed_when: False
     become: yes
-    become_user: "{{ rust_user }}"
+    become_user: nobody
     shell: |
-      ~/.cargo/bin/rustup component list --installed | \
+      /opt/rust/bin/rustup component list --installed | \
         sed 's/-x86_64-unknown-linux-gnu$//'
     register: components
+    when: rust_toolchains|d([])
 
   - name: instala componentes do rust
     become: yes
-    become_user: "{{ rust_user }}"
-    command: ~/.cargo/bin/rustup component add {{ item }}
+    become_user: nobody
+    shell: |
+      /opt/rust/bin/rustup component add "{{ item }}"
     loop: "{{ rust_components }}"
-    when: item not in components.stdout_lines|d([])
+    when:
+      - item not in components.stdout_lines|d([])
+      - rust_toolchains|d([])
 
+  - name: define variáveis de ambiente
+    copy:
+      content: |
+        export PATH="/opt/rust/bin:$PATH"
+        export RUSTUP_HOME="/opt/rust"
+        export CARGO_HOME="/opt/rust"
+      dest: /etc/profile.d/rust.sh
+
+  environment:
+    RUSTUP_HOME: /opt/rust
+    CARGO_HOME: /opt/rust
   tags: ["rust"]
