@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/watchexec --version | cut -f2 -d' '
+    register: watchexec_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala watchexec
+    include_tasks: install.yml
+    when: watchexec_register_version.stdout != watchexec_version or watchexec_force_install is defined
+
+  tags: ["watchexec"]
