@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/hyperfine --version | cut -f2 -d' '
+    register: hyperfine_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala hyperfine
+    include_tasks: install.yml
+    when: hyperfine_register_version.stdout != hyperfine_version or hyperfine_force_install is defined
+
+  tags: ["hyperfine"]
