@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/cargo-add --version | cut -f2 -d' '
+    register: cargo_edit_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala cargo-edit
+    include_tasks: install.yml
+    when: cargo_edit_register_version.stdout != cargo_edit_version or cargo_edit_force_install is defined
+
+  tags: ["cargo-edit"]
