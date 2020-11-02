@@ -1,10 +1,4 @@
 ---
-- name: instala o rust no usuário builder
-  include_role:
-    name: zanardo/rust
-  vars:
-    rust_user: _builder
-
 - name: instala pacotes necessários
   apt:
     name:
