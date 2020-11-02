@@ -1,0 +1,47 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name:
+      - libssl-dev
+      - build-essential
+      - pkg-config
+
+- name: faz download do gocryptfs
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/rfjakob/gocryptfs/archive/v{{ gocryptfs_version }}.tar.gz
+    file: gocryptfs-{{ gocryptfs_version }}.tar.gz
+    dir: /tmp
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    cd ~ && \
+    rm -rf gocryptfs* && \
+    tar xf /tmp/gocryptfs-{{ gocryptfs_version }}.tar.gz && \
+    cd gocryptfs-{{ gocryptfs_version }} && \
+    export PATH="/usr/local/go/bin:$PATH" && \
+    go build -ldflags="-X main.GitVersion={{ gocryptfs_version }}" && \
+    cp -f gocryptfs /tmp && \
+    cd ~ && \
+    rm -rf gocryptfs*
+
+- name: instala o binário
+  copy:
+    remote_src: yes
+    src: /tmp/gocryptfs
+    dest: /usr/local/bin/gocryptfs
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop:
+    - gocryptfs-{{ gocryptfs_version }}.tar.gz
+    - gocryptfs

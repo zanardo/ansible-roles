@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/gocryptfs --version | cut -f1 -d';' | cut -f2 -d' '
+    register: gocryptfs_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala gocryptfs
+    include_tasks: install.yml
+    when: gocryptfs_register_version.stdout != gocryptfs_version or gocryptfs_force_install is defined
+
+  tags: ["gocryptfs"]
