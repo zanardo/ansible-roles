@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/onefetch --version | cut -f2 -d' '
+    register: onefetch_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala onefetch
+    include_tasks: install.yml
+    when: onefetch_register_version.stdout != onefetch_version or onefetch_force_install is defined
+
+  tags: ["onefetch"]
