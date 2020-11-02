@@ -1,0 +1,46 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name:
+      - build-essential
+
+- name: faz download do ripgrep
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/BurntSushi/ripgrep/archive/{{ ripgrep_version }}.tar.gz
+    file: ripgrep-{{ ripgrep_version }}.tar.gz
+    dir: /tmp
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    executable=/bin/bash
+    cd ~ && \
+    rm -rf ripgrep* && \
+    tar xf /tmp/ripgrep-{{ ripgrep_version }}.tar.gz && \
+    cd ripgrep-{{ ripgrep_version }} && \
+    source /etc/profile.d/rust.sh && \
+    cargo build --release && \
+    cp -f target/release/rg /tmp && \
+    cd ~ && \
+    rm -rf ripgrep*
+
+- name: instala o binário
+  copy:
+    remote_src: yes
+    src: /tmp/rg
+    dest: /usr/local/bin/rg
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop:
+    - ripgrep-{{ ripgrep_version }}.tar.gz
+    - rg

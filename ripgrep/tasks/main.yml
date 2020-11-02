@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/rg --version | head -1 | cut -f2 -d' '
+    register: ripgrep_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala ripgrep
+    include_tasks: install.yml
+    when: ripgrep_register_version.stdout != ripgrep_version or ripgrep_force_install is defined
+
+  tags: ["ripgrep"]
