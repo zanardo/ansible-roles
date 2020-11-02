@@ -1,0 +1,40 @@
+---
+- name: faz download do direnv
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/direnv/direnv/archive/v{{ direnv_version }}.tar.gz
+    file: direnv-{{ direnv_version }}.tar.gz
+    dir: /tmp
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    cd ~ && \
+    rm -rf direnv* && \
+    tar xf /tmp/direnv-{{ direnv_version }}.tar.gz && \
+    cd direnv-{{ direnv_version }} && \
+    export PATH="/usr/local/go/bin:$PATH" && \
+    go build && \
+    cp -f direnv /tmp && \
+    cd ~ && \
+    rm -rf direnv*
+
+- name: instala o binário
+  copy:
+    remote_src: yes
+    src: /tmp/direnv
+    dest: /usr/local/bin/direnv
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop:
+    - direnv-{{ direnv_version }}.tar.gz
+    - direnv

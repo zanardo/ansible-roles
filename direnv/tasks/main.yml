@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/direnv --version
+    register: direnv_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala direnv
+    include_tasks: install.yml
+    when: direnv_register_version.stdout != direnv_version or direnv_force_install is defined
+
+  tags: ["direnv"]
