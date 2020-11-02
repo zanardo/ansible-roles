@@ -1,0 +1,51 @@
+---
+- name: instala o rust no usuário builder
+  include_role:
+    name: zanardo/rust
+  vars:
+    rust_user: _builder
+
+- name: instala pacotes necessários
+  apt:
+    name:
+      - build-essential
+
+- name: faz download do tokei
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/XAMPPRocky/tokei/archive/v{{ tokei_version }}.tar.gz
+    file: tokei-{{ tokei_version }}.tar.gz
+    dir: /tmp
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    cd ~ && \
+    rm -rf tokei* && \
+    tar xf /tmp/tokei-{{ tokei_version }}.tar.gz && \
+    cd tokei-{{ tokei_version }} && \
+    export PATH="$HOME/.cargo/bin:$PATH" && \
+    cargo build --release && \
+    cp -f target/release/tokei /tmp && \
+    cd ~ && \
+    rm -rf tokei*
+
+- name: instala o binário
+  copy:
+    remote_src: yes
+    src: /tmp/tokei
+    dest: /usr/local/bin/tokei
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop:
+    - tokei-{{ tokei_version }}.tar.gz
+    - tokei

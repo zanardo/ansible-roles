@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/tokei --version | cut -f2 -d' '
+    register: tokei_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala tokei
+    include_tasks: install.yml
+    when: tokei_register_version.stdout != tokei_version or tokei_force_install is defined
+
+  tags: ["tokei"]
