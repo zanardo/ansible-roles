@@ -2,5 +2,9 @@
 - hosts:
   - debian-buster
 
+  vars:
+    rust_toolchains:
+      - stable
+
   roles:
     - zanardo/tokei

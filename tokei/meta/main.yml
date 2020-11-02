@@ -1,3 +1,4 @@
 ---
 dependencies:
   - zanardo/builder
+  - zanardo/rust

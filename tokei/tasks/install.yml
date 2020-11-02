@@ -23,11 +23,12 @@
   become_user: _builder
   shell: |
     warn=no
+    executable=/bin/bash
     cd ~ && \
     rm -rf tokei* && \
     tar xf /tmp/tokei-{{ tokei_version }}.tar.gz && \
     cd tokei-{{ tokei_version }} && \
-    export PATH="$HOME/.cargo/bin:$PATH" && \
+    source /etc/profile.d/rust.sh && \
     cargo build --release && \
     cp -f target/release/tokei /tmp && \
     cd ~ && \
