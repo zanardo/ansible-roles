@@ -92,7 +92,6 @@
       content: |
         export PATH="/opt/rust/bin:$PATH"
         export RUSTUP_HOME="/opt/rust"
-        export CARGO_HOME="/opt/rust"
       dest: /etc/profile.d/rust.sh
 
   environment:
