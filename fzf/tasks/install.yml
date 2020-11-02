@@ -1,0 +1,40 @@
+---
+- name: faz download do fzf
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/junegunn/fzf/archive/{{ fzf_version }}.tar.gz
+    file: fzf-{{ fzf_version }}.tar.gz
+    dir: /tmp
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    cd ~ && \
+    rm -rf fzf* && \
+    tar xf /tmp/fzf-{{ fzf_version }}.tar.gz && \
+    cd fzf-{{ fzf_version }} && \
+    export PATH="/usr/local/go/bin:$PATH" && \
+    go build -a -ldflags "-s -w -X main.version={{ fzf_version }} -X main.revision=tarball" && \
+    cp -f fzf /tmp && \
+    cd ~ && \
+    rm -rf fzf*
+
+- name: instala o binário
+  copy:
+    remote_src: yes
+    src: /tmp/fzf
+    dest: /usr/local/bin/fzf
+    owner: root
+    group: root
+    mode: 0o755
+
+- name: remove arquivos temporários
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop:
+    - fzf-{{ fzf_version }}.tar.gz
+    - fzf

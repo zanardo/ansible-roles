@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/fzf --version | cut -f1 -d' '
+    register: fzf_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala fzf
+    include_tasks: install.yml
+    when: fzf_register_version.stdout != fzf_version or fzf_force_install is defined
+
+  tags: ["fzf"]
