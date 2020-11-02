@@ -1,0 +1,17 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/espanso --version | cut -f2 -d' '
+    register: espanso_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala espanso
+    include_tasks: install.yml
+    when: espanso_register_version.stdout != espanso_version or espanso_force_install is defined
+
+  tags: ["espanso"]
