@@ -7,7 +7,7 @@ Isto evita compilações com o usuário `root`, por motivos de segurança.
 
 ## Tags
 
-- `builder`: aplica todo do role.
+- `builder`: aplica todo o role.
 
 ## Compatibilidade
 

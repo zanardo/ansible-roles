@@ -4,8 +4,8 @@ Ansible Role para configurar um host para ser atualizado via **apt-dater**.
 
 ## Tags
 
-- `apt-dater`: aplica todo do role.
-- `apt-dater-host`: aplica todo do role.
+- `apt-dater`: aplica todo o role.
+- `apt-dater-host`: aplica todo o role.
 
 ## Compatibilidade
 

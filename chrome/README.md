@@ -8,7 +8,7 @@ adicionado, para que o aplicativo possa ser atualizado via _apt_.
 
 ## Tags
 
-- `chrome`: aplica todo do role.
+- `chrome`: aplica todo o role.
 
 ## Compatibilidade
 
