@@ -56,7 +56,7 @@
         grep default | \
         sed 's/-x86_64-unknown-linux-gnu.*$//'
     register: default
-    when: rust_toolchains|d([])
+    when: rust_toolchains|length > 0
 
   - name: define o toolchain default
     become: yes
@@ -65,7 +65,7 @@
       /opt/rust/bin/rustup default {{ rust_toolchains[0] }}
     when:
       - rust_toolchains|length > 0
-      - default.stdout != rust_toolchains[0]
+      - default.stdout|d("") != rust_toolchains[0]
 
   - name: obtém componentes instalados
     changed_when: False
