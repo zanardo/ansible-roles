@@ -1,0 +1,56 @@
+---
+- name: faz download do código-fonte - python {{ python_version }}
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+    file: python-{{ python_version }}.tar.xz
+    dir: /tmp
+
+- name: checa versão instalada - python {{ python_version }}
+  shell:
+    warn=no
+    /usr/local/bin/python{{ ".".join(python_version.split('.')[:2]) }} --version | cut -f2 -d' '
+  register: python_register_version
+  changed_when: False
+  check_mode: no
+  failed_when: False
+
+- block:
+
+  - name: desinstala patchlevels anteriores - python {{ python_version }}
+    failed_when: False
+    command: stow -d /usr/local/stow -D "python-{{ ".".join(python_version.split('.')[:2]) }}"
+
+  - name: desinstala patchlevels anteriores - python {{ python_version }}
+    file:
+      state: absent
+      path: /usr/local/stow/python-{{ ".".join(python_version.split('.')[:2]) }}
+
+  - name: cria diretório de instalação
+    file:
+      state: directory
+      path: /usr/local/stow/python-{{ ".".join(python_version.split('.')[:2]) }}
+      owner: _builder
+      group: _builder
+
+  - name: descompacta, compila o instala - python {{ python_version }}
+    become: yes
+    become_user: _builder
+    shell: |
+      warn=no
+      executable=/bin/bash
+      cd ~ && \
+      rm -rf Python* && \
+      tar xJf "/tmp/python-{{ python_version }}.tar.xz" && \
+      cd Python-{{ python_version }} && \
+      ./configure --prefix="/usr/local/stow/python-{{ ".".join(python_version.split('.')[:2]) }}" && \
+      make -j$(nproc) && \
+      make altinstall && \
+      cd ~ && \
+      rm -rf Python*
+
+  - name: executa stow para criar os symlinks - python {{ python_version }}
+    command: stow -d /usr/local/stow -R "python-{{ ".".join(python_version.split('.')[:2]) }}"
+
+  when: python_version != python_register_version.stdout|d("")

@@ -1,0 +1,35 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - build-essential
+        - stow
+        - libreadline-dev
+        - libncursesw5-dev
+        - zlib1g-dev
+        - libbz2-dev
+        - libexpat1-dev
+        - libsqlite3-dev
+        - libffi-dev
+        - libdb-dev
+        - libgdbm-dev
+        - blt-dev
+        - ca-certificates
+        - libsqlite3-0
+        - file
+        - libexpat1
+        - libffi6
+        - libmagic1
+        - mime-support
+        - libssl-dev
+        - libssl1.1
+
+  - name: prepara instalação
+    include_tasks: "python.yml"
+    loop: "{{ python_src_versions|d([]) }}"
+    loop_control:
+      loop_var: python_version
+
+  tags: ["python", "python-src"]
