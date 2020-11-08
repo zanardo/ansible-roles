@@ -1,0 +1,99 @@
+---
+- name: executa debootstrap
+  shell:
+    warn=no
+    creates="{{ nspawn_dir }}"
+    rm -rf "{{ nspawn_dir }}.tmp" && \
+    debootstrap \
+      --include=systemd,dbus,locales,python3,sudo,openssh-server \
+      "{{ nspawn_debian_suite }}" \
+      "{{ nspawn_dir }}.tmp" \
+      "{{ nspawn_debian_mirror }}" && \
+    mv -f "{{ nspawn_dir }}.tmp" "{{ nspawn_dir }}"
+
+- name: configura a interfaces de rede
+  copy:
+    content: "{{ nspawn_etc_network_interfaces }}"
+    dest: "{{ nspawn_dir }}/etc/network/interfaces"
+
+- name: configura o dns do container
+  copy:
+    content: "{{ nspawn_etc_resolv_conf }}"
+    dest: "{{ nspawn_dir }}/etc/resolv.conf"
+
+- name: configura o nome do container
+  copy:
+    content: "{{ nspawn_name }}"
+    dest: "{{ nspawn_dir }}/etc/hostname"
+
+- name: configura hosts do container
+  lineinfile:
+    path: "{{ nspawn_dir }}/etc/hosts"
+    regexp: "^127.0.0.1 {{ nspawn_name }}$"
+    line: "127.0.0.1 {{ nspawn_name }}"
+    state: present
+
+- name: configura timezone do container
+  copy:
+    content: "America/Sao_Paulo"
+    dest: "{{ nspawn_dir }}/etc/timezone"
+  register: timezone_changed
+
+- name: configura timezone do container
+  command: |
+    systemd-nspawn -D "{{ nspawn_dir }}" \
+      /usr/sbin/dpkg-reconfigure -f noninteractive tzdata
+  when: timezone_changed is changed
+
+- name: configura locales do container
+  copy:
+    content: |
+      pt_BR.UTF-8 UTF-8
+      en_US.UTF-8 UTF-8
+    dest: "{{ nspawn_dir }}/etc/locale.gen"
+  register: locales_changed
+
+- name: configura locale default do container
+  copy:
+    content: |
+      LANG="en_US.UTF-8"
+      LANGUAGE="en_US:en"
+    dest: "{{ nspawn_dir }}/etc/default/locale"
+
+- name: gera locales do container
+  command: |
+    systemd-nspawn -D "{{ nspawn_dir }}" \
+    /usr/sbin/locale-gen
+  when: locales_changed is changed
+
+- name: configura o ssh no container
+  lineinfile:
+    path: "{{ nspawn_dir }}/etc/ssh/sshd_config"
+    regexp: "^#?PermitRootLogin.*$"
+    line: "PermitRootLogin yes"
+    state: present
+
+- name: cria o diretório de configurações do ssh
+  file:
+    state: directory
+    path: "{{ nspawn_dir }}/root/.ssh"
+
+- name: libera a chave de ssh
+  copy:
+    content: "{{ nspawn_bootstrap_ssh_allowed_key }}"
+    dest: "{{ nspawn_dir }}/root/.ssh/authorized_keys"
+
+- name: remove chaves de ssh em know_hosts local
+  connection: local
+  run_once: yes
+  known_hosts:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ nspawn_ip }}"
+    - "{{ nspawn_name }}"
+
+- name: cria arquivo de finalização do bootstrap
+  file:
+    path: "{{ nspawn_dir }}/etc/.nspawn.bootstrap.ok"
+    state: touch

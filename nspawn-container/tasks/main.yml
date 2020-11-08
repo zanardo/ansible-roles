@@ -1,0 +1,60 @@
+---
+- block:
+
+  # Força uma coleta de facts do host em nspawn_host
+  - setup: {}
+
+  - name: instala pacotes necessários para rodar containers
+    apt:
+      state: present
+      install_recommends: no
+      name:
+        - debootstrap
+        - systemd-container
+
+  - name: cria diretório de configurações dos containers
+    file:
+      state: directory
+      path: /etc/systemd/nspawn
+
+  - name: cria configurações do container
+    copy:
+      content: "{{ nspawn_config }}"
+      dest: "/etc/systemd/nspawn/{{ nspawn_name }}.nspawn"
+    register: conf
+
+  - name: recarrega configurações systemd
+    command:
+      systemctl daemon-reload
+    when: conf is changed
+
+  - name: verifica se é necessário bootstrap
+    stat:
+      path: "{{ nspawn_dir }}/etc/.nspawn.bootstrap.ok"
+    register: st
+
+  - name: executa tasks de bootstrap
+    include_tasks: bootstrap-{{ nspawn_distro }}.yml
+    when: not st.stat.exists
+
+  - name: configura inicialização de container - ativo
+    shell: |
+      warn=no
+      machinectl enable {{ nspawn_name }} &&
+      machinectl start {{ nspawn_name }}
+    changed_when: False
+    when: nspawn_autostart|bool
+
+  - name: configura inicialização de container - desativado
+    shell: |
+      warn=no
+      machinectl disable {{ nspawn_name }} &&
+      machinectl stop {{ nspawn_name }}
+    changed_when: False
+    failed_when: False
+    when: not nspawn_autostart|bool
+
+  delegate_to: "{{ nspawn_host }}"
+  tags:
+    - nspawn
+    - nspawn-debian

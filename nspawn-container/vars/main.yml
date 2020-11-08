@@ -1,0 +1,2 @@
+---
+nspawn_dir: "/var/lib/machines/{{ nspawn_name }}"

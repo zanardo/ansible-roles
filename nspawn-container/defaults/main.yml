@@ -1,0 +1,3 @@
+---
+nspawn_autostart: yes
+nspawn_debian_mirror: "http://deb.debian.org/debian"

@@ -1,2 +1,0 @@
----
-nspawn_container_dir: "/var/lib/machines/{{ nspawn_container_name }}"
