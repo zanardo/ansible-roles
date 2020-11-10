@@ -23,9 +23,9 @@
   - name: instala ticket
     unarchive:
       creates: "/opt/ticket-{{ ticket_version }}/README.md"
-      dest: "/opt/ticket-{{ ticket_version }}"
+      dest: "/opt"
       remote_src: yes
-      src: "{{ artifacts }}/ticket/ticket-{{ ticket_version }}.tar.xz"
+      src: "https://github.com/zanardo/ticket/archive/v{{ ticket_version }}.tar.gz"
 
   - name: cria virtualenv
     shell:
