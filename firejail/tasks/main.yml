@@ -1,0 +1,23 @@
+---
+- block:
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - build-essential
+        - gawk
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      /usr/local/bin/firejail --version | head -1 | cut -f3 -d' '
+    register: firejail_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala firejail
+    include_tasks: install.yml
+    when: firejail_register_version.stdout != firejail_version or firejail_force_install is defined
+
+  tags: ["firejail"]
