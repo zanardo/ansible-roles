@@ -73,6 +73,10 @@ As seguintes mudanças são feitas no sistema:
         \""
 ```
 
+## Tags
+
+- `virt-install`: Executa todo o role.
+
 ## Compatibilidade
 
 - Debian Stretch

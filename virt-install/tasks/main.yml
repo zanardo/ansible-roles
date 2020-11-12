@@ -1,24 +1,29 @@
 ---
-- setup:
-  delegate_to: "{{ virt_install_vmhost }}"
+- block:
 
-- name: instala pacotes necessários - debian
-  apt:
-    name:
-      - python-libvirt
-      - virtinst
-    state: present
-    install_recommends: no
-  delegate_to: "{{ virt_install_vmhost }}"
+  - setup:
+    delegate_to: "{{ virt_install_vmhost }}"
 
-- name: verifica se máquina virtual existe
-  virt:
-    command: list_vms
-  register: virt_vms
-  check_mode: no
-  delegate_to: "{{ virt_install_vmhost }}"
+  - name: instala pacotes necessários - debian
+    apt:
+      name:
+        - python-libvirt
+        - virtinst
+      state: present
+      install_recommends: no
+    delegate_to: "{{ virt_install_vmhost }}"
+
+  - name: verifica se máquina virtual existe
+    virt:
+      command: list_vms
+    register: virt_vms
+    check_mode: no
+    delegate_to: "{{ virt_install_vmhost }}"
+
+  tags: ["virt-install"]
 
 - block:
+
     - name: cria diretório do preseed
       file:
         state: directory
@@ -60,5 +65,6 @@
         - "{{ virt_install_name }}"
 
   when: virt_install_name not in virt_vms.list_vms
+  tags: ["virt-install"]
 
 - setup: {}
