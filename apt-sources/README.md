@@ -9,7 +9,7 @@ Ansible Role para configurar os repositórios de pacotes do Debian (em
 
 # Tags
 
-- `sources_list`: Executa todo o role.
+- `apt-sources`: Executa todo o role.
 
 # Compatibilidade
 
