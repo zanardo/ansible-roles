@@ -48,8 +48,7 @@
   - name: configura inicialização de container - desativado
     shell: |
       warn=no
-      machinectl disable {{ nspawn_name }} &&
-      machinectl stop {{ nspawn_name }}
+      machinectl disable {{ nspawn_name }}
     changed_when: False
     failed_when: False
     when: not nspawn_autostart|bool
