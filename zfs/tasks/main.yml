@@ -1,31 +1,30 @@
 ---
-- name: instala os cabeçalhos de compilação para kernel
-  apt:
-    name: "linux-headers-{{ ansible_kernel }}"
-    state: present
-  tags: zfs
+- block:
 
-# O pacote zfsutils-linux falha ao instalar no Buster sem carregar
-# o módulo zfs.
+  - name: instala os cabeçalhos de compilação para kernel
+    apt:
+      name: "linux-headers-{{ ansible_kernel }}"
+      state: present
 
-- name: instala módulo do zfs
-  apt:
-    name:
-      - zfs-dkms
-    state: present
-    install_recommends: no
-  tags: zfs
+  # O pacote zfsutils-linux falha ao instalar no Buster sem carregar
+  # o módulo zfs.
+  - name: instala módulo do zfs
+    apt:
+      name:
+        - zfs-dkms
+      state: present
+      install_recommends: no
 
-- name: carrega o módulo do kernel
-  modprobe:
-    name: zfs
-    state: present
-  tags: zfs
+  - name: carrega o módulo do kernel
+    modprobe:
+      name: zfs
+      state: present
 
-- name: instala ferramentas do zfs
-  apt:
-    name:
-      - zfsutils-linux
-    state: present
-    install_recommends: no
-  tags: zfs
+  - name: instala ferramentas do zfs
+    apt:
+      name:
+        - zfsutils-linux
+      state: present
+      install_recommends: no
+
+  tags: ["zfs"]
