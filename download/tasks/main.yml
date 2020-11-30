@@ -1,4 +1,10 @@
 ---
+- name: instala pacotes necessários
+  yum:
+    name:
+      - tar
+  when: ansible_distribution == "CentOS"
+
 - name: cria diretório de cache na máquina local
   delegate_to: localhost
   run_once: yes
