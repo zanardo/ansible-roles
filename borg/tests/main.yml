@@ -2,9 +2,7 @@
 - hosts:
     - debian-stretch
     - debian-buster
-
-  vars:
-    borg_version: "1.1.13"
+    - centos8
 
   roles:
 
