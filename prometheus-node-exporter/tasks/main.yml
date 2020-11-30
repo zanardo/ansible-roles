@@ -1,14 +1,6 @@
 ---
 - block:
 
-  - name: faz download do prometheus-node-exporter
-    include_role:
-      name: zanardo/download
-    vars:
-      url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
-      file: "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
-      dir: "/tmp"
-
   - name: obtém versão instalada do prometheus node exporter
     shell:
       /usr/local/bin/node_exporter --version 2>&1 | \
@@ -26,16 +18,27 @@
       system: yes
       createhome: no
 
-  - name: descompacta tarball
-    shell:
-      warn=no
-      chdir=/usr/local/bin
-      tar --strip-components=1 -xf "/tmp/{{ item }}" "{{ item|replace(".tar.gz", "") }}/node_exporter" && \
-      chown root:root node_exporter
-    with_items:
-      - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+  - block:
+
+    - name: faz download do prometheus-node-exporter
+      include_role:
+        name: zanardo/download
+      vars:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+        file: "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+        dir: "/tmp"
+
+    - name: descompacta tarball
+      shell:
+        warn=no
+        chdir=/usr/local/bin
+        tar --strip-components=1 -xf "/tmp/{{ item }}" "{{ item|replace(".tar.gz", "") }}/node_exporter" && \
+        chown root:root node_exporter
+      with_items:
+        - "node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+      notify: reinicia prometheus-node-exporter
+
     when: version.stdout != prometheus_node_exporter_version
-    notify: reinicia prometheus-node-exporter
 
   - name: copia unit do systemd
     template:
