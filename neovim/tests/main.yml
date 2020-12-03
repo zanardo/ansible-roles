@@ -3,9 +3,6 @@
     - debian-stretch
     - debian-buster
 
-  vars:
-    neovim_version: "0.4.3"
-
   roles:
 
     - zanardo/neovim
