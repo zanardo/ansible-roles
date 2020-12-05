@@ -12,10 +12,19 @@
         - debootstrap
         - systemd-container
 
+  - name: verifica se é necessário bootstrap
+    stat:
+      path: "{{ nspawn_dir }}/etc/.nspawn.bootstrap.ok"
+    register: st
+
   - name: cria diretório de configurações dos containers
     file:
       state: directory
       path: /etc/systemd/nspawn
+
+  - name: executa tasks de bootstrap
+    include_tasks: bootstrap-{{ nspawn_distro }}.yml
+    when: not st.stat.exists
 
   - name: cria configurações do container
     copy:
@@ -27,15 +36,6 @@
     command:
       systemctl daemon-reload
     when: conf is changed
-
-  - name: verifica se é necessário bootstrap
-    stat:
-      path: "{{ nspawn_dir }}/etc/.nspawn.bootstrap.ok"
-    register: st
-
-  - name: executa tasks de bootstrap
-    include_tasks: bootstrap-{{ nspawn_distro }}.yml
-    when: not st.stat.exists
 
   - name: configura inicialização de container - ativo
     shell: |
