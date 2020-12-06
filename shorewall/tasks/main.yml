@@ -1,32 +1,14 @@
 ---
 - block:
 
-  - name: instala pacotes
-    apt:
-      name: shorewall
-      state: present
-    register: shorewall_install_register
-
-  # Aparentemente o Debian Stretch precisa que forcemos a carga
-  # via comando, pois o Shorewall volta parado no reboot.
-  - name: habilita serviço do systemd
-    shell: systemctl enable shorewall
-    when: shorewall_install_register is changed
-
-  - name: habilita início no boot
-    lineinfile:
-      dest: /etc/default/shorewall
-      line: "startup=1"
-      regexp: "^startup="
-      state: present
-    notify: reconfigura shorewall
+  - include_tasks: "{{ ansible_distribution|lower }}.yml"
 
   - name: verifica se a reconfiguração falhou
     file:
       path: /tmp/ansible-shorewall-restart
       state: absent
     notify: reconfigura shorewall
-    tags: shorewall:conf
+    tags: ["shorewall:conf"]
 
   - name: copia arquivos de configuração
     template:
@@ -37,6 +19,6 @@
     with_fileglob:
       - "{{ shorewall_conf }}"
     notify: reconfigura shorewall
-    tags: shorewall:conf
+    tags: ["shorewall:conf"]
 
-  tags: shorewall
+  tags: ["shorewall"]

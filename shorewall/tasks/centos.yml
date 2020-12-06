@@ -1,0 +1,22 @@
+---
+- include_role:
+    name: zanardo/repo-epel
+
+- name: instala pacotes necessários
+  yum:
+    name: shorewall
+    state: present
+  register: shorewall_install_register
+
+- name: habilita início no boot
+  lineinfile:
+    dest: /etc/shorewall/shorewall.conf
+    line: "STARTUP_ENABLED=Yes"
+    regexp: "^STARTUP_ENABLED="
+    state: present
+  notify: reconfigura shorewall
+
+- name: habilita serviço no systemd
+  systemd:
+    name: shorewall
+    enabled: yes
