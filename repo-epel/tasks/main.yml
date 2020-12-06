@@ -1,0 +1,11 @@
+---
+- block:
+
+  - name: instala pacote para epel
+    yum:
+      name: epel-release
+      state: present
+
+  tags:
+    - epel
+    - repo-epel
