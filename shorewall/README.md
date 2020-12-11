@@ -30,4 +30,4 @@ permite manter as configurações em arquivos-textos organizados.
 
 - Debian Stretch
 - Debian Buster
-- CentOS 8
+- Ubuntu Bionic
