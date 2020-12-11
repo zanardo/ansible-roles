@@ -39,4 +39,3 @@ Este role deve ser usado nos demais roles que fazem download de artefatos extern
 
 - Debian Stretch
 - Debian Buster
-- CentOS 8

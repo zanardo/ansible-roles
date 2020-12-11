@@ -4,7 +4,6 @@
     name:
       - gnupg
     state: present
-  when: ansible_distribution == "Debian"
 
 - name: faz download do executável
   include_role:
