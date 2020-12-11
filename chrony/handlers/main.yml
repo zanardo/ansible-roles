@@ -1,6 +1,6 @@
 ---
 - name: reinicia chrony
   systemd:
-    name: "{{ chrony_service_name }}"
+    name: chrony
     state: restarted
   tags: chrony

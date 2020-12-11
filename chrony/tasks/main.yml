@@ -1,24 +1,15 @@
 ---
 - block:
+
     - name: instala pacotes necessários
       apt:
         state: present
         name: chrony
-      when: ansible_distribution == "Debian"
-
-    - name: instala pacotes necessários
-      yum:
-        state: present
-        name: chrony
-      when: ansible_distribution == "CentOS"
-
-    - name: carrega variáveis específicas de configuração
-      include_vars: "{{ ansible_distribution|lower }}.yml"
 
     - name: copia arquivo de configuração
       template:
-        src: "{{ chrony_conf }}"
-        dest: "{{ chrony_etc_base }}/chrony.conf"
+        src: "{{ chrony_conf|d('chrony.conf') }}"
+        dest: /etc/chrony/chrony.conf
         mode: 0644
         owner: root
         group: root
@@ -27,7 +18,7 @@
 
     - name: habilita e carrega chrony no systemd
       systemd:
-        name: "{{ chrony_service_name }}"
+        name: chrony
         enabled: yes
         state: started
 

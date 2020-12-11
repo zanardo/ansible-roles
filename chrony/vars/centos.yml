@@ -1,3 +1,0 @@
----
-chrony_etc_base: "/etc"
-chrony_service_name: "chronyd"
