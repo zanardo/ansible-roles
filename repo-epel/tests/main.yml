@@ -1,6 +1,0 @@
----
-- hosts:
-    - centos8
-
-  roles:
-    - zanardo/repo-epel
