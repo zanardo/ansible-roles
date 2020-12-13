@@ -55,3 +55,4 @@ python_src_versions:
 
 - Debian Stretch
 - Debian Buster
+- Arch
