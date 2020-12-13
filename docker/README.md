@@ -27,3 +27,4 @@ docker_daemon_config:
 ## Compatibilidade
 
 - Debian Buster
+- Arch

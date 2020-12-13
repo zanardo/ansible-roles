@@ -1,6 +1,7 @@
 ---
 - hosts:
     - debian-buster
+    - arch
 
   vars:
     docker_daemon_config:

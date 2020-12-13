@@ -1,0 +1,29 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg2
+      - software-properties-common
+      - python-docker
+      - python3-docker
+    state: present
+
+- name: adiciona chave gpg no apt para docker
+  apt_key:
+    state: present
+    url: "{{ docker_apt_repo }}/linux/debian/gpg"
+
+- name: adiciona repositório do docker
+  apt_repository:
+    repo: "deb [arch=amd64] {{ docker_apt_repo }}/linux/debian {{ ansible_distribution_release }} stable"
+    state: present
+    filename: docker
+
+- name: instala docker
+  apt:
+    state: present
+    name: docker-ce
+    install_recommends: no

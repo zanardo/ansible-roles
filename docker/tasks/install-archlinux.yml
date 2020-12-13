@@ -1,0 +1,4 @@
+---
+- name: instala docker
+  pacman:
+    name: docker
