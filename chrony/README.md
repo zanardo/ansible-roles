@@ -1,6 +1,6 @@
 # chrony
 
-Ansible Role para instalar o [chrony](https://chrony.tuxfamily.org/) no Debian.
+Ansible Role para instalar o [chrony](https://chrony.tuxfamily.org/).
 
 O **Chrony** é um servidor de NTP para sincronização de relógio.
 
@@ -27,3 +27,4 @@ O **Chrony** é um servidor de NTP para sincronização de relógio.
 - Debian Stretch
 - Debian Buster
 - Ubuntu Bionic
+- Arch

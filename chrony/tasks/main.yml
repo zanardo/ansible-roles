@@ -1,24 +1,27 @@
 ---
 - block:
 
+    - name: carrega variáveis específicas da distribuição
+      include_vars: "{{ ansible_distribution|lower }}.yml"
+
     - name: instala pacotes necessários
-      apt:
+      package:
         state: present
         name: chrony
 
     - name: copia arquivo de configuração
       template:
         src: "{{ chrony_conf|d('chrony.conf') }}"
-        dest: /etc/chrony/chrony.conf
+        dest: "{{ chrony_conf_dest }}"
         mode: 0644
         owner: root
         group: root
       notify: reinicia chrony
       tags: ["chrony:conf"]
 
-    - name: habilita e carrega chrony no systemd
+    - name: habilita e carrega chrony
       systemd:
-        name: chrony
+        name: "{{ chrony_service }}"
         enabled: yes
         state: started
 

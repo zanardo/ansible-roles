@@ -3,6 +3,7 @@
     - debian-stretch
     - debian-buster
     - ubuntu-bionic
+    - arch
 
   roles:
     - zanardo/chrony
