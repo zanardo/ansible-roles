@@ -1,12 +1,4 @@
 ---
-- name: faz download do código-fonte - python {{ python_version }}
-  include_role:
-    name: zanardo/download
-  vars:
-    url: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
-    file: python-{{ python_version }}.tar.xz
-    dir: /tmp
-
 - name: checa versão instalada - python {{ python_version }}
   shell:
     warn=no
@@ -17,6 +9,14 @@
   failed_when: False
 
 - block:
+
+  - name: faz download do código-fonte - python {{ python_version }}
+    include_role:
+      name: zanardo/download
+    vars:
+      url: https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+      file: python-{{ python_version }}.tar.xz
+      dir: /tmp
 
   - name: desinstala patchlevels anteriores - python {{ python_version }}
     failed_when: False
