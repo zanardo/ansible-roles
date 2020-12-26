@@ -10,7 +10,7 @@
 - name: checa versão instalada - python {{ python_version }}
   shell:
     warn=no
-    /usr/local/bin/python{{ ".".join(python_version.split('.')[:2]) }} --version | cut -f2 -d' '
+    /usr/local/bin/python{{ ".".join(python_version.split('.')[:2]) }} --version 2>&1 | cut -f2 -d' '
   register: python_register_version
   changed_when: False
   check_mode: no
