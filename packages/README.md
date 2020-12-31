@@ -1,6 +1,6 @@
 # packages
 
-Ansible Role para instalar pacotes via apt.
+Ansible Role para instalar pacotes.
 
 ## Variáveis
 
@@ -20,3 +20,4 @@ packages_install:
 
 - Debian Stretch
 - Debian Buster
+- Arch

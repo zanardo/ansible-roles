@@ -1,0 +1,5 @@
+---
+- name: instala pacotes
+  apt:
+    state: present
+    name: '{{ packages_install|d([]) }}'
