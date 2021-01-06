@@ -11,6 +11,15 @@
       name:
         - debootstrap
         - systemd-container
+    when: ansible_distribution == "Debian"
+
+  - name: instala pacotes necessários para rodar containers
+    pacman:
+      state: present
+      name:
+        - debootstrap
+        - debian-archive-keyring
+    when: ansible_distribution == "Archlinux"
 
   - name: verifica se é necessário bootstrap
     stat:

@@ -53,5 +53,6 @@ Bridge=kvm0
 
 ## Compatibilidade
 
+- Arch (host)
 - Debian Buster (host/container)
 - Debian Stretch (container)
