@@ -1,7 +1,7 @@
 ---
 - block:
     - name: instala pacotes
-      apt:
+      package:
         name: dnsmasq
         state: present
 
@@ -15,5 +15,11 @@
       when: dnsmasq_conf|d(False)
       notify: reinicia dnsmasq
       tags: "dnsmasq:conf"
+
+    - name: habilita serviço
+      systemd:
+        name: dnsmasq
+        enabled: yes
+        state: started
 
   tags: "dnsmasq"

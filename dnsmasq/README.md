@@ -17,3 +17,4 @@ O **dnsmasq** fornece um resolvedor recursivo de DNS, além de um servidor DHCP.
 
 - Debian Stretch
 - Debian Buster
+- Arch
