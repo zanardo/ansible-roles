@@ -66,3 +66,12 @@
   tags:
     - nspawn
     - nspawn-debian
+
+- name: força coleta de facts do container (e aguarda carregamento)
+  setup: {}
+  retries: 10
+  delay: 10
+  tags:
+    - nspawn
+    - nspawn-debian
+  when: nspawn_autostart|bool
