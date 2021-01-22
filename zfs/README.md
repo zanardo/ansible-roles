@@ -9,3 +9,4 @@ Ansible Role para instalar o ZFS via pacotes do repositório oficial do Debian.
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye

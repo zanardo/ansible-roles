@@ -1,9 +1,11 @@
 ---
 - block:
 
-  - name: instala os cabeçalhos de compilação para kernel
+  - name: instala os pacotes necessários para compilação
     apt:
-      name: "linux-headers-{{ ansible_kernel }}"
+      name:
+        - build-essential
+        - "linux-headers-{{ ansible_kernel }}"
       state: present
 
   # O pacote zfsutils-linux falha ao instalar no Buster sem carregar
