@@ -11,3 +11,4 @@ Ansible Role para configurar um host para ser atualizado via **apt-dater**.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
