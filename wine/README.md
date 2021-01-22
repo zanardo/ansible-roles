@@ -12,3 +12,4 @@ O **Wine** é um emulador para executar aplicativos Windows no Linux.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
