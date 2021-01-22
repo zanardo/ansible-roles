@@ -15,3 +15,4 @@ Ansible Role para configurar os repositórios de pacotes do Debian (em
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
