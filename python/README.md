@@ -10,6 +10,8 @@ PS: O Python 2 e `virtualenv` são instalados como padrão por questões de
 compatibilidade deste _role_. O Python 2 é obsoleto, e ao invés de usar o
 `virtualenv`, o ideal é usar `python3 -m venv`.
 
+PS: No Debian Bullseye, a instalação do Python 2 é ignorada.
+
 ## Variáveis
 
 - `python_install_python2`: Instala os pacotes do Python 2. Default: `yes`.
@@ -25,3 +27,4 @@ compatibilidade deste _role_. O Python 2 é obsoleto, e ao invés de usar o
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye

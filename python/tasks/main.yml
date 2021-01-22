@@ -7,7 +7,9 @@
           - python
           - python-dev
           - python-pip
-      when: python_install_python2
+      when:
+        - python_install_python2
+        - ansible_distribution_release not in ("bullseye", "NA")
 
     - name: instala pacotes necessários - python3
       apt:
