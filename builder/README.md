@@ -13,3 +13,4 @@ Isto evita compilações com o usuário `root`, por motivos de segurança.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
