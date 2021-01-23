@@ -14,3 +14,4 @@ adicionado, para que o aplicativo possa ser atualizado via _apt_.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
