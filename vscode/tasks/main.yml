@@ -8,7 +8,7 @@
           - apt-transport-https
           - libx11-xcb1
           - libasound2
-          - ttf-dejavu
+          - fonts-dejavu
           - fonts-liberation
           - libgl1-mesa-dri
           - libgl1-mesa-glx

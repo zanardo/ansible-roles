@@ -17,5 +17,5 @@ adicionado, para que o aplicativo possa ser atualizado via _apt_.
 
 ## Compatibilidade
 
-- Debian Stretch
 - Debian Buster
+- Debian Bullseye
