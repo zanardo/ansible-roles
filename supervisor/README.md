@@ -18,3 +18,4 @@ processos, e é usado nos outros roles.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
