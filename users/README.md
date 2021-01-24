@@ -38,3 +38,4 @@ mkpasswd --method=sha-512
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
