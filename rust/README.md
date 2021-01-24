@@ -22,3 +22,4 @@ O Rust é instalado em `/opt/rust`, com os toolchains definidos na lista
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
