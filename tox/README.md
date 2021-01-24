@@ -21,3 +21,4 @@ scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
