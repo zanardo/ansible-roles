@@ -1,6 +1,7 @@
 ---
 - hosts:
     - debian-buster
+    - debian-bullseye
     - arch
 
   vars:
