@@ -30,4 +30,5 @@ permite manter as configurações em arquivos-textos organizados.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
 - Ubuntu Bionic
