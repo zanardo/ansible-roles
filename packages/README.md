@@ -20,4 +20,5 @@ packages_install:
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
 - Arch
