@@ -26,5 +26,6 @@ O **Chrony** é um servidor de NTP para sincronização de relógio.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
 - Ubuntu Bionic
 - Arch
