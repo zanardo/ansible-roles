@@ -13,3 +13,4 @@ O Go é instalado em `/usr/local/go`. Adicione `/usr/local/go/bin` no `$PATH`.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
