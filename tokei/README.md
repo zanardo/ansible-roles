@@ -15,3 +15,4 @@ O tokei é compilado do código-fonte. É necessário definir a variável `rust_
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
