@@ -14,3 +14,4 @@ O Node é instalado em `/usr/local/node`. Adicione `/usr/local/node/bin` no
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
