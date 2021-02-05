@@ -9,7 +9,7 @@ adicionado, para que o aplicativo possa ser atualizado via _apt_.
 ## Variáveis
 
 - `vscode_apt_repo`: Repositório do _apt_, para uso de mirrors locais. Default:
-  `https://packages.microsoft.com/repos/vscode`.
+  `https://packages.microsoft.com/repos/code`.
 
 ## Tags
 
