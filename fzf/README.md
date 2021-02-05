@@ -16,3 +16,4 @@ variável para a instalação do Go: `go_version`.
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
