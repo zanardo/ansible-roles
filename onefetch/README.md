@@ -15,3 +15,4 @@ O onefetch é compilado do código-fonte. É necessário definir a variável `ru
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
