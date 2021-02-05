@@ -18,3 +18,4 @@ Ansible Role para instalar e configurar o
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
