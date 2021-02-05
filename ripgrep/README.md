@@ -15,3 +15,4 @@ O ripgrep é compilado do código-fonte. É necessário definir a variável `rus
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
