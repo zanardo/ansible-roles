@@ -28,3 +28,4 @@ ssh_authorized_keys:
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
