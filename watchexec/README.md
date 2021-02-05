@@ -15,3 +15,4 @@ O watchexec é compilado do código-fonte. É necessário definir a variável `r
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
