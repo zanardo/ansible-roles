@@ -18,3 +18,4 @@ Ansible role para instalar e configurar o [Redis](http://redis.io/).
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
