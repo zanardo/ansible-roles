@@ -18,3 +18,4 @@ Ansible Role para instalar e configurar o [Nginx](http://www.nginx.org/).
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
