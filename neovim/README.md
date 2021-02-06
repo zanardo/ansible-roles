@@ -14,3 +14,4 @@ O NeoVIM é instalado em `/usr/local/neovim`. São criados links em
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
