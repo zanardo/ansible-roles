@@ -14,3 +14,4 @@ apt oficial baixado do projeto.
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
