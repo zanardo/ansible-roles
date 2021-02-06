@@ -18,3 +18,4 @@ Ansible Role para instalar e configurar o [lighttpd](https://www.lighttpd.net/).
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
