@@ -23,3 +23,4 @@ diretamente do site oficial.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
