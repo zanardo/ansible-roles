@@ -17,3 +17,4 @@ O rust-analyzer é compilado do código-fonte. É necessário definir a variáve
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
