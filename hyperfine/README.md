@@ -2,7 +2,8 @@
 
 Ansible Role para instalar o [hyperfine](https://github.com/sharkdp/hyperfine).
 
-O hyperfine é compilado do código-fonte. É necessário definir a variável `rust_toolchains`.
+O hyperfine é compilado do código-fonte. É necessário definir a variável
+`rust_toolchains`.
 
 ## Variáveis
 

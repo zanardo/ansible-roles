@@ -2,7 +2,8 @@
 
 Ansible Role para instalar o [ripgrep](https://github.com/BurntSushi/ripgrep).
 
-O ripgrep é compilado do código-fonte. É necessário definir a variável `rust_toolchains`.
+O ripgrep é compilado do código-fonte. É necessário definir a variável
+`rust_toolchains`.
 
 ## Variáveis
 

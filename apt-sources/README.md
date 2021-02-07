@@ -4,8 +4,8 @@ Ansible Role para configurar os repositórios de pacotes do Debian (em
 # Variáveis
 
 - `sources_list_path`: caminho local para o template contendo a lista de
-  repositórios. Caso esta variável não seja definida, os defaults contidos
-  neste role serão usados.
+  repositórios. Caso esta variável não seja definida, os defaults contidos neste
+  role serão usados.
 
 # Tags
 

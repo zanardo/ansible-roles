@@ -10,8 +10,8 @@ permite manter as configurações em arquivos-textos organizados.
 
 - `shorewall_conf`: diretório absoluto onde os arquivos que deverão ser copiados
   estão salvos. Todos os arquivos desse diretório serão copiados para
-  `/etc/shorewall` no destino. Default: `{{ playbook_dir
-  }}/files/{{ansible_hostname }}/shorewall/*`.
+  `/etc/shorewall` no destino. Default: `{{
+  playbook_dir}}/files/{{ansible_hostname }}/shorewall/*`.
 
 ## Ações
 

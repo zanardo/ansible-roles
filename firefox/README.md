@@ -10,8 +10,8 @@ diretamente do site oficial.
   última versão será instalada, porém não será feito upgrade caso uma versão já
   esteja instalada. Use `firefox_chown` para que seu usuário possa atualizar a
   instalação pelo próprio atualizador do Firefox.
-- `firefox_lang`: Idioma a ser instalado (default `en-US`). Segue a mesma
-  lógica do URL de download.
+- `firefox_lang`: Idioma a ser instalado (default `en-US`). Segue a mesma lógica
+  do URL de download.
 - `firefox_chown`: Usuário dono do diretório de instalação. Default `root`. Mude
   para seu usuário para ter poder de atualização via atualizador do Firefox.
 

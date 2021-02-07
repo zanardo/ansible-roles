@@ -20,7 +20,8 @@ O **Chrony** é um servidor de NTP para sincronização de relógio.
 ## Tags
 
 - `chrony`: Executa todo o role.
-- `chrony:conf`: Atualiza o arquivo de configurações e reinicia o chrony caso necessário.
+- `chrony:conf`: Atualiza o arquivo de configurações e reinicia o chrony caso
+  necessário.
 
 # Compatibilidade
 

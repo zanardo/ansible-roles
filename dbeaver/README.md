@@ -1,7 +1,7 @@
 # dbeaver
 
-Ansible Role para instalar o [DBeaver](https://github.com/dbeaver/dbeaver), com pacote
-apt oficial baixado do projeto.
+Ansible Role para instalar o [DBeaver](https://github.com/dbeaver/dbeaver), com
+pacote apt oficial baixado do projeto.
 
 ## Variáveis
 

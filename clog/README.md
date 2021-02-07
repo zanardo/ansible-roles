@@ -7,8 +7,8 @@ Ansible Role para instalar o script do cliente do
 
 - `clog_users`: usuários em que o `clog send-queue` será agendado no cron.
 
-- `clog_send_queue_interval_minutes`: intervalo em minutos para envio da fila
-   do clog.
+- `clog_send_queue_interval_minutes`: intervalo em minutos para envio da fila do
+   clog.
 
 - `clog_send_queue_server`: servidor que receberá a fila (ex:
   `http://clog:7890`).

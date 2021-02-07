@@ -6,11 +6,12 @@ O Docker é instalado do repositório oficial do projeto, usando apt.
 
 ## Variáveis
 
-- `docker_apt_repo`: Repositório apt do Docker. Permite alterar para mirror local. Default:
-  `https://download.docker.com`.
+- `docker_apt_repo`: Repositório apt do Docker. Permite alterar para mirror
+  local. Default: `https://download.docker.com`.
 - `docker_users`: usuários para adicionar ao grupo `docker`. Default: `[]`.
-- `docker_daemon_config`: Configurações do daemon (salvas em `/etc/docker/daemon.json`). Configurar
-  em YAML, e ela será convertida para JSON automaticamente. Default: `{}`, Exemplo:
+- `docker_daemon_config`: Configurações do daemon (salvas em
+  `/etc/docker/daemon.json`). Configurar em YAML, e ela será convertida para
+  JSON automaticamente. Default: `{}`, Exemplo:
 
 ```yaml
 docker_daemon_config:

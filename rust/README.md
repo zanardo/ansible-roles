@@ -7,9 +7,9 @@ O Rust é instalado em `/opt/rust`, com os toolchains definidos na lista
 
 ## Variáveis
 
-- `rust_toolchains`: Define uma lista de toolchains a serem instalados. O primeiro da
-  lista será o default. Caso um toolchain esteja instalado e não exista na lista, ele
-  será desinstalado. Ex: `["stable", "nightly"]`.
+- `rust_toolchains`: Define uma lista de toolchains a serem instalados. O
+  primeiro da lista será o default. Caso um toolchain esteja instalado e não
+  exista na lista, ele será desinstalado. Ex: `["stable", "nightly"]`.
 
 - `rust_components`: Define os componentes a serem instalados. Ex: `["rustfmt",
   "rust-src"]`. Default: `[]`.

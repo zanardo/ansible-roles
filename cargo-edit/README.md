@@ -1,8 +1,10 @@
 # cargo-edit
 
-Ansible Role para instalar o [cargo-edit](https://github.com/killercup/cargo-edit).
+Ansible Role para instalar o
+[cargo-edit](https://github.com/killercup/cargo-edit).
 
-O cargo-edit é compilado do código-fonte. É necessário definir a variável `rust_toolchains`.
+O cargo-edit é compilado do código-fonte. É necessário definir a variável
+`rust_toolchains`.
 
 ## Variáveis
 

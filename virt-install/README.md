@@ -11,8 +11,8 @@ instalação automatizada do sistema operacional.
 - `virt_install_http_proxy`: proxy http passado para o `virt-install`, para
   agilizar downloads consecutivos para netinstall (kernel, initrd, etc).
 - `virt_install_name`: nome da máquina virtual.
-- `virt_install_ip`: IP da máquina virtual (usado para reciclar a entrada
-   em `known_hosts` do SSH).
+- `virt_install_ip`: IP da máquina virtual (usado para reciclar a entrada em
+   `known_hosts` do SSH).
 - `virt_install_args`: lista com argumentos passados diretamente ao
   `virt-install`. Note que somente os argumentos `--connect` (o qual usa
   `qemu:///system`) e `--name` (`virt_install_name`) são passados para o
