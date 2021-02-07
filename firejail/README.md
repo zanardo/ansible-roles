@@ -6,7 +6,7 @@ O firejail é compilado do código-fonte.
 
 ## Variáveis
 
-- `fzf_version`: Versão do firejail a ser instalada.
+- `firejail_version`: Versão do firejail a ser instalada.
 
 ## Tags
 
@@ -15,3 +15,4 @@ O firejail é compilado do código-fonte.
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye
