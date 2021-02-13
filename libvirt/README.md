@@ -43,3 +43,4 @@ shutdown dos guests.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
