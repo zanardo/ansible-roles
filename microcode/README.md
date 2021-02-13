@@ -15,3 +15,4 @@ e AMD.
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
