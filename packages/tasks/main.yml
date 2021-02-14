@@ -1,3 +1,6 @@
 ---
-- include_tasks: "{{ ansible_distribution|lower }}.yml"
-  tags: packages
+- block:
+
+  - include_tasks: "{{ ansible_distribution|lower }}.yml"
+
+  tags: ["packages"]
