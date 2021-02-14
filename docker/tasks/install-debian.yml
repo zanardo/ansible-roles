@@ -39,4 +39,4 @@
       state: present
       name: docker.io
 
-  when: ansible_distribution_release in ("NA")
+  when: ansible_distribution_release in ("bullseye")
