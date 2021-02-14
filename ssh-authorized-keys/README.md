@@ -22,7 +22,7 @@ ssh_authorized_keys:
 
 ## Tags
 
-- `ssh_authorized_keys`: Executa todo o role.
+- `ssh-authorized-keys`: Executa todo o role.
 
 ## Compatibilidade
 

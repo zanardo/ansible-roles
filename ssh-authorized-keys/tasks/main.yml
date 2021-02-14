@@ -20,4 +20,4 @@
       loop_control:
         label: "{{ item[0].key }} - {{ item[1].split()[-1] }}"
 
-  tags: ["ssh_authorized_keys"]
+  tags: ["ssh-authorized-keys"]
