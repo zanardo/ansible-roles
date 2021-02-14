@@ -21,3 +21,4 @@ sysctl_set:
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye
