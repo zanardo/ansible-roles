@@ -1,0 +1,5 @@
+---
+- name: reinicia intel-undervolt
+  supervisorctl:
+    name: intel-undervolt
+    state: restarted

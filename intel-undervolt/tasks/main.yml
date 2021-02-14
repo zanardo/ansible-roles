@@ -1,0 +1,24 @@
+---
+- block:
+
+  - name: checa versão instalada
+    shell:
+      warn=no
+      cat /usr/local/intel-undervolt/intel-undervolt.version
+    register: intel_undervolt_register_version
+    changed_when: False
+    check_mode: no
+    failed_when: False
+
+  - name: instala intel-undervolt
+    include_tasks: install.yml
+    when: intel_undervolt_register_version.stdout != intel_undervolt_version
+
+  - name: copia arquivo de configuração
+    template:
+      src: "{{ intel_undervolt_conf|d('intel-undervolt.conf.j2') }}"
+      dest: "/usr/local/intel-undervolt/etc/intel-undervolt.conf"
+    notify: reinicia intel-undervolt
+    tags: ["intel-undervolt:conf"]
+
+  tags: ["intel-undervolt"]

@@ -1,0 +1,60 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name:
+      - build-essential
+      - pkg-config
+
+- name: apaga o arquivo de controle de versão
+  file:
+    path: /usr/local/intel-undervolt/intel-undervolt.version
+    state: absent
+
+- name: faz download do intel-undervolt
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://github.com/kitsunyan/intel-undervolt/archive/{{ intel_undervolt_version }}.tar.gz
+    file: intel-undervolt-{{ intel_undervolt_version }}.tar.gz
+    dir: /tmp
+
+- name: cria diretório de instalação
+  file:
+    state: directory
+    path: /usr/local/intel-undervolt
+    owner: _builder
+    group: _builder
+
+- name: descompacta e compila o pacote
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    executable=/bin/bash
+    cd ~ && \
+    rm -rf intel-undervolt* && \
+    tar xf /tmp/intel-undervolt-{{ intel_undervolt_version }}.tar.gz && \
+    cd intel-undervolt-{{ intel_undervolt_version }} && \
+    ./configure \
+      --bindir=/usr/local/intel-undervolt/bin \
+      --sysconfdir=/usr/local/intel-undervolt/etc \
+      && \
+    make && \
+    make install && \
+    cd ~ && \
+    rm -rf intel-undervolt*
+
+- name: copia unit do supervisor
+  template:
+    src: intel-undervolt.supervisor.j2
+    dest: /etc/supervisor/conf.d/intel-undervolt.conf
+
+- name: configura serviço no supervisor
+  supervisorctl:
+    name: intel-undervolt
+    state: present
+
+- name: salva a versão instalada
+  copy:
+    dest: /usr/local/intel-undervolt/intel-undervolt.version
+    content: "{{ intel_undervolt_version }}"
