@@ -8,7 +8,11 @@ Address = {{ item.address }}
 {% for peer in item.peers|d([]) %}
 {% for dest in peer.allowed_ips|d([]) %}
 [Route]
+{% if ansible_distribution_release in ["buster"] %}
 Gateway = {{ item.address }}
+{% elif ansible_distribution_release in ["bullseye"] %}
+Gateway = {{ item.address|replace("/32", "") }}
+{% endif %}
 Destination = {{ dest }}
 
 {% endfor %}
@@ -16,7 +20,11 @@ Destination = {{ dest }}
 {% else %}
 {% for route in item.routes|d([]) %}
 [Route]
+{% if ansible_distribution_release in ["buster"] %}
 Gateway = {{ route.gateway }}
+{% elif ansible_distribution_release in ["bullseye"] %}
+Gateway = {{ route.gateway|replace("/32", "") }}
+{% endif %}
 Destination = {{ route.destination }}
 
 {% endfor %}

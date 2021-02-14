@@ -49,3 +49,4 @@ wireguard_devs:
 ## Compatibilidade
 
 - Debian Buster
+- Debian Bullseye

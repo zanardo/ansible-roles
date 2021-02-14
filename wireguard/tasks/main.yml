@@ -4,7 +4,7 @@
       assert:
         that:
           - ansible_distribution == "Debian"
-          - ansible_distribution_release in ["buster"]
+          - ansible_distribution_release in ["buster", "bullseye"]
 
     - name: instala pacotes necessários
       apt:
