@@ -3,12 +3,14 @@
     - debian-stretch
     - debian-buster
     - debian-bullseye
+    - ubuntu-bionic
     - arch
 
   vars:
     packages_install:
       - tmux
       - git
+      - make
 
   roles:
     - { role: zanardo/packages }
