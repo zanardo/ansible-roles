@@ -1,17 +1,16 @@
 ---
-- block:
-
-  - name: checa versão instalada
-    shell:
-      warn=no
+- name: instala hyperfine
+  include_role:
+    name: zanardo/rust-app
+  vars:
+    rust_app_name: hyperfine
+    rust_app_version: "{{ hyperfine_version }}"
+    rust_app_apt_packages:
+      - build-essential
+    rust_app_cmd_get_version: >
       /usr/local/bin/hyperfine --version | cut -f2 -d' '
-    register: hyperfine_register_version
-    changed_when: False
-    check_mode: no
-    failed_when: False
-
-  - name: instala hyperfine
-    include_tasks: install.yml
-    when: hyperfine_register_version.stdout != hyperfine_version or hyperfine_force_install is defined
-
+    rust_app_url: >
+      https://github.com/sharkdp/hyperfine/archive/refs/tags/v{{ hyperfine_version }}.tar.gz
+    rust_app_executables:
+      - hyperfine
   tags: ["hyperfine"]
