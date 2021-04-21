@@ -1,0 +1,13 @@
+---
+- name: checa versão instalada
+  shell:
+    warn=no
+    {{ rust_app_cmd_get_version }}
+  register: register_version
+  changed_when: False
+  check_mode: no
+  failed_when: False
+
+- name: instala {{ rust_app_name }}
+  include_tasks: install.yml
+  when: register_version.stdout != rust_app_version

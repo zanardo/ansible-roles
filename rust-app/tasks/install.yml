@@ -1,0 +1,51 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name: "{{ rust_app_apt_packages }}"
+
+- name: faz download de {{ rust_app_name }}
+  include_role:
+    name: zanardo/download
+  vars:
+    url: "{{ rust_app_url }}"
+    file: "{{ rust_app_name }}-{{ rust_app_version }}.tar.gz"
+    dir: /tmp
+
+- name: descompacta e compila {{ rust_app_name }}
+  become: yes
+  become_user: _builder
+  shell: |
+    warn=no
+    executable=/bin/bash
+    cd ~ && \
+    rm -rf {{ rust_app_name }}* && \
+    tar xf /tmp/{{ rust_app_name }}-{{ rust_app_version }}.tar.gz && \
+    cd {{ rust_app_name }}-{{ rust_app_version }} && \
+    source /etc/profile.d/rust.sh && \
+    cargo build --release && \
+    {% for exe in rust_app_executables %}
+    cp -f target/release/{{ exe }} /tmp && \
+    {% endfor %}
+    cd ~ && \
+    rm -rf {{ rust_app_name }}*
+
+- name: instala os arquivos binários de {{ rust_app_name }}
+  copy:
+    remote_src: yes
+    src: /tmp/{{ item }}
+    dest: /usr/local/bin/{{ item }}
+    owner: root
+    group: root
+    mode: 0o755
+  loop: "{{ rust_app_executables }}"
+
+- name: remove arquivos temporários de {{ rust_app_name }}
+  file:
+    state: absent
+    path: /tmp/{{ rust_app_name }}-{{ rust_app_version }}.tar.gz
+
+- name: remove arquivos temporários de {{ rust_app_name }}
+  file:
+    state: absent
+    path: /tmp/{{ item }}
+  loop: "{{ rust_app_executables }}"
