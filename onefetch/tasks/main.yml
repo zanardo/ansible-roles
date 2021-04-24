@@ -1,17 +1,16 @@
 ---
-- block:
-
-  - name: checa versão instalada
-    shell:
-      warn=no
+- name: instala onefetch
+  include_role:
+    name: zanardo/rust-app
+  vars:
+    rust_app_name: onefetch
+    rust_app_version: "{{ onefetch_version }}"
+    rust_app_apt_packages:
+      - build-essential
+    rust_app_cmd_get_version: >
       /usr/local/bin/onefetch --version | cut -f2 -d' '
-    register: onefetch_register_version
-    changed_when: False
-    check_mode: no
-    failed_when: False
-
-  - name: instala onefetch
-    include_tasks: install.yml
-    when: onefetch_register_version.stdout != onefetch_version or onefetch_force_install is defined
-
+    rust_app_url: >
+      https://github.com/o2sh/onefetch/archive/v{{ onefetch_version }}.tar.gz
+    rust_app_executables:
+      - onefetch
   tags: ["onefetch"]
