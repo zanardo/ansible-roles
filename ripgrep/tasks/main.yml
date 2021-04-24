@@ -1,17 +1,16 @@
 ---
-- block:
-
-  - name: checa versão instalada
-    shell:
-      warn=no
+- name: instala ripgrep
+  include_role:
+    name: zanardo/rust-app
+  vars:
+    rust_app_name: ripgrep
+    rust_app_version: "{{ ripgrep_version }}"
+    rust_app_apt_packages:
+      - build-essential
+    rust_app_cmd_get_version: >
       /usr/local/bin/rg --version | head -1 | cut -f2 -d' '
-    register: ripgrep_register_version
-    changed_when: False
-    check_mode: no
-    failed_when: False
-
-  - name: instala ripgrep
-    include_tasks: install.yml
-    when: ripgrep_register_version.stdout != ripgrep_version or ripgrep_force_install is defined
-
+    rust_app_url: >
+      https://github.com/BurntSushi/ripgrep/archive/{{ ripgrep_version }}.tar.gz
+    rust_app_executables:
+      - rg
   tags: ["ripgrep"]
