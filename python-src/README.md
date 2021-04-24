@@ -58,4 +58,3 @@ python_src_versions:
 - Debian Stretch
 - Debian Buster
 - Debian Bullseye
-- Arch
