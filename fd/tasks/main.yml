@@ -1,17 +1,16 @@
 ---
-- block:
-
-  - name: checa versão instalada
-    shell:
-      warn=no
+- name: instala fd
+  include_role:
+    name: zanardo/rust-app
+  vars:
+    rust_app_name: fd
+    rust_app_version: "{{ fd_version }}"
+    rust_app_apt_packages:
+      - build-essential
+    rust_app_cmd_get_version: >
       /usr/local/bin/fd --version | cut -f2 -d' '
-    register: fd_register_version
-    changed_when: False
-    check_mode: no
-    failed_when: False
-
-  - name: instala fd
-    include_tasks: install.yml
-    when: fd_register_version.stdout != fd_version or fd_force_install is defined
-
+    rust_app_url: >
+      https://github.com/sharkdp/fd/archive/v{{ fd_version }}.tar.gz
+    rust_app_executables:
+      - fd
   tags: ["fd"]
