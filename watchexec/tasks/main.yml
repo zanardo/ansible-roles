@@ -1,17 +1,15 @@
----
-- block:
-
-  - name: checa versão instalada
-    shell:
-      warn=no
+- name: instala watchexec
+  include_role:
+    name: zanardo/rust-app
+  vars:
+    rust_app_name: watchexec
+    rust_app_version: "{{ watchexec_version }}"
+    rust_app_apt_packages:
+      - build-essential
+    rust_app_cmd_get_version: >
       /usr/local/bin/watchexec --version | cut -f2 -d' '
-    register: watchexec_register_version
-    changed_when: False
-    check_mode: no
-    failed_when: False
-
-  - name: instala watchexec
-    include_tasks: install.yml
-    when: watchexec_register_version.stdout != watchexec_version or watchexec_force_install is defined
-
+    rust_app_url: >
+      https://github.com/watchexec/watchexec/archive/{{ watchexec_version }}.tar.gz
+    rust_app_executables:
+      - watchexec
   tags: ["watchexec"]
