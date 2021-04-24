@@ -22,4 +22,3 @@ packages_install:
 - Debian Buster
 - Debian Bullseye
 - Ubuntu Bionic
-- Arch

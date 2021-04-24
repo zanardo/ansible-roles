@@ -1,5 +1,0 @@
----
-- name: instala pacotes
-  pacman:
-    state: present
-    name: '{{ packages_install|d([]) }}'
