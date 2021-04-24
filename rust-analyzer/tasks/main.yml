@@ -1,17 +1,17 @@
----
-- block:
-
-  - name: checa versão instalada
-    shell:
-      warn=no
+- name: instala rust-analyzer
+  include_role:
+    name: zanardo/rust-app
+  vars:
+    rust_app_name: rust-analyzer
+    rust_app_version: "{{ rust_analyzer_version }}"
+    rust_app_apt_packages:
+      - build-essential
+    rust_app_cmd_get_version: >
       /usr/local/bin/rust-analyzer --version | cut -f2 -d' '
-    register: rust_analyzer_register_version
-    changed_when: False
-    check_mode: no
-    failed_when: False
-
-  - name: instala rust-analyzer
-    include_tasks: install.yml
-    when: rust_analyzer_register_version.stdout != rust_analyzer_version or rust_analyzer_force_install is defined
-
+    rust_app_url: >
+      https://github.com/rust-analyzer/rust-analyzer/archive/{{ rust_analyzer_version }}.tar.gz
+    rust_app_executables:
+      - rust-analyzer
+    rust_app_env:
+      RUST_ANALYZER_REV: "{{ rust_analyzer_version }}"
   tags: ["rust-analyzer"]
