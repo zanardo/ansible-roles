@@ -2,6 +2,8 @@
 - name: instala espanso
   include_role:
     name: zanardo/rust-app
+    apply:
+      tags: ["espanso"]
   vars:
     rust_app_name: espanso
     rust_app_version: "{{ espanso_version }}"

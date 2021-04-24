@@ -2,6 +2,8 @@
 - name: instala fd
   include_role:
     name: zanardo/rust-app
+    apply:
+      tags: ["fd"]
   vars:
     rust_app_name: fd
     rust_app_version: "{{ fd_version }}"

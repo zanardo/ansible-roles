@@ -2,6 +2,8 @@
 - name: instala hyperfine
   include_role:
     name: zanardo/rust-app
+    apply:
+      tags: ["hyperfine"]
   vars:
     rust_app_name: hyperfine
     rust_app_version: "{{ hyperfine_version }}"

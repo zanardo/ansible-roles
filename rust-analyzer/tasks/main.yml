@@ -1,6 +1,8 @@
 - name: instala rust-analyzer
   include_role:
     name: zanardo/rust-app
+    apply:
+      tags: ["rust-analyzer"]
   vars:
     rust_app_name: rust-analyzer
     rust_app_version: "{{ rust_analyzer_version }}"
