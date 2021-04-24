@@ -3,7 +3,6 @@
     - debian-stretch
     - debian-buster
     - debian-bullseye
-    - archlinux
 
   vars:
     users_password:

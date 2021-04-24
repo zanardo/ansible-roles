@@ -3,7 +3,6 @@
     - debian-stretch
     - debian-buster
     - debian-bullseye
-    - arch
 
   vars:
     dnsmasq_conf: "./dnsmasq.conf"
