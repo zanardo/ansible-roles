@@ -14,6 +14,7 @@
 - name: descompacta e compila {{ rust_app_name }}
   become: yes
   become_user: _builder
+  environment: "{{ rust_app_env }}"
   shell: |
     warn=no
     executable=/bin/bash
