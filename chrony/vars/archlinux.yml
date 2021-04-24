@@ -1,3 +1,0 @@
----
-chrony_service: chronyd
-chrony_conf_dest: "/etc/chrony.conf"
