@@ -29,4 +29,3 @@ docker_daemon_config:
 
 - Debian Buster
 - Debian Bullseye
-- Arch
