@@ -1,17 +1,21 @@
 ---
-- block:
-
-  - name: checa versão instalada
-    shell:
-      warn=no
+- name: instala cargo-edit
+  include_role:
+    name: zanardo/rust-app
+  vars:
+    rust_app_name: cargo-edit
+    rust_app_version: "{{ cargo_edit_version }}"
+    rust_app_apt_packages:
+      - build-essential
+      - pkg-config
+      - libssl-dev
+    rust_app_cmd_get_version: >
       /usr/local/bin/cargo-add --version | cut -f2 -d' '
-    register: cargo_edit_register_version
-    changed_when: False
-    check_mode: no
-    failed_when: False
-
-  - name: instala cargo-edit
-    include_tasks: install.yml
-    when: cargo_edit_register_version.stdout != cargo_edit_version or cargo_edit_force_install is defined
+    rust_app_url: >
+      https://github.com/killercup/cargo-edit/archive/v{{ cargo_edit_version }}.tar.gz
+    rust_app_executables:
+      - cargo-add
+      - cargo-rm
+      - cargo-upgrade
 
   tags: ["cargo-edit"]
