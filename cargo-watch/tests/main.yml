@@ -1,0 +1,11 @@
+---
+- hosts:
+  - debian-buster
+  - debian-bullseye
+
+  vars:
+    rust_toolchains:
+      - stable
+
+  roles:
+    - zanardo/cargo-watch

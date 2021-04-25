@@ -1,0 +1,17 @@
+- name: instala cargo-watch
+  include_role:
+    name: zanardo/rust-app
+    apply:
+      tags: ["cargo-watch"]
+  vars:
+    rust_app_name: cargo-watch
+    rust_app_version: "{{ cargo_watch_version }}"
+    rust_app_apt_packages:
+      - build-essential
+    rust_app_cmd_get_version: >
+      /usr/local/bin/cargo-watch --version | cut -f2 -d' '
+    rust_app_url: >
+      https://github.com/passcod/cargo-watch/archive/refs/tags/v{{ cargo_watch_version }}.tar.gz
+    rust_app_executables:
+      - cargo-watch
+  tags: ["cargo-watch"]
