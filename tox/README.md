@@ -11,9 +11,7 @@ scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Variables
 
-* `tox_version`: Versão do tox a ser instalada. Caso a variável não seja
-  definida, a última versão será instalada (porém não será atualizada
-  automaticamente).
+* `tox_version`: Versão do tox a ser instalada.
 
 ## Tags
 

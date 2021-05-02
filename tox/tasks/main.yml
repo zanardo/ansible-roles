@@ -1,29 +1,13 @@
 ---
-- block:
-
-  - name: cria diretórios para os pacotes
-    file:
-      state: directory
-      path: /opt/tox
-      owner: nobody
-      group: nogroup
-
-  - name: instala os pacotes
-    become: yes
-    become_user: nobody
-    pip:
-      name: tox
-      version: "{{ tox_version|d(omit) }}"
-      virtualenv_python: /usr/bin/python3
-      virtualenv: /opt/tox
-
-  - name: cria symlinks para os scripts
-    file:
-      state: link
-      src: /opt/tox/bin/{{ item }}
-      dest: /usr/local/bin/{{ item }}
-    loop:
+- name: instala tox
+  include_role:
+    name: zanardo/python-app
+    apply:
+      tags: ["tox"]
+  vars:
+    python_app_name: tox
+    python_app_version: "{{ tox_version }}"
+    python_app_scripts:
       - tox
       - tox-quickstart
-
   tags: ["tox"]
