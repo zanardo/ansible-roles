@@ -1,28 +1,12 @@
 ---
-- block:
-
-  - name: cria diretórios para os pacotes
-    file:
-      state: directory
-      path: /opt/flake8
-      owner: nobody
-      group: nogroup
-
-  - name: instala os pacotes
-    become: yes
-    become_user: nobody
-    pip:
-      name: flake8
-      version: "{{ flake8_version|d(omit) }}"
-      virtualenv_python: /usr/bin/python3
-      virtualenv: /opt/flake8
-
-  - name: cria symlinks para os scripts
-    file:
-      state: link
-      src: /opt/flake8/bin/{{ item }}
-      dest: /usr/local/bin/{{ item }}
-    loop:
+- name: instala flake8
+  include_role:
+    name: zanardo/python-app
+    apply:
+      tags: ["flake8"]
+  vars:
+    python_app_name: flake8
+    python_app_version: "{{ flake8_version }}"
+    python_app_scripts:
       - flake8
-
   tags: ["flake8"]
