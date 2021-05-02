@@ -1,28 +1,12 @@
 ---
-- block:
-
-  - name: cria diretórios para os pacotes
-    file:
-      state: directory
-      path: /opt/poetry
-      owner: nobody
-      group: nogroup
-
-  - name: instala os pacotes
-    become: yes
-    become_user: nobody
-    pip:
-      name: poetry
-      version: "{{ poetry_version|d(omit) }}"
-      virtualenv_python: /usr/bin/python3
-      virtualenv: /opt/poetry
-
-  - name: cria symlinks para os scripts
-    file:
-      state: link
-      src: /opt/poetry/bin/{{ item }}
-      dest: /usr/local/bin/{{ item }}
-    loop:
+- name: instala poetry
+  include_role:
+    name: zanardo/python-app
+    apply:
+      tags: ["poetry"]
+  vars:
+    python_app_name: poetry
+    python_app_version: "{{ poetry_version }}"
+    python_app_scripts:
       - poetry
-
   tags: ["poetry"]
