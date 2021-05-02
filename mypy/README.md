@@ -12,9 +12,7 @@ os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Variables
 
-* `mypy_version`: Versão do mypy a ser instalada. Caso a variável não seja
-  definida, a última versão será instalada (porém não será atualizada
-  automaticamente).
+* `mypy_version`: Versão do mypy a ser instalada.
 
 ## Tags
 
