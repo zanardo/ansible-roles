@@ -12,9 +12,7 @@ para os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Variables
 
-* `isort_version`: Versão do isort a ser instalada. Caso a variável não seja
-  definida, a última versão será instalada (porém não será atualizada
-  automaticamente).
+* `isort_version`: Versão do isort a ser instalada.
 
 ## Tags
 
