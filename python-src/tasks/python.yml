@@ -34,12 +34,6 @@
       owner: _builder
       group: _builder
 
-  # stow falha pois /usr/local/share/man é um symlink
-  - name: corrige diretório no arch
-    shell:
-      test -L /usr/local/share/man && rm -f /usr/local/share/man
-    when: ansible_distribution == "Archlinux"
-
   - name: descompacta, compila o instala - python {{ python_version }}
     become: yes
     become_user: _builder
