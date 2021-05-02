@@ -1,0 +1,13 @@
+---
+- name: instala httpie
+  include_role:
+    name: zanardo/python-app
+    apply:
+      tags: ["httpie"]
+  vars:
+    python_app_name: httpie
+    python_app_version: "{{ httpie_version }}"
+    python_app_scripts:
+      - http
+      - https
+  tags: ["httpie"]
