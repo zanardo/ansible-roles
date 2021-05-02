@@ -13,9 +13,7 @@ sistema.
 
 ## Variables
 
-* `docker_compose_version`: Versão do docker-compose a ser instalada. Caso a
-  variável não seja definida, a última versão será instalada (porém não será
-  atualizada automaticamente).
+* `docker_compose_version`: Versão do docker-compose a ser instalada.
 
 ## Tags
 

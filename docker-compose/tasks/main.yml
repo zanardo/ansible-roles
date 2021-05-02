@@ -1,28 +1,12 @@
 ---
-- block:
-
-  - name: cria diretórios para os pacotes
-    file:
-      state: directory
-      path: /opt/docker-compose
-      owner: nobody
-      group: nogroup
-
-  - name: instala os pacotes
-    become: yes
-    become_user: nobody
-    pip:
-      name: docker-compose
-      version: "{{ docker_compose_version|d(omit) }}"
-      virtualenv_python: /usr/bin/python3
-      virtualenv: /opt/docker-compose
-
-  - name: cria symlinks para os scripts
-    file:
-      state: link
-      src: /opt/docker-compose/bin/{{ item }}
-      dest: /usr/local/bin/{{ item }}
-    loop:
+- name: instala docker-compose
+  include_role:
+    name: zanardo/python-app
+    apply:
+      tags: ["docker-compose"]
+  vars:
+    python_app_name: docker-compose
+    python_app_version: "{{ docker_compose_version }}"
+    python_app_scripts:
       - docker-compose
-
   tags: ["docker-compose"]
