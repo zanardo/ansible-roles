@@ -12,9 +12,7 @@ O `pynvim` é instalado em um virtualenv em `/opt/pynvim`.
 
 ## Variables
 
-* `pynvim_version`: Versão do pynvim a ser instalada. Caso a variável não seja
-  definida, a última versão será instalada (porém não será atualizada
-  automaticamente).
+* `pynvim_version`: Versão do pynvim a ser instalada.
 
 ## Tags
 
