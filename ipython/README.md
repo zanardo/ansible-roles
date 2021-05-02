@@ -13,9 +13,7 @@ scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Variables
 
-* `ipython_version`: Versão do ipython a ser instalada. Caso a variável não seja
-  definida, a última versão será instalada (porém não será atualizada
-  automaticamente).
+* `ipython_version`: Versão do ipython a ser instalada.
 
 ## Tags
 
