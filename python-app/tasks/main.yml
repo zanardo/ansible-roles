@@ -1,0 +1,27 @@
+---
+- name: instala pacotes necessários
+  apt:
+    name: "{{ python_app_apt_packages }}"
+
+- name: cria diretório para os pacotes
+  file:
+    state: directory
+    path: /opt/{{ python_app_name }}
+    owner: nobody
+    group: nogroup
+
+- name: instala os pacotes
+  become: yes
+  become_user: nobody
+  pip:
+    name: "{{ python_app_name }}"
+    version: "{{ python_app_version }}"
+    virtualenv_python: /usr/bin/python3
+    virtualenv: /opt/{{ python_app_name }}
+
+- name: cria symlinks para os scripts
+  file:
+    state: link
+    src: /opt/{{ python_app_name }}/bin/{{ item }}
+    dest: /usr/local/bin/{{ item }}
+  loop: "{{ python_app_scripts }}"
