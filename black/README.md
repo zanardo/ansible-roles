@@ -12,9 +12,7 @@ para os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Variables
 
-* `black_version`: Versão do black a ser instalada. Caso a variável não seja
-  definida, a última versão será instalada (porém não será atualizada
-  automaticamente).
+* `black_version`: Versão do black a ser instalada.
 
 ## Tags
 
