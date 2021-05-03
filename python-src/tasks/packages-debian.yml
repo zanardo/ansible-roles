@@ -18,8 +18,19 @@
       - libsqlite3-0
       - file
       - libexpat1
-      - libffi6
       - libmagic1
       - mime-support
       - libssl-dev
       - libssl1.1
+
+- name: instala pacotes necessários - debian buster
+  apt:
+    name:
+      - libffi6
+  when: ansible_distribution_release in ("stretch", "buster")
+
+- name: instala pacotes necessários - debian bullseys
+  apt:
+    name:
+      - libffi7
+  when: ansible_distribution_release == "NA"
