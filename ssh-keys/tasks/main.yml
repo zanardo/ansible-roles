@@ -32,4 +32,4 @@
       loop_control:
         label: "{{ item.key }}"
 
-  tags: ["ssh_keys"]
+  tags: ["ssh-keys"]

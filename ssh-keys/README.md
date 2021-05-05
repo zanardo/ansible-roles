@@ -65,7 +65,7 @@ ssh_keys:
 
 ## Tags
 
-- `ssh_keys`: Executa todo o role.
+- `ssh-keys`: Executa todo o role.
 
 ## Compatibilidade
 
