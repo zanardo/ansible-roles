@@ -2,17 +2,7 @@
 - hosts:
     - debian-stretch
     - debian-buster
-
-  roles:
-    - zanardo/apt-sources
-
-
-- hosts:
     - debian-bullseye
-
-  # Bullseye ainda não possui ansible_distribution_release setado.
-  vars:
-    sources_list_path: "bullseye.list"
 
   roles:
     - zanardo/apt-sources

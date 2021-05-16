@@ -33,4 +33,4 @@
   apt:
     name:
       - libffi7
-  when: ansible_distribution_release == "NA"
+  when: ansible_distribution_release in ("bullseye")
