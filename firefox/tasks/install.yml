@@ -1,14 +1,20 @@
 ---
 - name: faz download da distribuição do firefox - versão específica
-  get_url:
-    url: "https://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/linux-x86_64/{{ firefox_lang }}/firefox-{{ firefox_version }}.tar.bz2"
-    dest: "/tmp/firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://ftp.mozilla.org/pub/firefox/releases/{{ firefox_version }}/linux-x86_64/{{ firefox_lang }}/firefox-{{ firefox_version }}.tar.bz2
+    file: firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2
+    dir: /tmp
   when: firefox_version != "latest"
 
 - name: faz download da distribuição do firefox - última versão
-  get_url:
-    url: "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang={{ firefox_lang }}"
-    dest: "/tmp/firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2"
+  include_role:
+    name: zanardo/download
+  vars:
+    url: https://download.mozilla.org/?product=firefox-latest&os=linux64&lang={{ firefox_lang }}
+    file: firefox-{{ firefox_lang }}-{{ firefox_version }}.tar.bz2
+    dir: /tmp
   when: firefox_version == "latest"
 
 - name: remove instalação atual do firefox
