@@ -16,6 +16,7 @@ try:
     user_host = sys.argv[1]
 except IndexError:
     print("usage: {} usuario@host".format(sys.argv[0]))
+    sys.exit(1)
 
 user = user_host.split("@")[0]
 
