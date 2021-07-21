@@ -23,7 +23,7 @@
     - name: instala virtualenv atualizado /usr/local
       shell: warn=no
         creates=/usr/local/bin/virtualenv
-        pip3 install --upgrade virtualenv
+        pip3 install {{ python_virtualenv_pip_options }} virtualenv
       when: python_install_virtualenv
 
   tags: ["python"]

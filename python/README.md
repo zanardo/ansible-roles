@@ -18,6 +18,8 @@ PS: No Debian Bullseye, a instalação do Python 2 é ignorada.
 - `python_install_python3`: Instala os pacotes do Python 3. Default: `yes`.
 - `python_install_virtualenv`: Instala o `virtualenv` atualizado em
   `/usr/local/bin`. Default: `yes`.
+- `python_virtualenv_pip_options`: Opções a serem passadas ao `pip` na instalação do
+  `virtualenv` atualizado. Default: "".
 
 ## Tags
 
