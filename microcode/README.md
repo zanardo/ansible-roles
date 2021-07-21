@@ -1,7 +1,6 @@
 # microcode
 
-Ansible Role para instalar as atualizações de microcode dos processadores Intel
-e AMD.
+Ansible Role para instalar as atualizações de microcode dos processadores Intel e AMD.
 
 ## Ações
 

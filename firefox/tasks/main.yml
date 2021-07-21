@@ -9,9 +9,8 @@
       failed_when: False
       check_mode: no
 
-    # Os pacotes abaixo foram identificados como necessários ao executar
-    # "firefox --version" rodando a instalação em um container mínimo sem o
-    # Xorg.
+    # Os pacotes abaixo foram identificados como necessários ao executar "firefox
+    # --version" rodando a instalação em um container mínimo sem o Xorg.
     - name: instala pacotes necessários
       apt:
         name:

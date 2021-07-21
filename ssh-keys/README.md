@@ -1,16 +1,12 @@
 # ssh-keys
 
-Role do Ansible para configurar chaves privadas e públicas em `~/.ssh` dos
-usuários.
+Role do Ansible para configurar chaves privadas e públicas em `~/.ssh` dos usuários.
 
-No momento, o role copia apenas os arquivos `~/.ssh/id_rsa` e
-`~/.ssh/id_rsa.pub`.
+No momento, o role copia apenas os arquivos `~/.ssh/id_rsa` e `~/.ssh/id_rsa.pub`.
 
-**Cuidado**, pois os arquivos serão sobrescritos com as novas chaves, caso
-existam!
+**Cuidado**, pois os arquivos serão sobrescritos com as novas chaves, caso existam!
 
-**Atenção**: manter as variáveis de configuração criptografadas usando Ansible
-Vault!
+**Atenção**: manter as variáveis de configuração criptografadas usando Ansible Vault!
 
 ## Como gerar as chaves?
 
@@ -44,8 +40,8 @@ shred -u ssh-key-tmp ssh-key-tmp.pub
 
 ## Variáveis
 
-- `ssh_keys`: Dicionário com os usuários de destino para serem configurados,
-  contendo as chaves privadas e públicas em cada um. Exemplo:
+- `ssh_keys`: Dicionário com os usuários de destino para serem configurados, contendo as
+  chaves privadas e públicas em cada um. Exemplo:
 
 ```yaml
 ssh_keys:

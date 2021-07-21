@@ -3,9 +3,8 @@
 Ansible Role para instalar/atualizar o [Docker
 Compose](https://github.com/docker/compose).
 
-O `docker-compose` é instalado em um virtualenv em `/opt/docker-compose`. São
-criados symlinks para os scripts em `/usr/local/bin`. É usado o Python 3 do
-sistema.
+O `docker-compose` é instalado em um virtualenv em `/opt/docker-compose`. São criados
+symlinks para os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Dependências
 

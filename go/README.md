@@ -1,7 +1,7 @@
 # go
 
-Ansible Role para instalar o [Go](https://golang.org/), com binário baixado
-diretamente do site oficial.
+Ansible Role para instalar o [Go](https://golang.org/), com binário baixado diretamente do
+site oficial.
 
 O Go é instalado em `/usr/local/go`. Adicione `/usr/local/go/bin` no `$PATH`.
 

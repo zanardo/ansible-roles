@@ -1,7 +1,6 @@
 # cargo-watch
 
-Ansible Role para instalar o
-[cargo-watch](https://github.com/passcod/cargo-watch).
+Ansible Role para instalar o [cargo-watch](https://github.com/passcod/cargo-watch).
 
 O cargo-watch é compilado do código-fonte. É necessário definir a variável
 `rust_toolchains`.

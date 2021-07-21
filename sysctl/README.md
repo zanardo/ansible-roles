@@ -2,8 +2,7 @@
 
 Ansible Role para definir configurações do _kernel_ via parâmetros do `sysctl`.
 
-Os parâmetros são salvos em `/etc/sysctl.d/local.conf` e definidos
-imediatamente.
+Os parâmetros são salvos em `/etc/sysctl.d/local.conf` e definidos imediatamente.
 
 ## Variáveis
 

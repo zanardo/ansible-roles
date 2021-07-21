@@ -37,8 +37,7 @@
     group: "{{ firefox_chown }}"
     extra_opts: ["--strip-components", "1"]
 
-# Aparentemente o owner e group acima não fixam as permissões em todos os
-# diretórios.
+# Aparentemente o owner e group acima não fixam as permissões em todos os diretórios.
 - name: corrige permissões
   file:
     path: "{{ firefox_path }}"

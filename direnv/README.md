@@ -2,8 +2,8 @@
 
 Ansible Role para instalar o [direnv](https://github.com/direnv/direnv).
 
-O direnv é compilado do código-fonte. Para isto, é necessário setar a seguinte
-variável para a instalação do Go: `go_version`.
+O direnv é compilado do código-fonte. Para isto, é necessário setar a seguinte variável
+para a instalação do Go: `go_version`.
 
 ## Variáveis
 

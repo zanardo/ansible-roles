@@ -5,16 +5,16 @@ Ansible Role para instalar e configurar túneis criptografados usando o
 
 A configuração é feita usando o `systemd-network`.
 
-Note que as liberações no firewall deverão ser configuradas separadamente.
-Exemplo: usando o role `zanardo/shorewall`.
+Note que as liberações no firewall deverão ser configuradas separadamente. Exemplo: usando
+o role `zanardo/shorewall`.
 
 ## Variáveis
 
-- `wireguard_delete`: Lista contendo nomes de interfaces para serem desativadas
-  e excluídas (caso não sejam mais utilizadas).
+- `wireguard_delete`: Lista contendo nomes de interfaces para serem desativadas e
+  excluídas (caso não sejam mais utilizadas).
 
-- `wireguard_devs`: Lista de dicionários contendo as configurações do Wireguard,
-  para cada interface. Exemplo:
+- `wireguard_devs`: Lista de dicionários contendo as configurações do Wireguard, para cada
+  interface. Exemplo:
 
 ```yaml
 wireguard_devs:
@@ -36,11 +36,11 @@ wireguard_devs:
           - "10.212.135.2/32"
 ```
 
-- `wireguard_auto_route`: Para criar automaticamente as entradas em `routes` na
-  variável `wireguard_devs` usando o gateway `wireguard_devs.address` e o
-  destino `wireguard_devs.peers.allowed_ips`. Default `yes`. Caso queira ter
-  mais controle sobre as rotas, configure esta variável como `no` e defina as
-  rotas em `wireguard_devs.routes`.
+- `wireguard_auto_route`: Para criar automaticamente as entradas em `routes` na variável
+  `wireguard_devs` usando o gateway `wireguard_devs.address` e o destino
+  `wireguard_devs.peers.allowed_ips`. Default `yes`. Caso queira ter mais controle sobre
+  as rotas, configure esta variável como `no` e defina as rotas em
+  `wireguard_devs.routes`.
 
 ## Tags
 

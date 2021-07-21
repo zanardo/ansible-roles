@@ -1,10 +1,10 @@
 # flake8
 
-Ansible Role para instalar/atualizar o
-[flake8](https://github.com/pycqa/flake8), um linter para Python.
+Ansible Role para instalar/atualizar o [flake8](https://github.com/pycqa/flake8), um
+linter para Python.
 
-O `flake8` é instalado em um virtualenv em `/opt/flake8`. São criados symlinks
-para os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
+O `flake8` é instalado em um virtualenv em `/opt/flake8`. São criados symlinks para os
+scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Dependências
 

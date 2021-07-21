@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# As configurações do sistema ticket deverão ser definidas
-# neste arquivo.
+# As configurações do sistema ticket deverão ser definidas neste arquivo.
 #
 
 # Endereço onde o servidor irá ouvir as conexões
@@ -11,15 +10,13 @@ port = 5000
 # Habilitar debug - não usar em produção!
 debug = False
 
-# Arquivo do banco de dados SQLite. Será criado automaticamente
-# caso não exista.
+# Arquivo do banco de dados SQLite. Será criado automaticamente caso não exista.
 dbname = "/srv/ticket/ticket.db"
 
 # Título das páginas.
 title = "ticket"
 
-# Descrição das prioridades. É possível adicionar mais prioridades
-# caso seja necessário.
+# Descrição das prioridades. É possível adicionar mais prioridades caso seja necessário.
 priodesc = {
     1: "Urgente",
     2: "Atenção",
@@ -45,9 +42,9 @@ mailsmtp = "127.0.0.1"
 
 # Funcionalidades ativas. Comentar a linha para desativar a funcionalidade.
 features = []
-features.append('timetrack')	# Tempo trabalhado
-features.append('adminonly')	# Restrição de tickets para administradores
-features.append("fileattach")   # Arquivos anexos
-features.append("dependency")   # Dependências entre tickets
-features.append('datedue')		# Data de previsão de solução
-features.append('mail')			# Envio de comentários por e-mail
+features.append("timetrack")  # Tempo trabalhado
+features.append("adminonly")  # Restrição de tickets para administradores
+features.append("fileattach")  # Arquivos anexos
+features.append("dependency")  # Dependências entre tickets
+features.append("datedue")  # Data de previsão de solução
+features.append("mail")  # Envio de comentários por e-mail

@@ -1,8 +1,7 @@
 # pynvim
 
-Ansible Role para instalar/atualizar o
-[pynvim](https://github.com/neovim/neovim), biblioteca para rodar plugins via
-Python no neovim.
+Ansible Role para instalar/atualizar o [pynvim](https://github.com/neovim/neovim),
+biblioteca para rodar plugins via Python no neovim.
 
 O `pynvim` é instalado em um virtualenv em `/opt/pynvim`.
 

@@ -1,5 +1,5 @@
-Ansible Role para instalar o
-[Borg](http://borgbackup.readthedocs.io/en/stable/), do binário oficial.
+Ansible Role para instalar o [Borg](http://borgbackup.readthedocs.io/en/stable/), do
+binário oficial.
 
 # Variáveis
 

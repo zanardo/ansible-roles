@@ -1,7 +1,6 @@
 # rust-analyzer
 
-Ansible Role para instalar o
-[rust-analyzer](https://github.com/XAMPPRocky/rust-analyzer).
+Ansible Role para instalar o [rust-analyzer](https://github.com/XAMPPRocky/rust-analyzer).
 
 O rust-analyzer é compilado do código-fonte. É necessário definir a variável
 `rust_toolchains`.

@@ -2,8 +2,8 @@
 
 Ansible Role para instalar o [Rclone](https://rclone.org/).
 
-O Rclone é compilado do código-fonte. Para isto, é necessário setar a seguinte
-variável para a instalação do Go: `go_version`.
+O Rclone é compilado do código-fonte. Para isto, é necessário setar a seguinte variável
+para a instalação do Go: `go_version`.
 
 ## Variáveis
 

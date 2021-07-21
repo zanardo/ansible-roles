@@ -1,11 +1,11 @@
-Ansible Role para definir storage, como criação de physical volumes (PVs),
-volume groups (VGs) e logical volumes (LVs) no LVM2, criação de sistema de
-arquivos, e configuração de montagem em `/etc/fstab`.
+Ansible Role para definir storage, como criação de physical volumes (PVs), volume groups
+(VGs) e logical volumes (LVs) no LVM2, criação de sistema de arquivos, e configuração de
+montagem em `/etc/fstab`.
 
 # Variáveis
 
-- `storage_lvm_vgs`: (opcional) lista de dicionários com os volume groups (VGs)
-  a serem criados pelo LVM. Ex:
+- `storage_lvm_vgs`: (opcional) lista de dicionários com os volume groups (VGs) a serem
+  criados pelo LVM. Ex:
 
 ```yaml
 storage_lvm_vgs:
@@ -15,8 +15,8 @@ storage_lvm_vgs:
       - /dev/vdc
 ```
 
-- `storage_lvm_lvs`: (opcional) lista de dicionários com os logical volumes
-  (LVs) a serem criados pelo LVM. Ex:
+- `storage_lvm_lvs`: (opcional) lista de dicionários com os logical volumes (LVs) a serem
+  criados pelo LVM. Ex:
 
 ```yaml
 storage_lvm_lvs:
@@ -25,8 +25,7 @@ storage_lvm_lvs:
     size: 50G
 ```
 
-- `storage_fs`: (opcional) lista de dicionários com os filesystems a serem
-  criados. Ex:
+- `storage_fs`: (opcional) lista de dicionários com os filesystems a serem criados. Ex:
 
 ```yaml
 storage_fs:
@@ -34,8 +33,8 @@ storage_fs:
     fstype: ext4
 ```
 
-- `storage_mount`: (opcional) lista de dicionários com os filesystems a serem
-  configurados para montagem em `/etc/fstab`. Ex:
+- `storage_mount`: (opcional) lista de dicionários com os filesystems a serem configurados
+  para montagem em `/etc/fstab`. Ex:
 
 ```yaml
 storage_mount:

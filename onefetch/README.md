@@ -2,8 +2,7 @@
 
 Ansible Role para instalar o [onefetch](https://github.com/o2sh/onefetch).
 
-O onefetch é compilado do código-fonte. É necessário definir a variável
-`rust_toolchains`.
+O onefetch é compilado do código-fonte. É necessário definir a variável `rust_toolchains`.
 
 ## Variáveis
 

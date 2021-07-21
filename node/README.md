@@ -3,8 +3,7 @@
 Ansible Role para instalar o [Node](https://nodejs.org/en/), com binário baixado
 diretamente do site oficial.
 
-O Node é instalado em `/usr/local/node`. Adicione `/usr/local/node/bin` no
-`$PATH`.
+O Node é instalado em `/usr/local/node`. Adicione `/usr/local/node/bin` no `$PATH`.
 
 ## Variáveis
 

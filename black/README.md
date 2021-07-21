@@ -3,8 +3,8 @@
 Ansible Role para instalar/atualizar o [black](https://github.com/psf/black), um
 formatador para código-fonte de Python.
 
-O `black` é instalado em um virtualenv em `/opt/black`. São criados symlinks
-para os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
+O `black` é instalado em um virtualenv em `/opt/black`. São criados symlinks para os
+scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Dependências
 

@@ -2,8 +2,8 @@
 
 Ansible Role para instalar/atualizar o [tox](https://github.com/tox-dev/tox).
 
-O `tox` é instalado em um virtualenv em `/opt/tox`. São criados symlinks para os
-scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
+O `tox` é instalado em um virtualenv em `/opt/tox`. São criados symlinks para os scripts
+em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Dependências
 

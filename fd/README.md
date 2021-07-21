@@ -2,8 +2,7 @@
 
 Ansible Role para instalar o [fd](https://github.com/sharkdp/fd).
 
-O fd é compilado do código-fonte. É necessário definir a variável
-`rust_toolchains`.
+O fd é compilado do código-fonte. É necessário definir a variável `rust_toolchains`.
 
 ## Variáveis
 

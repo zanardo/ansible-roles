@@ -1,10 +1,10 @@
 # mypy
 
-Ansible Role para instalar/atualizar o [mypy](http://mypy-lang.org/), um
-verificador estático para o Python.
+Ansible Role para instalar/atualizar o [mypy](http://mypy-lang.org/), um verificador
+estático para o Python.
 
-O `mypy` é instalado em um virtualenv em `/opt/mypy`. São criados symlinks para
-os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
+O `mypy` é instalado em um virtualenv em `/opt/mypy`. São criados symlinks para os scripts
+em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Dependências
 

@@ -1,7 +1,6 @@
 # watchexec
 
-Ansible Role para instalar o
-[watchexec](https://github.com/watchexec/watchexec).
+Ansible Role para instalar o [watchexec](https://github.com/watchexec/watchexec).
 
 O watchexec é compilado do código-fonte. É necessário definir a variável
 `rust_toolchains`.

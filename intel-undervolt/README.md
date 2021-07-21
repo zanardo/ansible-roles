@@ -3,8 +3,8 @@
 Ansible Role para instalar o
 [intel-undervolt](https://github.com/kitsunyan/intel-undervolt/).
 
-O `intel-undervolt` é usado para controlar a voltagem e reduzir a temperatura
-máxima do processador de alguns laptops.
+O `intel-undervolt` é usado para controlar a voltagem e reduzir a temperatura máxima do
+processador de alguns laptops.
 
 ## Variáveis
 
@@ -14,8 +14,7 @@ máxima do processador de alguns laptops.
 ## Tags
 
 - `intel-undervolt`: Executa todo o role.
-- `intel-undervolt:conf`: Atualiza o arquivo de configuração e reaplica a
-  configuração.
+- `intel-undervolt:conf`: Atualiza o arquivo de configuração e reaplica a configuração.
 
 ## Compatibilidade
 

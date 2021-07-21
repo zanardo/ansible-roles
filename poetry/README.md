@@ -3,8 +3,8 @@
 Ansible Role para instalar/atualizar o [poetry](https://python-poetry.org/), um
 gerenciador de dependências para Python.
 
-O `poetry` é instalado em um virtualenv em `/opt/poetry`. São criados symlinks
-para os scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
+O `poetry` é instalado em um virtualenv em `/opt/poetry`. São criados symlinks para os
+scripts em `/usr/local/bin`. É usado o Python 3 do sistema.
 
 ## Dependências
 

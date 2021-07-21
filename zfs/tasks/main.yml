@@ -8,8 +8,7 @@
         - "linux-headers-{{ ansible_kernel }}"
       state: present
 
-  # O pacote zfsutils-linux falha ao instalar no Buster sem carregar
-  # o módulo zfs.
+  # O pacote zfsutils-linux falha ao instalar no Buster sem carregar o módulo zfs.
   - name: instala módulo do zfs
     apt:
       name:
