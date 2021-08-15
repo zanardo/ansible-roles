@@ -78,3 +78,4 @@ As seguintes mudanças são feitas no sistema:
 
 - Debian Stretch
 - Debian Buster
+- Debian Bullseye

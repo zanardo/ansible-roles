@@ -4,7 +4,7 @@
   - setup:
     delegate_to: "{{ virt_install_vmhost }}"
 
-  - name: instala pacotes necessários - debian
+  - name: instala pacotes necessários
     apt:
       name:
         - python-libvirt
@@ -12,6 +12,17 @@
       state: present
       install_recommends: no
     delegate_to: "{{ virt_install_vmhost }}"
+    when: ansible_distribution_release != "bullseye"
+
+  - name: instala pacotes necessários
+    apt:
+      name:
+        - python3-libvirt
+        - virtinst
+      state: present
+      install_recommends: no
+    delegate_to: "{{ virt_install_vmhost }}"
+    when: ansible_distribution_release == "bullseye"
 
   - name: verifica se máquina virtual existe
     virt:
