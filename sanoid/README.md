@@ -1,4 +1,4 @@
-# squid
+# sanoid
 
 Ansible Role para instalar e configurar o
 **[sanoid](https://github.com/jimsalterjrs/sanoid/)** no Debian.
