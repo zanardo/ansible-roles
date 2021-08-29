@@ -49,6 +49,14 @@
       delegate_to: "{{ virt_install_vmhost }}"
       when: virt_install_preseed is defined and virt_install_preseed != ""
 
+    - name: cria dataset do zfs
+      zfs:
+        name: "{{ virt_install_zfs_dataset }}"
+        extra_zfs_properties: "{{ virt_install_zfs_dataset_properties }}"
+        state: present
+      delegate_to: "{{ virt_install_vmhost }}"
+      when: virt_install_zfs_dataset is defined
+
     - name: instala máquina virtual {{ virt_install_name }}
       shell: http_proxy="{{ virt_install_http_proxy|d('') }}" virt-install
         --connect qemu:///system

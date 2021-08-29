@@ -17,6 +17,8 @@ do sistema operacional.
   (`virt_install_name`) são passados para o `virt-install`.
 - `virt_waitfor_port`: porta TCP para aguardar a máquina responder em `virt_install_ip`.
   Pode ser usado quando é passado o argumento `--noautoconsole` para o `virt-install`.
+- `virt_install_zfs_dataset`: caso definida, cria um dataset no ZFS para armazenar a VM.
+- `virt_install_zfs_dataset_properties`: opções para o dataset do ZFS. Default: `{}`.
 
 ## Ações
 
