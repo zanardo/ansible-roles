@@ -1,3 +1,4 @@
 ---
 nspawn_autostart: yes
 nspawn_debian_mirror: "http://deb.debian.org/debian"
+nspawn_zfs_dataset_properties: {}

@@ -2,14 +2,12 @@
 - name: executa debootstrap
   shell:
     warn=no
-    creates="{{ nspawn_dir }}"
-    rm -rf "{{ nspawn_dir }}.tmp" && \
+    creates="{{ nspawn_dir }}/usr/bin/sudo"
     debootstrap \
       --include=systemd,dbus,locales,python3,sudo,openssh-server \
       "{{ nspawn_debian_suite }}" \
-      "{{ nspawn_dir }}.tmp" \
-      "{{ nspawn_debian_mirror }}" && \
-    mv -f "{{ nspawn_dir }}.tmp" "{{ nspawn_dir }}"
+      "{{ nspawn_dir }}" \
+      "{{ nspawn_debian_mirror }}"
 
 - name: configura a interfaces de rede
   copy:

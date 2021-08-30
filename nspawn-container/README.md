@@ -32,6 +32,11 @@ Bridge=kvm0
 * `nspawn_bootstrap_ssh_allowed_key`: Chave(s) pública(s) de SSH a serem liberadas em
   `/root/.ssh/authorized_keys` no container.
 
+* `nspawn_zfs_dataset`: caso definida, cria um dataset no ZFS para armazenar a VM.
+
+* `nspawn_zfs_dataset_properties`: opções para o dataset do ZFS. Default: `{}`.
+
+
 ### Variáveis para containers com `nspawn_distro` == `debian`
 
 * `nspawn_debian_suite`: Suite do Debian a ser instalada no container. Exemplo: `buster`.

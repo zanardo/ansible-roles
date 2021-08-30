@@ -22,6 +22,13 @@
       state: directory
       path: /etc/systemd/nspawn
 
+  - name: cria dataset do zfs
+    zfs:
+      name: "{{ nspawn_zfs_dataset }}"
+      extra_zfs_properties: "{{ nspawn_zfs_dataset_properties }}"
+      state: present
+    when: nspawn_zfs_dataset is defined
+
   - name: executa tasks de bootstrap
     include_tasks: bootstrap-{{ nspawn_distro }}.yml
     when: not st.stat.exists
