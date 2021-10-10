@@ -5,6 +5,7 @@
     apt:
       name:
         - build-essential
+        - linux-headers-amd64
         - "linux-headers-{{ ansible_kernel }}"
       state: present
 
