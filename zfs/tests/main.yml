@@ -3,5 +3,10 @@
   - debian-buster
   - debian-bullseye
 
+  vars:
+    zfs_mod_conf:
+      zfs_arc_sys_free: "2147483648"
+      zfs_arc_max: "32212254720"
+
   roles:
     - zanardo/zfs

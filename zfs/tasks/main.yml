@@ -17,6 +17,15 @@
       state: present
       install_recommends: no
 
+  - name: configura o módulo do zfs
+    copy:
+      dest: "/etc/modprobe.d/zfs.conf"
+      content: |
+        {% for item in zfs_mod_conf %}
+        options zfs {{ item }}={{ zfs_mod_conf[item] }}
+        {% endfor %}
+    tags: ["zfs:conf"]
+
   - name: carrega o módulo do kernel
     modprobe:
       name: zfs
