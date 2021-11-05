@@ -1,6 +1,6 @@
 # zfs
 
-Ansible Role para instalar o ZFS via pacotes do repositório oficial do Debian.
+Ansible Role para instalar o ZFS via pacotes do repositório de *backports* do Debian.
 
 ## Variáveis
 

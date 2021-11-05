@@ -15,6 +15,7 @@
       name:
         - zfs-dkms
       state: present
+      default_release: "{{ ansible_distribution_release }}-backports"
       install_recommends: no
 
   - name: configura o módulo do zfs
@@ -36,6 +37,7 @@
       name:
         - zfsutils-linux
       state: present
+      default_release: "{{ ansible_distribution_release }}-backports"
       install_recommends: no
 
   tags: ["zfs"]
