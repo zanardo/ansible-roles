@@ -1,7 +1,0 @@
----
-- hosts:
-    - debian-buster
-    - debian-bullseye
-
-  roles:
-    - zanardo/pynvim
