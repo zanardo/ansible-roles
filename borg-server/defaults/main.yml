@@ -2,3 +2,4 @@
 borg_server_user: borg
 borg_server_home: "/home/borg"
 borg_server_ssh_keys: {}
+borg_server_ssh_keys_append_custom: []

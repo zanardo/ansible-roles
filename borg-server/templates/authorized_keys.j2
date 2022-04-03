@@ -1,3 +1,6 @@
 {% for item in borg_server_ssh_keys %}
 command="cd {{ borg_server_home }}/{{ item.name }};borg serve --restrict-to-path {{ borg_server_home }}/{{ item.name }}",no-port-forwarding,no-X11-forwarding,no-pty,no-agent-forwarding,no-user-rc {{ item.key }}
 {% endfor %}
+{% for item in borg_server_ssh_keys_append_custom %}
+{{ item }}
+{% endfor %}

@@ -22,6 +22,15 @@ borg_server_ssh_keys:
     key: "ssh-rsa ABC123ABC123...."
 ```
 
+- `borg_server_ssh_keys_append_custom`: lista com entradas manuais adicionadas em
+  `authorized_keys` do SSH do usuário do Borg. Isto foi feito para permitir liberações
+  customizadas, como por exemplo parâmetros diferente para o Borg ou acesso à múltiplos
+  repositórios. Default: `[]`.
+
+
+# Tags
+
+- `borg-server`: Executa todo o role.
 
 # Ações
 

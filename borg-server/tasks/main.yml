@@ -1,40 +1,43 @@
 ---
-- name: cria usuário para os backups
-  user:
-    shell: /bin/bash
-    name: "{{ borg_server_user }}"
-    home: "{{ borg_server_home }}"
-    state: present
-
-- name: define permissões para home
-  file:
-    state: directory
-    path: "{{ borg_server_home }}"
-    owner: "{{ borg_server_user }}"
-    group: "{{ borg_server_user }}"
-    mode: 0755
-
 - block:
+  - name: cria usuário para os backups
+    user:
+      shell: /bin/bash
+      name: "{{ borg_server_user }}"
+      home: "{{ borg_server_home }}"
+      state: present
 
-  - name: cria diretório para ssh
+  - name: define permissões para home
     file:
       state: directory
-      mode: 0700
-      path: ~/.ssh
+      path: "{{ borg_server_home }}"
+      owner: "{{ borg_server_user }}"
+      group: "{{ borg_server_user }}"
+      mode: 0755
 
-  - name: libera chaves do ssh em ~/.ssh/authorized_keys
-    template:
-      src: authorized_keys.j2
-      dest: ~/.ssh/authorized_keys
-      mode: 0600
+  - block:
 
-  - name: cria diretórios para backups
-    file:
-      state: directory
-      mode: 0700
-      path: "~/{{ item.name }}"
-    with_items: "{{ borg_server_ssh_keys }}"
+    - name: cria diretório para ssh
+      file:
+        state: directory
+        mode: 0700
+        path: ~/.ssh
+
+    - name: libera chaves do ssh em ~/.ssh/authorized_keys
+      template:
+        src: authorized_keys.j2
+        dest: ~/.ssh/authorized_keys
+        mode: 0600
+
+    - name: cria diretórios para backups
+      file:
+        state: directory
+        mode: 0700
+        path: "~/{{ item.name }}"
+      with_items: "{{ borg_server_ssh_keys }}"
 
 
-  become: yes
-  become_user: "{{ borg_server_user }}"
+    become: yes
+    become_user: "{{ borg_server_user }}"
+
+  tags: ["borg-server"]
