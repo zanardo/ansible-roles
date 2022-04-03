@@ -10,17 +10,8 @@
     register: reboot_register
 
   - name: reinicia máquina
-    shell: ( sleep 3 && reboot & )
-    when: reboot_register is changed
-
-  - name: aguarda porta tcp {{ virt_waitfor_port }} em {{ virt_install_ip }}
-    connection: local
-    wait_for:
-      host: '{{ virt_install_ip }}'
-      port: '{{ virt_waitfor_port }}'
-      state: present
-      timeout: 300
-      delay: 15
+    reboot:
+      reboot_timeout: 300
     when: reboot_register is changed
 
   tags: ["virt-install"]
